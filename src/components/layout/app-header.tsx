@@ -1,4 +1,4 @@
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import cosyIcon from "@/assets/cosy-logo.webp";
@@ -10,12 +10,8 @@ import type { AppLanguage } from "@/i18n/resources";
 export function AppHeader() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const routerState = useRouterState();
   const { logoutUser, userName, isUserLoggedIn } = useAuthInformation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-
-  const currentPath = routerState.location.pathname;
-  const isDashboard = currentPath === "/dashboard";
 
   async function handleLanguageChange(language: AppLanguage) {
     await i18n.changeLanguage(language);

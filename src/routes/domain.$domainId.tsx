@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { DomainDetailPage } from "@/pages/domain-detail-page";
+import { DomainDetailPage } from "@/pages/domain-detail";
 import { store } from "@/store/store";
 
 export const Route = createFileRoute("/domain/$domainId")({
