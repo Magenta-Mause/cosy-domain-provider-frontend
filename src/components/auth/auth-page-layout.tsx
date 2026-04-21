@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 import { Panel } from "@/components/pixel/panel";
 import { Scenery } from "@/components/pixel/scenery";
 
@@ -12,6 +14,21 @@ export function AuthPageLayout({
 }: AuthPageLayoutProps) {
   return (
     <Scenery>
+      <Link
+        to="/"
+        data-testid="auth-back-link"
+        style={{
+          position: "absolute",
+          top: 24,
+          left: 28,
+          fontSize: 16,
+          color: "oklch(0.95 0.08 70)",
+          textDecoration: "none",
+          zIndex: 5,
+        }}
+      >
+        ← Back
+      </Link>
       <div
         style={{
           minHeight: "100vh",
