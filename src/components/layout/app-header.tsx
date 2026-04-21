@@ -37,6 +37,7 @@ export function AppHeader() {
         >
             <Link
                 to="/dashboard"
+                data-testid="header-logo-link"
                 style={{
                     display: "flex",
                     alignItems: "center",
@@ -65,7 +66,7 @@ export function AppHeader() {
                 </div>
             </Link>
             <div style={{flex: 1}}/>
-        
+
             <LanguageMenu onChangeLanguage={handleLanguageChange}/>
 
             {isUserLoggedIn ? (
@@ -83,7 +84,7 @@ export function AppHeader() {
                     }}
                 />
             ) : (
-                <Link to="/login" className="pbtn sm secondary">
+                <Link to="/login" data-testid="header-login-link" className="pbtn sm secondary">
                     {t("nav.login")}
                 </Link>
             )}

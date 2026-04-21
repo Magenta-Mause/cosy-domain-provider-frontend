@@ -43,29 +43,30 @@ export function UserMenu({userName, isLoggingOut, onLogout}: UserMenuProps) {
         <div ref={menuRef} style={{position: "relative"}}>
             <button
                 type="button"
+                data-testid="user-menu-toggle-btn"
                 className="pbtn sm secondary"
                 disabled={isLoggingOut}
                 onClick={() => setMenuOpen((open) => !open)}
                 style={{gap: 8}}
                 title={t("nav.userMenu")}
             >
-        <span
-            style={{
-                width: 22,
-                height: 22,
-                borderRadius: 2,
-                background: "var(--accent)",
-                border: "2px solid var(--foreground)",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 12,
-                color: "var(--btn-primary)",
-                fontFamily: "'Press Start 2P', monospace",
-            }}
-        >
-          {initial}
-        </span>
+                <span
+                    style={{
+                        width: 22,
+                        height: 22,
+                        borderRadius: 2,
+                        background: "var(--accent)",
+                        border: "2px solid var(--foreground)",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 12,
+                        color: "var(--btn-primary)",
+                        fontFamily: "'Press Start 2P', monospace",
+                    }}
+                >
+                    {initial}
+                </span>
                 {userName ?? t("nav.userMenu")}
             </button>
             {menuOpen ? (
@@ -89,6 +90,7 @@ export function UserMenu({userName, isLoggingOut, onLogout}: UserMenuProps) {
                 >
                     <button
                         type="button"
+                        data-testid="user-menu-change-username-btn"
                         className="pbtn sm ghost"
                         style={{justifyContent: "flex-start"}}
                         title={t("nav.notImplemented")}
@@ -99,6 +101,7 @@ export function UserMenu({userName, isLoggingOut, onLogout}: UserMenuProps) {
                     </button>
                     <button
                         type="button"
+                        data-testid="user-menu-change-password-btn"
                         className="pbtn sm ghost"
                         style={{
                             justifyContent: "flex-start",
@@ -112,6 +115,7 @@ export function UserMenu({userName, isLoggingOut, onLogout}: UserMenuProps) {
                     </button>
                     <button
                         type="button"
+                        data-testid="user-menu-logout-btn"
                         className="pbtn sm ghost"
                         style={{justifyContent: "flex-start"}}
                         disabled={isLoggingOut}
@@ -127,6 +131,7 @@ export function UserMenu({userName, isLoggingOut, onLogout}: UserMenuProps) {
                     </button>
                     <button
                         type="button"
+                        data-testid="user-menu-delete-user-btn"
                         className="pbtn sm ghost"
                         style={{
                             justifyContent: "flex-start",

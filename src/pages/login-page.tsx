@@ -59,6 +59,7 @@ export function LoginPage() {
               </label>
               <input
                 id="username"
+                data-testid="login-username-input"
                 className="pinput"
                 type="text"
                 autoComplete="username"
@@ -76,6 +77,7 @@ export function LoginPage() {
               <div style={{ position: "relative" }}>
                 <input
                   id="password"
+                  data-testid="login-password-input"
                   className="pinput"
                   type={showPw ? "text" : "password"}
                   autoComplete="current-password"
@@ -87,6 +89,7 @@ export function LoginPage() {
                 />
                 <button
                   type="button"
+                  data-testid="login-toggle-password-btn"
                   onClick={() => setShowPw(!showPw)}
                   style={{
                     position: "absolute",
@@ -121,6 +124,7 @@ export function LoginPage() {
 
             <button
               type="submit"
+              data-testid="login-submit-btn"
               className="pbtn lg"
               disabled={!username || !password || submitting}
               style={{ width: "100%" }}

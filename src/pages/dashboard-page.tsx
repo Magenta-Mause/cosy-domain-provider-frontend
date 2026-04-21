@@ -83,6 +83,7 @@ export function DashboardPage() {
                         </div>
                         <button
                             type="button"
+                            data-testid="dashboard-create-new-btn"
                             className="pbtn lg"
                             onClick={() =>
                                 void navigate({
@@ -179,6 +180,7 @@ export function DashboardPage() {
                         <button
                             key={k}
                             type="button"
+                            data-testid={`dashboard-filter-${k}-btn`}
                             className={filter === k ? "pbtn sm" : "pbtn sm secondary"}
                             onClick={() => setFilter(k)}
                         >
@@ -193,11 +195,11 @@ export function DashboardPage() {
                         className="panel-flat"
                         style={{padding: 40, textAlign: "center", fontSize: 18}}
                     >
-            <span className="dotloader">
-              <span/>
-              <span/>
-              <span/>
-            </span>
+                        <span className="dotloader">
+                            <span/>
+                            <span/>
+                            <span/>
+                        </span>
                     </div>
                 ) : isError ? (
                     <div
@@ -225,6 +227,7 @@ export function DashboardPage() {
                             <button
                                 key={d.uuid}
                                 type="button"
+                                data-testid={`dashboard-domain-item-${d.uuid}`}
                                 className="panel-flat hover-lift"
                                 style={{
                                     padding: 18,

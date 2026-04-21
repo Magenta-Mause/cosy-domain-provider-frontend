@@ -53,6 +53,7 @@ export function HomePage() {
                 >
                     <Link
                         to="/dashboard"
+                        data-testid="home-logo-link"
                         style={{
                             display: "flex",
                             alignItems: "center",
@@ -100,15 +101,15 @@ export function HomePage() {
                         </a>
                     </nav>
                     {isUserLoggedIn ? (
-                        <Link to="/dashboard" className="pbtn sm">
+                        <Link to="/dashboard" data-testid="home-dashboard-link" className="pbtn sm">
                             My Dashboard →
                         </Link>
                     ) : (
                         <>
-                            <Link to="/login" className="pbtn sm secondary">
+                            <Link to="/login" data-testid="home-login-link" className="pbtn sm secondary">
                                 Log in
                             </Link>
-                            <Link to="/register" className="pbtn sm">
+                            <Link to="/register" data-testid="home-signup-link" className="pbtn sm">
                                 Sign up
                             </Link>
                         </>
@@ -177,6 +178,7 @@ export function HomePage() {
                                 <div style={{display: "flex", gap: 8, alignItems: "stretch"}}>
                                     <div style={{position: "relative", flex: 1}}>
                                         <input
+                                            data-testid="home-subdomain-input"
                                             className="pinput"
                                             value={subdomain}
                                             onChange={(e) =>
@@ -200,11 +202,12 @@ export function HomePage() {
                                                 pointerEvents: "none",
                                             }}
                                         >
-                      .cosy-hosting.net
-                    </span>
+                                            .cosy-hosting.net
+                                        </span>
                                     </div>
                                     <button
                                         type={"button"}
+                                        data-testid="home-check-btn"
                                         className="pbtn"
                                         onClick={() => void navigate({to: "/register"})}
                                     >
@@ -404,6 +407,7 @@ export function HomePage() {
                                     </ul>
                                     <Link
                                         to="/register"
+                                        data-testid="home-register-free-link"
                                         className="pbtn secondary"
                                         style={{textAlign: "center"}}
                                     >
@@ -443,6 +447,7 @@ export function HomePage() {
                                     </ul>
                                     <Link
                                         to="/register"
+                                        data-testid="home-register-plus-link"
                                         className="pbtn"
                                         style={{textAlign: "center"}}
                                     >
