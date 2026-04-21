@@ -17,28 +17,21 @@ export function DangerTab({
   const { t } = useTranslation();
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className="flex flex-col gap-4">
       <h3 style={{ color: "var(--destructive)" }}>
         {t("domainDetail.dangerZone")}
       </h3>
       {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
       <Panel style={{ padding: 18, borderColor: "var(--destructive)" }}>
-        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: 6,
-            }}
-          >
+        <div className="flex gap-4 items-center">
+          <div className="flex-1 flex flex-col gap-1.5">
             <div
-              className="pixel"
-              style={{ fontSize: 13, color: "var(--destructive)" }}
+              className="pixel text-[13px]"
+              style={{ color: "var(--destructive)" }}
             >
               {t("domainDetail.dangerZone")}
             </div>
-            <div style={{ fontSize: 16, opacity: 0.8 }}>
+            <div className="text-base opacity-80">
               {t("domainDetail.deleteDescription")}
             </div>
           </div>

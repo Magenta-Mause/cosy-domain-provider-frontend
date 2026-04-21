@@ -22,13 +22,7 @@ function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
     <button
       type="button"
       data-testid={`dashboard-domain-item-${domain.uuid}`}
-      className="panel-flat hover-lift"
-      style={{
-        padding: 18,
-        cursor: "pointer",
-        width: "100%",
-        textAlign: "left",
-      }}
+      className="panel-flat hover-lift p-[18px] cursor-pointer w-full text-left"
       onClick={() =>
         void navigate({
           to: "/domain/$domainId",
@@ -36,7 +30,7 @@ function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
         })
       }
     >
-      <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+      <div className="flex gap-5 items-center">
         <Mailbox
           size={48}
           flag={
@@ -45,38 +39,26 @@ function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
               : "var(--destructive)"
           }
         />
-        <div
-          style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}
-        >
-          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        <div className="flex-1 flex flex-col gap-1">
+          <div className="flex gap-2.5 items-center">
             <div
-              className="pixel"
-              style={{ fontSize: 16, color: "var(--btn-primary)" }}
+              className="pixel text-base"
+              style={{ color: "var(--btn-primary)" }}
             >
               {domain.fqdn ?? domain.label}
             </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              gap: 14,
-              fontSize: 16,
-              opacity: 0.85,
-              alignItems: "center",
-            }}
-          >
+          <div className="flex gap-3.5 text-base opacity-[0.85] items-center">
             {domain.status ? <StatusDot status={domain.status} /> : null}
             {domain.targetIp ? (
               <span>→ {domain.targetIp}</span>
             ) : (
-              <span style={{ opacity: 0.7 }}>
-                {t("dashboard.notConnected")}
-              </span>
+              <span className="opacity-70">{t("dashboard.notConnected")}</span>
             )}
           </div>
         </div>
         {domain.status ? <SubdomainStatusBadge status={domain.status} /> : null}
-        <span style={{ fontSize: 22, opacity: 0.6 }}>→</span>
+        <span className="text-[22px] opacity-60">→</span>
       </div>
     </button>
   );
@@ -91,10 +73,7 @@ export function SubdomainList({
 
   if (isLoading) {
     return (
-      <div
-        className="panel-flat"
-        style={{ padding: 40, textAlign: "center", fontSize: 18 }}
-      >
+      <div className="panel-flat p-10 text-center text-lg">
         <DotLoader />
       </div>
     );
@@ -103,12 +82,8 @@ export function SubdomainList({
   if (isError) {
     return (
       <div
-        className="panel-flat"
-        style={{
-          padding: 24,
-          color: "var(--destructive)",
-          textAlign: "center",
-        }}
+        className="panel-flat p-6 text-center"
+        style={{ color: "var(--destructive)" }}
       >
         ⚠ {t("dashboard.loadError")}
       </div>
@@ -117,17 +92,14 @@ export function SubdomainList({
 
   if (subdomains.length === 0) {
     return (
-      <div
-        className="panel-flat"
-        style={{ padding: 24, textAlign: "center", fontSize: 18 }}
-      >
+      <div className="panel-flat p-6 text-center text-lg">
         {t("dashboard.empty")}
       </div>
     );
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+    <div className="flex flex-col gap-3">
       {subdomains.map((d) => (
         <SubdomainListItem key={d.uuid} domain={d} />
       ))}

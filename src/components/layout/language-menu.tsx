@@ -48,12 +48,11 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
   }
 
   return (
-    <div ref={languageMenuRef} style={{ position: "relative" }}>
+    <div ref={languageMenuRef} className="relative">
       <button
         type="button"
         data-testid="language-menu-toggle-btn"
-        className="pbtn sm"
-        style={{ gap: 6 }}
+        className="pbtn sm gap-1.5"
         onClick={() => setLanguageMenuOpen((open) => !open)}
         title={t("language.label")}
       >
@@ -64,8 +63,8 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
         <div
           role="menu"
           aria-label={t("language.label")}
+          className="absolute grid gap-1.5 p-2 z-[35]"
           style={{
-            position: "absolute",
             top: "calc(100% + 8px)",
             right: 0,
             minWidth: 180,
@@ -73,17 +72,12 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
             border: "2px solid var(--foreground)",
             borderRadius: "var(--radius-sm)",
             boxShadow: "4px 4px 0 0 var(--foreground)",
-            padding: 8,
-            display: "grid",
-            gap: 6,
-            zIndex: 35,
           }}
         >
           <button
             type="button"
             data-testid="language-menu-en-btn"
-            className="pbtn sm ghost"
-            style={{ justifyContent: "flex-start" }}
+            className="pbtn sm ghost justify-start"
             onClick={() => {
               void handleLanguageChange("en");
             }}
@@ -93,8 +87,7 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
           <button
             type="button"
             data-testid="language-menu-de-btn"
-            className="pbtn sm ghost"
-            style={{ justifyContent: "flex-start" }}
+            className="pbtn sm ghost justify-start"
             onClick={() => {
               void handleLanguageChange("de");
             }}

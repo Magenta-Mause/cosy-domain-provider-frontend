@@ -13,7 +13,7 @@ const TABS: Array<[TabKey, string]> = [
 
 export function DomainTabBar({ activeTab, onChange }: DomainTabBarProps) {
   return (
-    <div style={{ display: "flex", gap: 8, marginBottom: 0 }}>
+    <div className="flex gap-2">
       {TABS.map(([k, l]) => (
         <button
           key={k}

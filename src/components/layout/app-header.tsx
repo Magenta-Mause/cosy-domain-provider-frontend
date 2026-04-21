@@ -21,47 +21,29 @@ export function AppHeader() {
   }
 
   return (
-    <header
-      style={{
-        padding: "16px 28px",
-        display: "flex",
-        alignItems: "center",
-        gap: 16,
-        position: "relative",
-        zIndex: 5,
-      }}
-    >
+    <header className="px-7 py-4 flex items-center gap-4 relative z-[5]">
       <Link
         to="/dashboard"
         data-testid="header-logo-link"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          textDecoration: "none",
-        }}
+        className="flex items-center gap-2.5 no-underline"
       >
         <img src={cosyIcon} alt={"Cosy"} className={"h-12"} />
-        <div style={{ textAlign: "left", paddingTop: "3px" }}>
+        <div className="text-left pt-[3px]">
           <div
-            className="pixel"
-            style={{ fontSize: 16, color: "oklch(0.95 0.05 70)" }}
+            className="pixel text-base"
+            style={{ color: "oklch(0.95 0.05 70)" }}
           >
             COSY
           </div>
           <div
-            style={{
-              fontSize: 14,
-              marginTop: 2,
-              color: "oklch(0.92 0.04 60)",
-              opacity: 0.85,
-            }}
+            className="text-sm mt-0.5 opacity-[0.85]"
+            style={{ color: "oklch(0.92 0.04 60)" }}
           >
             Domain Provider
           </div>
         </div>
       </Link>
-      <div style={{ flex: 1 }} />
+      <div className="flex-1" />
 
       <LanguageMenu onChangeLanguage={handleLanguageChange} />
 

@@ -11,38 +11,24 @@ export function HeroSection() {
 
   return (
     <section
-      style={{
-        padding: "60px 32px 40px",
-        maxWidth: 1200,
-        margin: "0 auto",
-        position: "relative",
-        zIndex: 2,
-      }}
+      className="relative z-[2] mx-auto"
+      style={{ padding: "60px 32px 40px", maxWidth: 1200 }}
     >
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.1fr 1fr",
-          gap: 48,
-          alignItems: "center",
-        }}
+        className="grid items-center gap-12"
+        style={{ gridTemplateColumns: "1.1fr 1fr" }}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <div className="flex flex-col gap-6">
           <div
-            className="signpost"
-            style={{
-              alignSelf: "flex-start",
-              fontSize: 12,
-              padding: "8px 14px",
-            }}
+            className="signpost self-start text-xs"
+            style={{ padding: "8px 14px" }}
           >
             {t("hero.badge")}
           </div>
           <h1
+            className="text-5xl leading-[1.3]"
             style={{
-              fontSize: 48,
               color: "oklch(0.95 0.08 70)",
-              lineHeight: 1.3,
               textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
             }}
           >
@@ -51,26 +37,18 @@ export function HeroSection() {
             {t("hero.titleLine2")}
           </h1>
           <p
-            style={{
-              fontSize: 22,
-              color: "oklch(0.92 0.04 60)",
-              maxWidth: 480,
-              lineHeight: 1.4,
-            }}
+            className="text-[22px] max-w-[480px] leading-[1.4]"
+            style={{ color: "oklch(0.92 0.04 60)" }}
           >
             {t("hero.description")}
           </p>
 
           <FlatPanel style={{ padding: 16, maxWidth: 520 }}>
-            <label
-              htmlFor="subdomain-input"
-              className="plabel"
-              style={{ marginBottom: 10 }}
-            >
+            <label htmlFor="subdomain-input" className="plabel mb-[10px]">
               {t("hero.claimLabel")}
             </label>
-            <div style={{ display: "flex", gap: 8, alignItems: "stretch" }}>
-              <div style={{ position: "relative", flex: 1 }}>
+            <div className="flex gap-2 items-stretch">
+              <div className="relative flex-1">
                 <input
                   id="subdomain-input"
                   data-testid="home-subdomain-input"
@@ -84,17 +62,7 @@ export function HeroSection() {
                   placeholder="my-castle"
                   style={{ paddingRight: 170 }}
                 />
-                <span
-                  style={{
-                    position: "absolute",
-                    right: 14,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    fontSize: 18,
-                    opacity: 0.7,
-                    pointerEvents: "none",
-                  }}
-                >
+                <span className="absolute right-[14px] top-1/2 -translate-y-1/2 text-lg opacity-70 pointer-events-none">
                   .cosy-hosting.net
                 </span>
               </div>
@@ -110,13 +78,8 @@ export function HeroSection() {
           </FlatPanel>
 
           <div
-            style={{
-              display: "flex",
-              gap: 24,
-              flexWrap: "wrap",
-              color: "oklch(0.92 0.04 60)",
-              fontSize: 18,
-            }}
+            className="flex gap-6 flex-wrap text-lg"
+            style={{ color: "oklch(0.92 0.04 60)" }}
           >
             <span>{t("hero.benefit1")}</span>
             <span>{t("hero.benefit2")}</span>
@@ -124,39 +87,23 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div style={{ position: "relative", height: 440 }}>
+        <div className="relative h-[440px]">
           <FlatPanel
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "oklch(0.75 0.08 58)",
-            }}
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ background: "oklch(0.75 0.08 58)" }}
           >
             <div
+              className="w-[88%] h-[88%] flex flex-col items-center justify-center gap-2.5 p-3 text-center"
               style={{
-                width: "88%",
-                height: "88%",
                 background:
                   "repeating-linear-gradient(45deg, oklch(0.75 0.08 58) 0 8px, oklch(0.8 0.06 58) 8px 16px)",
                 border: "3px dashed var(--foreground)",
                 borderRadius: "var(--radius-sm)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 10,
                 color: "var(--foreground)",
-                padding: 12,
-                textAlign: "center",
               }}
             >
-              <div className="pixel" style={{ fontSize: 12 }}>
-                [ hero pixel art ]
-              </div>
-              <div style={{ fontSize: 18, opacity: 0.8 }}>
+              <div className="pixel text-xs">[ hero pixel art ]</div>
+              <div className="text-lg opacity-80">
                 A cosy pixel-art post office with
                 <br />
                 mailboxes labeled with subdomains.

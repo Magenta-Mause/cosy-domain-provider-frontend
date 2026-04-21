@@ -10,60 +10,47 @@ export function LandingNav() {
 
   return (
     <header
-      style={{
-        padding: "20px 32px",
-        display: "flex",
-        alignItems: "center",
-        gap: 16,
-        position: "relative",
-        zIndex: 3,
-      }}
+      className="flex items-center gap-4 relative z-[3]"
+      style={{ padding: "20px 32px" }}
     >
       <Link
         to="/dashboard"
         data-testid="home-logo-link"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          textDecoration: "none",
-        }}
+        className="flex items-center gap-2.5 no-underline"
       >
         <img src={cosyIcon} alt="Cosy" className="h-12" />
-        <div style={{ textAlign: "left", paddingTop: "3px" }}>
+        <div className="text-left pt-[3px]">
           <div
-            className="pixel"
-            style={{ fontSize: 16, color: "oklch(0.95 0.05 70)" }}
+            className="pixel text-base"
+            style={{ color: "oklch(0.95 0.05 70)" }}
           >
             COSY
           </div>
           <div
-            style={{
-              fontSize: 14,
-              marginTop: 2,
-              color: "oklch(0.92 0.04 60)",
-              opacity: 0.85,
-            }}
+            className="text-sm mt-0.5 opacity-[0.85]"
+            style={{ color: "oklch(0.92 0.04 60)" }}
           >
             Domain Provider
           </div>
         </div>
       </Link>
 
-      <div style={{ flex: 1 }} />
+      <div className="flex-1" />
 
-      <nav style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      <nav className="flex gap-2 items-center">
         <a
           href="#features"
           data-testid="home-features-link"
-          style={{ color: "oklch(0.95 0.05 70)", fontSize: 18 }}
+          className="text-lg"
+          style={{ color: "oklch(0.95 0.05 70)" }}
         >
           {t("landingNav.features")}
         </a>
         <a
           href="#pricing"
           data-testid="home-pricing-link"
-          style={{ color: "oklch(0.95 0.05 70)", fontSize: 18, marginLeft: 12 }}
+          className="text-lg ml-3"
+          style={{ color: "oklch(0.95 0.05 70)" }}
         >
           {t("landingNav.pricing")}
         </a>

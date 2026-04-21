@@ -5,13 +5,8 @@ export function PageFooter() {
 
   return (
     <footer
-      style={{
-        padding: "32px",
-        textAlign: "center",
-        fontSize: 16,
-        opacity: 0.7,
-        background: "var(--background)",
-      }}
+      className="p-8 text-center text-base opacity-70"
+      style={{ background: "var(--background)" }}
     >
       {t("footer.text")}
     </footer>

@@ -43,50 +43,31 @@ export function OverviewTab({
   const { t } = useTranslation();
 
   return (
-    <form
-      onSubmit={onSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: 20 }}
-    >
+    <form onSubmit={onSubmit} className="flex flex-col gap-5">
       {!isCreateMode ? (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 16,
-            marginBottom: 8,
-          }}
-        >
-          <FlatPanel style={{ padding: 16 }}>
-            <div className="pixel" style={{ fontSize: 10, opacity: 0.7 }}>
+        <div className="grid grid-cols-2 gap-4 mb-2">
+          <FlatPanel className="p-4">
+            <div className="pixel text-[10px] opacity-70">
               {t("domainDetail.domainFqdn")}
             </div>
-            <div style={{ fontSize: 18, marginTop: 6 }}>
-              {domain?.fqdn ?? "—"}
-            </div>
+            <div className="text-lg mt-1.5">{domain?.fqdn ?? "—"}</div>
           </FlatPanel>
-          <FlatPanel style={{ padding: 16 }}>
-            <div className="pixel" style={{ fontSize: 10, opacity: 0.7 }}>
+          <FlatPanel className="p-4">
+            <div className="pixel text-[10px] opacity-70">
               {t("domainDetail.createdLabel")}
             </div>
-            <div style={{ fontSize: 18, marginTop: 6 }}>{createdAt}</div>
+            <div className="text-lg mt-1.5">{createdAt}</div>
           </FlatPanel>
         </div>
       ) : null}
 
       <fieldset
-        style={{
-          border: "none",
-          padding: 0,
-          margin: 0,
-          display: "flex",
-          flexDirection: "column",
-          gap: 16,
-        }}
+        className="border-none p-0 m-0 flex flex-col gap-4"
         disabled={isSubmitting || isDeleting}
       >
         <legend className="sr-only">{t("domainDetail.formLegend")}</legend>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div className="flex flex-col gap-2">
           <label className="plabel" htmlFor="label">
             {t("createSubdomain.label")}
           </label>
@@ -100,7 +81,7 @@ export function OverviewTab({
             placeholder="my-castle"
             readOnly={!isCreateMode}
           />
-          <div style={{ fontSize: 16, opacity: 0.65 }}>
+          <div className="text-base opacity-[0.65]">
             {!isCreateMode
               ? t("domainDetail.labelReadonly")
               : t("createSubdomain.labelHint")}
@@ -110,7 +91,7 @@ export function OverviewTab({
           ) : null}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div className="flex flex-col gap-2">
           <label className="plabel" htmlFor="targetIp">
             {t("createSubdomain.targetIp")}
           </label>
@@ -124,7 +105,7 @@ export function OverviewTab({
             placeholder="203.0.113.42"
             inputMode="decimal"
           />
-          <div style={{ fontSize: 16, opacity: 0.65 }}>
+          <div className="text-base opacity-[0.65]">
             {t("createSubdomain.targetIpHint")}
           </div>
           {hasSubmitted && !ipValid ? (
@@ -135,7 +116,7 @@ export function OverviewTab({
 
       {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
 
-      <div style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}>
+      <div className="flex gap-3 justify-end">
         <Link
           to="/dashboard"
           data-testid="domain-detail-back-btn"

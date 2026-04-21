@@ -17,29 +17,16 @@ export function AuthPageLayout({
       <Link
         to="/"
         data-testid="auth-back-link"
+        className="absolute top-6 left-7 text-base no-underline z-[5]"
         style={{
-          position: "absolute",
-          top: 24,
-          left: 28,
-          fontSize: 16,
           color: "oklch(0.95 0.08 70)",
-          textDecoration: "none",
-          zIndex: 5,
           border: "black thin solid",
         }}
       >
         ← Back
       </Link>
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "60px 20px",
-        }}
-      >
-        <Panel style={{ padding: 32, width: "100%", maxWidth }}>
+      <div className="min-h-screen flex items-center justify-center px-5 py-[60px]">
+        <Panel className="p-8 w-full" style={{ maxWidth }}>
           {children}
         </Panel>
       </div>

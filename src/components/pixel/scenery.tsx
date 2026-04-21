@@ -2,18 +2,14 @@ import type { ReactNode } from "react";
 
 export function Scenery({ children }: { children: ReactNode }) {
   return (
-    <div
-      className="sky-bg"
-      style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }}
-    >
+    <div className="sky-bg min-h-screen relative overflow-hidden">
       <div
+        className="absolute rounded-full"
         style={{
-          position: "absolute",
           right: "8%",
           top: "6%",
           width: 72,
           height: 72,
-          borderRadius: "50%",
           background: "oklch(0.95 0.03 80)",
           boxShadow:
             "0 0 0 4px oklch(0.3 0.02 260), 0 0 40px oklch(0.95 0.03 80 / 0.4)",
@@ -21,12 +17,11 @@ export function Scenery({ children }: { children: ReactNode }) {
         aria-hidden
       />
       <div
+        className="absolute opacity-[0.85]"
         style={{
-          position: "absolute",
           left: "12%",
           top: "18%",
           color: "oklch(0.95 0.02 240)",
-          opacity: 0.85,
         }}
         aria-hidden
       >

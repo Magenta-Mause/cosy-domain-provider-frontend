@@ -20,18 +20,10 @@ const STATUS_I18N: Record<
 export function StatusDot({ status }: { status: SubdomainDtoStatus }) {
   const { t } = useTranslation();
   return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 6,
-        fontSize: 16,
-      }}
-    >
+    <span className="inline-flex items-center gap-1.5 text-base">
       <span
+        className="w-2.5 h-2.5"
         style={{
-          width: 10,
-          height: 10,
           background: STATUS_COLORS[status],
           border: "2px solid var(--foreground)",
         }}

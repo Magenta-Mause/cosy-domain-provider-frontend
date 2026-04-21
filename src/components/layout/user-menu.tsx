@@ -40,27 +40,21 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
   }, [menuOpen]);
 
   return (
-    <div ref={menuRef} style={{ position: "relative" }}>
+    <div ref={menuRef} className="relative">
       <button
         type="button"
         data-testid="user-menu-toggle-btn"
-        className="pbtn sm secondary"
+        className="pbtn sm secondary gap-2"
         disabled={isLoggingOut}
         onClick={() => setMenuOpen((open) => !open)}
-        style={{ gap: 8 }}
         title={t("nav.userMenu")}
       >
         <span
+          className="inline-flex items-center justify-center w-[22px] h-[22px] text-xs"
           style={{
-            width: 22,
-            height: 22,
             borderRadius: 2,
             background: "var(--accent)",
             border: "2px solid var(--foreground)",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 12,
             color: "var(--btn-primary)",
             fontFamily: "'Press Start 2P', monospace",
           }}
@@ -73,8 +67,8 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
         <div
           role="menu"
           aria-label={t("nav.userMenu")}
+          className="absolute grid gap-1.5 p-2 z-30"
           style={{
-            position: "absolute",
             top: "calc(100% + 8px)",
             right: 0,
             minWidth: 220,
@@ -82,17 +76,12 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
             border: "2px solid var(--foreground)",
             borderRadius: "var(--radius-sm)",
             boxShadow: "4px 4px 0 0 var(--foreground)",
-            padding: 8,
-            display: "grid",
-            gap: 6,
-            zIndex: 30,
           }}
         >
           <button
             type="button"
             data-testid="user-menu-change-username-btn"
-            className="pbtn sm ghost"
-            style={{ justifyContent: "flex-start" }}
+            className="pbtn sm ghost justify-start"
             title={t("nav.notImplemented")}
             onClick={() => setMenuOpen(false)}
             disabled
@@ -102,12 +91,7 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
           <button
             type="button"
             data-testid="user-menu-change-password-btn"
-            className="pbtn sm ghost"
-            style={{
-              justifyContent: "flex-start",
-              opacity: 0.5,
-              cursor: "not-allowed",
-            }}
+            className="pbtn sm ghost justify-start opacity-50 cursor-not-allowed"
             title={t("nav.notImplemented")}
             disabled
           >
@@ -116,8 +100,7 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
           <button
             type="button"
             data-testid="user-menu-logout-btn"
-            className="pbtn sm ghost"
-            style={{ justifyContent: "flex-start" }}
+            className="pbtn sm ghost justify-start"
             disabled={isLoggingOut}
             onClick={async () => {
               try {
@@ -132,11 +115,8 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
           <button
             type="button"
             data-testid="user-menu-delete-user-btn"
-            className="pbtn sm ghost"
-            style={{
-              justifyContent: "flex-start",
-              color: "var(--destructive)",
-            }}
+            className="pbtn sm ghost justify-start"
+            style={{ color: "var(--destructive)" }}
             title={t("nav.notImplemented")}
             onClick={() => setMenuOpen(false)}
             disabled

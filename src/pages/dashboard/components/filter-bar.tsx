@@ -20,14 +20,7 @@ export function FilterBar({ filter, onChange }: FilterBarProps) {
   ];
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: 8,
-        marginBottom: 16,
-        alignItems: "center",
-      }}
-    >
+    <div className="flex gap-2 mb-4 items-center">
       {filters.map(([k, l]) => (
         <button
           key={k}

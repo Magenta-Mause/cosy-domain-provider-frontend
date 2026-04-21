@@ -31,15 +31,12 @@ export function LoginForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: 16 }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <h2 style={{ fontSize: 22 }}>{t("login.title")}</h2>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-[22px]">{t("login.title")}</h2>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         <label className="plabel" htmlFor="email">
           {t("login.email")}
         </label>
@@ -56,7 +53,7 @@ export function LoginForm() {
         />
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         <label className="plabel" htmlFor="password">
           {t("login.password")}
         </label>
@@ -74,17 +71,11 @@ export function LoginForm() {
         {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
+      <div className="flex items-center justify-end">
         <Link
           to="/"
           data-testid="login-forgot-password-link"
-          style={{ fontSize: 16 }}
+          className="text-base"
         >
           {t("login.forgotPassword")}
         </Link>
@@ -93,14 +84,13 @@ export function LoginForm() {
       <button
         type="submit"
         data-testid="login-submit-btn"
-        className="pbtn lg"
+        className="pbtn lg w-full"
         disabled={!email || !password || submitting}
-        style={{ width: "100%" }}
       >
         {submitting ? t("login.submitting") : t("login.submitButton")}
       </button>
 
-      <p style={{ fontSize: 16, textAlign: "center", opacity: 0.7 }}>
+      <p className="text-base text-center opacity-70">
         {t("login.noAccount")}{" "}
         <Link to="/register" data-testid="login-register-link-footer">
           {t("login.registerLink")}

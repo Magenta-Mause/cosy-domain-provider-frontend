@@ -10,57 +10,33 @@ export function PricingSection() {
   return (
     <section
       id="pricing"
-      style={{ padding: "60px 32px", background: "var(--background)" }}
+      className="px-8 py-[60px]"
+      style={{ background: "var(--background)" }}
     >
-      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-        <div
-          style={{
-            marginBottom: 32,
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-          }}
-        >
+      <div className="max-w-[1000px] mx-auto">
+        <div className="mb-8 text-center flex flex-col gap-2">
           <h2>{t("pricing.title")}</h2>
-          <p style={{ fontSize: 20, maxWidth: 520, margin: "0 auto" }}>
+          <p className="text-xl max-w-[520px] mx-auto">
             {t("pricing.subtitle")}
           </p>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 24,
-          }}
-        >
-          <Panel style={{ padding: 28 }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-                justifyContent: "space-between",
-              }}
-              className={"h-full"}
-            >
-              <div className={"w-full flex flex-col gap-3"}>
+        <div className="grid grid-cols-2 gap-6">
+          <Panel className="p-7">
+            <div className="h-full flex flex-col gap-4 justify-between">
+              <div className="w-full flex flex-col gap-3">
                 <Badge color="gray">{t("pricing.freeBadge")}</Badge>
                 <h3>{t("pricing.freeTitle")}</h3>
                 <div
-                  className="pixel"
-                  style={{ fontSize: 26, color: "var(--btn-primary)" }}
+                  className="pixel text-[26px]"
+                  style={{ color: "var(--btn-primary)" }}
                 >
                   {t("pricing.freePrice")}
                 </div>
-                <ul
-                  style={{ listStyle: "none", padding: 0, margin: 0 }}
-                  className="stack-sm"
-                >
+                <ul className="list-none p-0 m-0 stack-sm">
                   <li>{t("pricing.freeFeature1")}</li>
                   <li>{t("pricing.freeFeature2")}</li>
                   <li>{t("pricing.freeFeature3")}</li>
-                  <li style={{ opacity: 0.55 }}>
+                  <li className="opacity-[0.55]">
                     {t("pricing.freeLimitation")}
                   </li>
                 </ul>
@@ -68,34 +44,33 @@ export function PricingSection() {
               <Link
                 to="/register"
                 data-testid="home-register-free-link"
-                className="pbtn secondary"
-                style={{ textAlign: "center" }}
+                className="pbtn secondary text-center"
               >
                 {t("pricing.freeButton")}
               </Link>
             </div>
           </Panel>
 
-          <Panel style={{ padding: 28, borderColor: "var(--accent)" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <div className={"w-full flex flex-col gap-3"}>
+          <Panel className="p-7" style={{ borderColor: "var(--accent)" }}>
+            <div className="flex flex-col gap-4">
+              <div className="w-full flex flex-col gap-3">
                 <Badge>{t("pricing.plusBadge")}</Badge>
                 <h3>{t("pricing.plusTitle")}</h3>
                 <div
-                  className="pixel"
-                  style={{ fontSize: 26, color: "var(--btn-primary)" }}
+                  className="pixel text-[26px]"
+                  style={{ color: "var(--btn-primary)" }}
                 >
                   {t("pricing.plusPrice")}
                 </div>
-                <ul
-                  style={{ listStyle: "none", padding: 0, margin: 0 }}
-                  className="stack-sm"
-                >
+                <ul className="list-none p-0 m-0 stack-sm">
                   <li>{t("pricing.plusFeature1")}</li>
                   <li>{t("pricing.plusFeature2")}</li>
                   <li>{t("pricing.plusFeature3")}</li>
                   <li>{t("pricing.plusFeature4")}</li>
-                  <li style={{ color: "var(--accent-4)", fontWeight: "bold" }}>
+                  <li
+                    className="font-bold"
+                    style={{ color: "var(--accent-4)" }}
+                  >
                     {t("pricing.plusSupport")}
                   </li>
                 </ul>
@@ -103,8 +78,7 @@ export function PricingSection() {
               <Link
                 to="/register"
                 data-testid="home-register-plus-link"
-                className="pbtn"
-                style={{ textAlign: "center" }}
+                className="pbtn text-center"
               >
                 {t("pricing.plusButton")}
               </Link>

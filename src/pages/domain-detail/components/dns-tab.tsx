@@ -17,10 +17,10 @@ export function DnsTab({ domain }: DnsTabProps) {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className="flex flex-col gap-4">
       <div>
         <h3>{t("domainDetail.dnsRecords")}</h3>
-        <p style={{ fontSize: 16, opacity: 0.75, marginTop: 6 }}>
+        <p className="text-base opacity-75 mt-1.5">
           {t("domainDetail.dnsManagedFor")}{" "}
           <span
             className="pixel"
@@ -63,6 +63,7 @@ export function DnsTab({ domain }: DnsTabProps) {
             row.map((cell, j) => (
               <div
                 key={`${row[0]}-${headers[j]}`}
+                className="truncate"
                 style={
                   {
                     padding: "12px 14px",
@@ -71,9 +72,6 @@ export function DnsTab({ domain }: DnsTabProps) {
                     fontFamily:
                       j === 0 ? "'Press Start 2P', monospace" : undefined,
                     color: j === 0 ? "var(--btn-primary)" : undefined,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
                   } as React.CSSProperties
                 }
               >

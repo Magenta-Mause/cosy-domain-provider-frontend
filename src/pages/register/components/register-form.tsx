@@ -12,32 +12,17 @@ import { PasswordStrength } from "./password-strength";
 function OrDivider() {
   const { t } = useTranslation();
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        margin: "4px 0",
-      }}
-    >
+    <div className="flex items-center gap-3 my-1">
       <div
-        style={{
-          flex: 1,
-          height: 3,
-          background: "var(--foreground)",
-          opacity: 0.4,
-        }}
+        className="flex-1 h-[3px] opacity-40"
+        style={{ background: "var(--foreground)" }}
       />
-      <span className="pixel" style={{ fontSize: 10, opacity: 0.7 }}>
+      <span className="pixel text-[10px] opacity-70">
         {t("register.orUseEmail")}
       </span>
       <div
-        style={{
-          flex: 1,
-          height: 3,
-          background: "var(--foreground)",
-          opacity: 0.4,
-        }}
+        className="flex-1 h-[3px] opacity-40"
+        style={{ background: "var(--foreground)" }}
       />
     </div>
   );
@@ -92,17 +77,14 @@ export function RegisterForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: 16 }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <h2 style={{ fontSize: 22 }}>{t("register.stakeTitle")}</h2>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-[22px]">{t("register.stakeTitle")}</h2>
       </div>
 
       <OrDivider />
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         <label className="plabel" htmlFor="username">
           {t("register.username")}
         </label>
@@ -121,7 +103,7 @@ export function RegisterForm() {
         />
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         <label className="plabel" htmlFor="email">
           {t("register.email")}
         </label>
@@ -138,7 +120,7 @@ export function RegisterForm() {
         />
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         <label className="plabel" htmlFor="password">
           {t("register.password")}
         </label>
@@ -160,7 +142,7 @@ export function RegisterForm() {
         ) : null}
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="flex flex-col gap-2">
         <label className="plabel" htmlFor="confirmPassword">
           {t("register.confirmPassword")}
         </label>
@@ -179,15 +161,7 @@ export function RegisterForm() {
         ) : null}
       </div>
 
-      <label
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          fontSize: 16,
-          cursor: "pointer",
-        }}
-      >
+      <label className="flex items-center gap-2.5 text-base cursor-pointer">
         <input
           type="checkbox"
           data-testid="register-terms-checkbox"
@@ -198,30 +172,16 @@ export function RegisterForm() {
         {t("register.termsPrefix")}{" "}
         <button
           type="button"
-          style={{
-            background: "none",
-            border: "none",
-            padding: 0,
-            cursor: "pointer",
-            textDecoration: "underline",
-            color: "inherit",
-            fontSize: "inherit",
-          }}
+          className="bg-transparent border-none p-0 cursor-pointer underline"
+          style={{ color: "inherit", fontSize: "inherit" }}
         >
           {t("register.termsLink")}
         </button>{" "}
         &{" "}
         <button
           type="button"
-          style={{
-            background: "none",
-            border: "none",
-            padding: 0,
-            cursor: "pointer",
-            textDecoration: "underline",
-            color: "inherit",
-            fontSize: "inherit",
-          }}
+          className="bg-transparent border-none p-0 cursor-pointer underline"
+          style={{ color: "inherit", fontSize: "inherit" }}
         >
           {t("register.privacyPolicyLink")}
         </button>
@@ -232,13 +192,12 @@ export function RegisterForm() {
       <button
         type="submit"
         data-testid="register-submit-btn"
-        className="pbtn lg"
+        className="pbtn lg w-full"
         disabled={!canSubmit}
-        style={{ width: "100%" }}
       >
         {submitting ? t("register.submitting") : t("register.submitButton")}
       </button>
-      <p style={{ fontSize: 18, textAlign: "center" }}>
+      <p className="text-lg text-center">
         {t("register.alreadyMovedIn")}{" "}
         <Link to="/login" data-testid="register-login-link">
           {t("register.loginLink")}

@@ -15,13 +15,12 @@ export function PasswordStrength({ password }: PasswordStrengthProps) {
       : "var(--accent)";
 
   return (
-    <div style={{ display: "flex", gap: 4 }}>
+    <div className="flex gap-1">
       {[0, 1, 2, 3].map((i) => (
         <div
           key={i}
+          className="flex-1 h-2"
           style={{
-            flex: 1,
-            height: 8,
             border: "2px solid var(--foreground)",
             background:
               password.length > i * 3 ? strengthColor : "var(--input-bg)",

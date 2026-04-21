@@ -40,28 +40,19 @@ export function StatsStrip({ subdomains }: StatsStripProps) {
   ];
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gap: 16,
-        marginBottom: 28,
-      }}
-    >
+    <div className="grid grid-cols-3 gap-4 mb-7">
       {stats.map((s) => (
-        <FlatPanel key={s.label} style={{ padding: 16 }}>
-          <div className="pixel" style={{ fontSize: 10, opacity: 0.7 }}>
+        <FlatPanel key={s.label} className="p-4">
+          <div className="pixel text-[10px] opacity-70">
             {s.label.toUpperCase()}
           </div>
           <div
-            className="pixel"
-            style={{ fontSize: 22, color: "var(--btn-primary)", marginTop: 8 }}
+            className="pixel text-[22px] mt-2"
+            style={{ color: "var(--btn-primary)" }}
           >
             {s.value}
           </div>
-          <div style={{ fontSize: 15, marginTop: 4, opacity: 0.75 }}>
-            {s.sub}
-          </div>
+          <div className="text-[15px] mt-1 opacity-75">{s.sub}</div>
         </FlatPanel>
       ))}
     </div>

@@ -28,7 +28,7 @@ export function PasswordInput({
   toggleTestId,
 }: PasswordInputProps) {
   return (
-    <div style={{ position: "relative" }}>
+    <div className="relative">
       <input
         id={id}
         data-testid={testId}
@@ -46,14 +46,7 @@ export function PasswordInput({
         type="button"
         data-testid={toggleTestId}
         onClick={onToggleShow}
-        style={{
-          position: "absolute",
-          right: 10,
-          top: "50%",
-          transform: "translateY(-50%)",
-          fontSize: 14,
-          opacity: 0.7,
-        }}
+        className="absolute right-[10px] top-1/2 -translate-y-1/2 text-sm opacity-70"
       >
         {showPw ? "[hide]" : "[show]"}
       </button>
