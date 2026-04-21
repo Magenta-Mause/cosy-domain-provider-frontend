@@ -82,7 +82,9 @@ export function RegisterPage() {
               <h2 style={{ fontSize: 22 }}>Stake your mailbox</h2>
               <p style={{ fontSize: 18 }}>
                 Already moved in?{" "}
-                <Link to="/login">{t("register.loginLink")}</Link>
+                <Link to="/login" data-testid="register-login-link">
+                  {t("register.loginLink")}
+                </Link>
               </p>
             </div>
 

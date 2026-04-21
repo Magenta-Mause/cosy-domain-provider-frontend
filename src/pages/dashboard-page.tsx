@@ -180,7 +180,7 @@ export function DashboardPage() {
             <button
               key={k}
               type="button"
-              data-testid={`dashboard-filter-${k}-btn`}
+              data-testid={`dashboard-filter-${String(k).toLowerCase()}-btn`}
               className={filter === k ? "pbtn sm" : "pbtn sm secondary"}
               onClick={() => setFilter(k)}
             >

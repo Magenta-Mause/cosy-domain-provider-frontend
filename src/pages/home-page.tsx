@@ -84,12 +84,14 @@ export function HomePage() {
           <nav style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <a
               href="#features"
+              data-testid="home-features-link"
               style={{ color: "oklch(0.95 0.05 70)", fontSize: 18 }}
             >
               Features
             </a>
             <a
               href="#pricing"
+              data-testid="home-pricing-link"
               style={{
                 color: "oklch(0.95 0.05 70)",
                 fontSize: 18,
