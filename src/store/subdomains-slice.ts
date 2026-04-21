@@ -19,7 +19,10 @@ const subdomainsSlice = createSlice({
   name: "subdomains",
   initialState,
   reducers: {
-    setSubdomainsState: (state, action: PayloadAction<SubdomainsStateStatus>) => {
+    setSubdomainsState: (
+      state,
+      action: PayloadAction<SubdomainsStateStatus>,
+    ) => {
       state.state = action.payload;
     },
     setSubdomains: (state, action: PayloadAction<SubdomainDto[]>) => {

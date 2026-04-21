@@ -2,15 +2,8 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Panel } from "@/components/pixel/panel";
+import { Scenery } from "@/components/pixel/scenery";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { useAppSelector } from "@/store/hooks";
 
@@ -23,115 +16,265 @@ export function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPw, setShowPw] = useState(false);
+  const [agreed, setAgreed] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const usernameValid = username.trim().length >= 3 && username.trim().length <= 20;
-  const emailValid = useMemo(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), [email]);
+  const usernameValid =
+    username.trim().length >= 3 && username.trim().length <= 20;
+  const emailValid = useMemo(
+    () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
+    [email],
+  );
   const passwordValid = password.length >= 8;
+  const passwordWeak = password.length > 0 && password.length < 8;
+  const passwordStrong = password.length >= 12;
   const confirmValid = password === confirmPassword;
   const canSubmit =
     usernameValid &&
     emailValid &&
     passwordValid &&
     confirmValid &&
+    agreed &&
     authState !== "loading";
+
+  const submitting = authState === "loading";
+
+  const strengthColor = passwordStrong
+    ? "var(--accent-2)"
+    : passwordWeak
+      ? "var(--destructive)"
+      : "var(--accent)";
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrorMessage(null);
     if (!canSubmit) return;
-
     try {
-      await registerUser({ username: username.trim(), email: email.trim(), password });
+      await registerUser({
+        username: username.trim(),
+        email: email.trim(),
+        password,
+      });
       await navigate({ to: "/dashboard" });
     } catch {
       setErrorMessage(t("register.error"));
     }
   }
 
-  const submitting = authState === "loading";
-
   return (
-    <Card className="mx-auto max-w-md">
-      <CardHeader>
-        <CardTitle>{t("register.title")}</CardTitle>
-        <CardDescription>{t("register.description")}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="space-y-2">
-            <label htmlFor="username" className="text-sm font-medium leading-none">
-              {t("register.username")}
+    <Scenery>
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "60px 20px",
+        }}
+      >
+        <Panel withRibbon style={{ padding: 32, width: "100%", maxWidth: 440 }}>
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: "flex", flexDirection: "column", gap: 16 }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <h2 style={{ fontSize: 22 }}>Stake your mailbox</h2>
+              <p style={{ fontSize: 18 }}>
+                Already moved in?{" "}
+                <Link to="/login">{t("register.loginLink")}</Link>
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                margin: "4px 0",
+              }}
+            >
+              <div
+                style={{
+                  flex: 1,
+                  height: 3,
+                  background: "var(--foreground)",
+                  opacity: 0.4,
+                }}
+              />
+              <span className="pixel" style={{ fontSize: 10, opacity: 0.7 }}>
+                OR USE EMAIL
+              </span>
+              <div
+                style={{
+                  flex: 1,
+                  height: 3,
+                  background: "var(--foreground)",
+                  opacity: 0.4,
+                }}
+              />
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label className="plabel" htmlFor="username">
+                {t("register.username")}
+              </label>
+              <input
+                id="username"
+                className="pinput"
+                type="text"
+                autoComplete="username"
+                required
+                minLength={3}
+                maxLength={20}
+                placeholder="your-username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label className="plabel" htmlFor="email">
+                {t("register.email")}
+              </label>
+              <input
+                id="email"
+                className="pinput"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="janne@example.net"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label className="plabel" htmlFor="password">
+                {t("register.password")}
+              </label>
+              <div style={{ position: "relative" }}>
+                <input
+                  id="password"
+                  className="pinput"
+                  type={showPw ? "text" : "password"}
+                  autoComplete="new-password"
+                  required
+                  minLength={8}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{ paddingRight: 80 }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw(!showPw)}
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    fontSize: 14,
+                    opacity: 0.7,
+                  }}
+                >
+                  {showPw ? "[hide]" : "[show]"}
+                </button>
+              </div>
+              {password.length > 0 ? (
+                <div style={{ display: "flex", gap: 4 }}>
+                  {[0, 1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      style={{
+                        flex: 1,
+                        height: 8,
+                        border: "2px solid var(--foreground)",
+                        background:
+                          password.length > i * 3
+                            ? strengthColor
+                            : "var(--input-bg)",
+                      }}
+                    />
+                  ))}
+                </div>
+              ) : null}
+              {passwordWeak ? (
+                <div style={{ fontSize: 16, color: "var(--destructive)" }}>
+                  ⚠ Needs at least 8 characters
+                </div>
+              ) : null}
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label className="plabel" htmlFor="confirmPassword">
+                {t("register.confirmPassword")}
+              </label>
+              <input
+                id="confirmPassword"
+                className="pinput"
+                type={showPw ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              {!confirmValid && confirmPassword.length > 0 ? (
+                <div style={{ fontSize: 16, color: "var(--destructive)" }}>
+                  ⚠ {t("register.passwordMismatch")}
+                </div>
+              ) : null}
+            </div>
+
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                fontSize: 16,
+                cursor: "pointer",
+              }}
+            >
+              <span
+                role="checkbox"
+                aria-checked={agreed}
+                tabIndex={0}
+                className={agreed ? "pcheck checked" : "pcheck"}
+                onClick={() => setAgreed(!agreed)}
+                onKeyDown={(e) =>
+                  e.key === " " || e.key === "Enter"
+                    ? setAgreed(!agreed)
+                    : undefined
+                }
+              />
+              I accept the{" "}
+              <a href="#" onClick={(e) => e.preventDefault()}>
+                terms
+              </a>{" "}
+              &{" "}
+              <a href="#" onClick={(e) => e.preventDefault()}>
+                privacy policy
+              </a>
             </label>
-            <Input
-              id="username"
-              autoComplete="username"
-              required
-              minLength={3}
-              maxLength={20}
-              placeholder="your-username"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium leading-none">
-              {t("register.email")}
-            </label>
-            <Input
-              id="email"
-              type="email"
-              autoComplete="email"
-              required
-              placeholder="name@example.com"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium leading-none">
-              {t("register.password")}
-            </label>
-            <Input
-              id="password"
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={8}
-              placeholder="Create a strong password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="confirmPassword" className="text-sm font-medium leading-none">
-              {t("register.confirmPassword")}
-            </label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              autoComplete="new-password"
-              required
-              placeholder="Repeat your password"
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-            />
-          </div>
-          {!confirmValid && confirmPassword.length > 0 ? (
-            <p className="text-sm text-red-600">{t("register.passwordMismatch")}</p>
-          ) : null}
-          {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
-          <Button type="submit" className="w-full" disabled={!canSubmit}>
-            {submitting ? t("register.submitting") : t("register.submit")}
-          </Button>
-          <p className="text-center text-sm text-muted-foreground">
-            {t("register.hasAccount")}{" "}
-            <Link to="/login" className="underline underline-offset-2 hover:text-foreground">
-              {t("register.loginLink")}
-            </Link>
-          </p>
-        </form>
-      </CardContent>
-    </Card>
+
+            {errorMessage ? (
+              <div style={{ fontSize: 16, color: "var(--destructive)" }}>
+                ⚠ {errorMessage}
+              </div>
+            ) : null}
+
+            <button
+              type="submit"
+              className="pbtn lg"
+              disabled={!canSubmit}
+              style={{ width: "100%" }}
+            >
+              {submitting ? t("register.submitting") : "Create account →"}
+            </button>
+          </form>
+        </Panel>
+      </div>
+    </Scenery>
   );
 }

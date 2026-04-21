@@ -12,13 +12,13 @@ import {
   setAuthState,
   setIdentity,
 } from "@/store/auth-slice";
+import { useAppDispatch } from "@/store/hooks";
 import {
   setSubdomains,
   setSubdomainsError,
   setSubdomainsState,
   upsertSubdomain,
 } from "@/store/subdomains-slice";
-import { useAppDispatch } from "@/store/hooks";
 
 const useDataLoading = () => {
   const dispatch = useAppDispatch();

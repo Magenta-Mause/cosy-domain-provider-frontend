@@ -1,47 +1,16 @@
 import { useNavigate } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { SubdomainDto } from "@/api/generated/model";
 import { SubdomainDtoStatus } from "@/api/generated/model";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { AppHeader } from "@/components/layout/app-header";
+import { Badge } from "@/components/pixel/badge";
+import { Mailbox } from "@/components/pixel/mailbox";
+import { FlatPanel } from "@/components/pixel/panel";
+import { StatusDot } from "@/components/pixel/status-dot";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
-import { cn } from "@/lib/utils";
 import { useAppSelector } from "@/store/hooks";
-
-const statusStyles: Record<SubdomainDtoStatus, string> = {
-  [SubdomainDtoStatus.ACTIVE]: "bg-green-100 text-green-800",
-  [SubdomainDtoStatus.PENDING]: "bg-yellow-100 text-yellow-800",
-  [SubdomainDtoStatus.FAILED]: "bg-red-100 text-red-800",
-};
-
-function StatusBadge({ status }: { status: SubdomainDtoStatus }) {
-  const { t } = useTranslation();
-  const label =
-    status === SubdomainDtoStatus.ACTIVE
-      ? t("status.active")
-      : status === SubdomainDtoStatus.PENDING
-        ? t("status.pending")
-        : t("status.failed");
-  return (
-    <span
-      className={cn(
-        "inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium",
-        statusStyles[status],
-      )}
-    >
-      {label}
-    </span>
-  );
-}
 
 export function DashboardPage() {
   const { t } = useTranslation();
@@ -50,90 +19,323 @@ export function DashboardPage() {
   const subdomains = useAppSelector(
     (state) => state.subdomains.items,
   ) as SubdomainDto[];
-  const isLoading = useAppSelector((state) => state.subdomains.state) === "loading";
-  const isError = useAppSelector((state) => state.subdomains.state) === "failed";
+  const isLoading =
+    useAppSelector((state) => state.subdomains.state) === "loading";
+  const isError =
+    useAppSelector((state) => state.subdomains.state) === "failed";
+  const [filter, setFilter] = useState<"all" | SubdomainDtoStatus>("all");
 
   useEffect(() => {
     void loadSubdomains();
   }, [loadSubdomains]);
 
+  const filtered =
+    filter === "all"
+      ? subdomains
+      : subdomains.filter((d) => d.status === filter);
+
+  const onlineCount = subdomains.filter(
+    (d) => d.status === SubdomainDtoStatus.ACTIVE,
+  ).length;
+
   return (
-    <Card className="mx-auto max-w-4xl">
-      <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
-        <div>
-          <CardTitle>{t("dashboard.title")}</CardTitle>
-          <CardDescription>{t("dashboard.description")}</CardDescription>
-        </div>
-        <button
-          type="button"
-          className="pbtn sm"
-          onClick={() => {
-            void navigate({ to: "/domain/$domainId", params: { domainId: "new" } });
+    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+      {/* Sky header */}
+      <div className="sky-bg">
+        <AppHeader />
+        <div
+          style={{
+            padding: "20px 28px 20px",
+            maxWidth: 1200,
+            margin: "0 auto",
           }}
         >
-          <Plus className="mr-2 h-4 w-4" />
-          {t("dashboard.createNew")}
-        </button>
-      </CardHeader>
-      <CardContent>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-end",
+              gap: 16,
+              marginBottom: 16,
+            }}
+          >
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: 8,
+              }}
+            >
+              <div
+                className="pixel"
+                style={{ fontSize: 11, color: "oklch(0.92 0.05 70)" }}
+              >
+                POST OFFICE
+              </div>
+              <h1
+                style={{
+                  color: "oklch(0.95 0.08 70)",
+                  textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
+                }}
+              >
+                {t("dashboard.title")}
+              </h1>
+            </div>
+            <button
+              type="button"
+              className="pbtn lg"
+              onClick={() =>
+                void navigate({
+                  to: "/domain/$domainId",
+                  params: { domainId: "new" },
+                })
+              }
+            >
+              + {t("dashboard.createNew")}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          padding: "20px 28px 60px",
+          maxWidth: 1200,
+          margin: "0 auto",
+          marginTop: 0,
+        }}
+      >
+        {/* Stats strip */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 16,
+            marginBottom: 28,
+          }}
+        >
+          {[
+            {
+              l: "Mailboxes",
+              v: String(subdomains.length),
+              sub: "domains registered",
+            },
+            {
+              l: "Active",
+              v: String(onlineCount),
+              sub:
+                onlineCount === subdomains.length && subdomains.length > 0
+                  ? "all active"
+                  : "online",
+            },
+            {
+              l: "Pending",
+              v: String(
+                subdomains.filter(
+                  (d) => d.status === SubdomainDtoStatus.PENDING,
+                ).length,
+              ),
+              sub: "awaiting verification",
+            },
+          ].map((s) => (
+            <FlatPanel key={s.l} style={{ padding: 16 }}>
+              <div className="pixel" style={{ fontSize: 10, opacity: 0.7 }}>
+                {s.l.toUpperCase()}
+              </div>
+              <div
+                className="pixel"
+                style={{
+                  fontSize: 22,
+                  color: "var(--btn-primary)",
+                  marginTop: 8,
+                }}
+              >
+                {s.v}
+              </div>
+              <div style={{ fontSize: 15, marginTop: 4, opacity: 0.75 }}>
+                {s.sub}
+              </div>
+            </FlatPanel>
+          ))}
+        </div>
+
+        {/* Filter bar */}
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            marginBottom: 16,
+            alignItems: "center",
+          }}
+        >
+          {(
+            [
+              ["all", "All"],
+              [SubdomainDtoStatus.ACTIVE, "Active"],
+              [SubdomainDtoStatus.PENDING, "Pending"],
+              [SubdomainDtoStatus.FAILED, "Failed"],
+            ] as const
+          ).map(([k, l]) => (
+            <button
+              key={k}
+              type="button"
+              className={filter === k ? "pbtn sm" : "pbtn sm secondary"}
+              onClick={() => setFilter(k)}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+
+        {/* Mailbox list */}
         {isLoading ? (
-          <p className="text-sm text-muted-foreground">Loading...</p>
+          <div
+            className="panel-flat"
+            style={{ padding: 40, textAlign: "center", fontSize: 18 }}
+          >
+            <span className="dotloader">
+              <span />
+              <span />
+              <span />
+            </span>
+          </div>
         ) : isError ? (
-          <p className="text-sm text-red-600">{t("dashboard.loadError")}</p>
-        ) : subdomains.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            {t("dashboard.empty")}
-          </p>
+          <div
+            className="panel-flat"
+            style={{
+              padding: 24,
+              color: "var(--destructive)",
+              textAlign: "center",
+            }}
+          >
+            ⚠ {t("dashboard.loadError")}
+          </div>
+        ) : filtered.length === 0 ? (
+          <div
+            className="panel-flat"
+            style={{ padding: 24, textAlign: "center", fontSize: 18 }}
+          >
+            {subdomains.length === 0
+              ? t("dashboard.empty")
+              : "No domains match this filter."}
+          </div>
         ) : (
-          <div className="overflow-hidden rounded-md border">
-            <table className="w-full text-sm">
-              <thead className="bg-muted/50 text-left text-xs uppercase text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-2">{t("dashboard.columnLabel")}</th>
-                  <th className="px-4 py-2">{t("dashboard.columnTarget")}</th>
-                  <th className="px-4 py-2">{t("dashboard.columnStatus")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {subdomains.map((subdomain) => (
-                  <tr key={subdomain.uuid} className="border-t">
-                    <td className="px-4 py-3 font-medium">
-                      {subdomain.uuid ? (
-                        <div className="flex items-center gap-3">
-                          <span>{subdomain.fqdn ?? subdomain.label}</span>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              void navigate({
-                                to: "/domain/$domainId",
-                                params: { domainId: subdomain.uuid as string },
-                              });
-                            }}
-                          >
-                            {t("dashboard.open")}
-                          </Button>
-                        </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {filtered.map((d) => (
+              <button
+                key={d.uuid}
+                type="button"
+                className="panel-flat hover-lift"
+                style={{
+                  padding: 18,
+                  cursor: "pointer",
+                  width: "100%",
+                  textAlign: "left",
+                }}
+                onClick={() =>
+                  void navigate({
+                    to: "/domain/$domainId",
+                    params: { domainId: d.uuid as string },
+                  })
+                }
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 20,
+                    alignItems: "center",
+                  }}
+                >
+                  <Mailbox
+                    size={48}
+                    flag={
+                      d.status === SubdomainDtoStatus.ACTIVE
+                        ? "oklch(0.65 0.2 145)"
+                        : "var(--destructive)"
+                    }
+                  />
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 4,
+                    }}
+                  >
+                    <div
+                      style={{ display: "flex", gap: 10, alignItems: "center" }}
+                    >
+                      <div
+                        className="pixel"
+                        style={{ fontSize: 16, color: "var(--btn-primary)" }}
+                      >
+                        {d.fqdn ?? d.label}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: 14,
+                        fontSize: 16,
+                        opacity: 0.85,
+                        alignItems: "center",
+                      }}
+                    >
+                      {d.status ? <StatusDot status={d.status} /> : null}
+                      {d.targetIp ? (
+                        <span>→ {d.targetIp}</span>
                       ) : (
-                        (subdomain.fqdn ?? subdomain.label)
+                        <span style={{ opacity: 0.7 }}>not connected</span>
                       )}
-                    </td>
-                    <td className="px-4 py-3 font-mono text-xs">
-                      {subdomain.targetIp}
-                    </td>
-                    <td className="px-4 py-3">
-                      {subdomain.status ? (
-                        <StatusBadge status={subdomain.status} />
-                      ) : null}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                  </div>
+                  {d.status === SubdomainDtoStatus.ACTIVE ? (
+                    <Badge color="green">🔒 Active</Badge>
+                  ) : d.status === SubdomainDtoStatus.PENDING ? (
+                    <Badge color="gray">⌛ Pending</Badge>
+                  ) : (
+                    <Badge color="red">⚠ Failed</Badge>
+                  )}
+                  <span style={{ fontSize: 22, opacity: 0.6 }}>→</span>
+                </div>
+              </button>
+            ))}
           </div>
         )}
-      </CardContent>
-    </Card>
+
+        {/* Add new slot */}
+        <button
+          type="button"
+          onClick={() =>
+            void navigate({
+              to: "/domain/$domainId",
+              params: { domainId: "new" },
+            })
+          }
+          style={{ width: "100%", marginTop: 20 }}
+        >
+          <div
+            style={{
+              padding: 28,
+              border: "3px dashed var(--foreground)",
+              borderRadius: "var(--radius)",
+              background:
+                "repeating-linear-gradient(45deg, transparent 0 8px, rgba(132,66,57,0.05) 8px 16px)",
+              textAlign: "center",
+            }}
+          >
+            <div
+              className="pixel"
+              style={{ fontSize: 14, color: "var(--btn-primary)" }}
+            >
+              + {t("dashboard.register")}
+            </div>
+            <div style={{ fontSize: 16, opacity: 0.7, marginTop: 6 }}>
+              Claim a new address on cosy-hosting.net
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
   );
 }

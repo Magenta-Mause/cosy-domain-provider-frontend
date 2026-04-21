@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import { defaultNS, resources, type AppLanguage } from "@/i18n/resources";
+import { type AppLanguage, defaultNS, resources } from "@/i18n/resources";
 
 const LANGUAGE_STORAGE_KEY = "cosy-language";
 const storedLanguage =

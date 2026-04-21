@@ -19,8 +19,8 @@ export function Input({
         "focus-visible:outline-none focus-visible:border-[color:var(--accent)]",
         "focus-visible:shadow-[inset_0_2px_0_var(--input-shadow),0_0_0_2px_var(--accent),3px_3px_0_0_var(--shadow)]",
         "disabled:cursor-not-allowed disabled:opacity-60",
-      className,
-    )}
+        className,
+      )}
       {...props}
     />
   );

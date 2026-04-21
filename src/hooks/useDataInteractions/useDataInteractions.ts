@@ -5,8 +5,8 @@ import {
   deleteSubdomain,
   fetchToken,
   login,
-  register,
   logout,
+  register,
   updateSubdomain,
 } from "@/api/generated/domain-provider-api";
 import type {
@@ -16,13 +16,13 @@ import type {
 } from "@/api/generated/model";
 import { parseIdentityToken } from "@/lib/jwt";
 import { clearIdentity, setAuthState, setIdentity } from "@/store/auth-slice";
+import { useAppDispatch } from "@/store/hooks";
 import {
   clearSubdomains,
   removeSubdomain,
   setSubdomainsError,
   upsertSubdomain,
 } from "@/store/subdomains-slice";
-import { useAppDispatch } from "@/store/hooks";
 
 const useDataInteractions = () => {
   const dispatch = useAppDispatch();

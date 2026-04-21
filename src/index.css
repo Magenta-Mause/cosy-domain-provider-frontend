@@ -361,6 +361,92 @@
   .mono {
     font-family: "VT323", ui-monospace, monospace;
   }
+
+  /* Wooden signpost */
+  .signpost {
+    background: linear-gradient(
+      180deg,
+      oklch(0.55 0.1 45) 0%,
+      oklch(0.42 0.09 40) 100%
+    );
+    color: oklch(0.92 0.05 70);
+    border: 3px solid oklch(0.3 0.08 35);
+    border-radius: var(--radius-sm);
+    box-shadow:
+      inset 0 3px 0 oklch(0.65 0.11 50),
+      inset 0 -3px 0 oklch(0.3 0.08 35),
+      4px 4px 0 0 var(--shadow);
+    padding: 12px 20px;
+    font-family: "Press Start 2P", monospace;
+    position: relative;
+  }
+
+  /* Pixel checkbox */
+  .pcheck {
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--foreground);
+    background: var(--input-bg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .pcheck.checked {
+    background: var(--accent-2);
+  }
+  .pcheck.checked::after {
+    content: "✓";
+    font-family: monospace;
+    font-weight: bold;
+    color: var(--foreground);
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  /* Dot loader animation */
+  @keyframes cosy-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  .dotloader span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--btn-primary);
+    margin: 0 2px;
+    animation: cosy-bounce 0.8s infinite;
+  }
+  .dotloader span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .dotloader span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  /* Stack utilities */
+  .stack-sm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .stack-md {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .stack-lg {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
 }
 
 ::-webkit-scrollbar {

@@ -173,8 +173,7 @@ const deCommon: CommonSchema = {
       ui: "• shadcn-Primitives liegen in components/ui.",
       routing: "• Routing wird von TanStack Router verwaltet.",
       state: "• Geteilter globaler State wird mit Redux Toolkit verwaltet.",
-      styling:
-        "• Styling nutzt Tailwind-Utility-Klassen und Design-Tokens.",
+      styling: "• Styling nutzt Tailwind-Utility-Klassen und Design-Tokens.",
     },
   },
   login: {
