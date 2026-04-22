@@ -20,3 +20,9 @@ npm run gen:api    # Regenerate API client from running backend OpenAPI spec (ba
 - **API client:** Custom logic goes in `src/hooks/useDataLoading` and `src/hooks/useDataInteractions`, not in the generated API code.
 - **New routes:** Create the page in `src/pages/`, create the route file in `src/routes/`. The route tree regenerates automatically on next dev server start.
 - **Testing:** Use `data-testid` attributes for Playwright selectors (`page.getByTestId(...)`).
+
+## Patterns
+
+See `docs/patterns/` for canonical conventions:
+- `state-management.md` — data flow: custom hooks → axios → Redux dispatch
+- `form-inputs.md` — `FormField` component spec and validation rules
