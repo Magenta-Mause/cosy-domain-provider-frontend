@@ -2,8 +2,6 @@ const enCommon = {
   appName: "Cosy Frontend",
   appTagline: "Fetch your own Subdomains",
   nav: {
-    home: "Home",
-    about: "About",
     dashboard: "Domains",
     newSubdomain: "New subdomain",
     login: "Log in",
@@ -18,27 +16,6 @@ const enCommon = {
     label: "Language",
     en: "English",
     de: "German",
-  },
-  home: {
-    title: "Cosy Domain Provider",
-    description:
-      "Tailwind + shadcn-style UI, Redux state, and TanStack Router are now wired together.",
-    counterLabel: "Redux counter state",
-    increment: "Increment",
-    decrement: "Decrement",
-    reset: "Reset",
-  },
-  about: {
-    title: "About this setup",
-    description:
-      "The app now follows a scalable frontend composition with isolated UI, pages, routing, and state.",
-    points: {
-      ui: "• shadcn-style primitives live in components/ui.",
-      routing: "• Routing is managed by TanStack Router.",
-      state: "• Shared global state is managed by Redux Toolkit.",
-      styling:
-        "• Styling uses Tailwind utility-first classes and design tokens.",
-    },
   },
   login: {
     title: "Welcome back",
@@ -220,8 +197,6 @@ const deCommon: CommonSchema = {
   appName: "Cosy Frontend",
   appTagline: "Verwalte deine eigenen Subdomains",
   nav: {
-    home: "Startseite",
-    about: "Info",
     dashboard: "Domains",
     newSubdomain: "Neue Subdomain",
     login: "Anmelden",
@@ -236,26 +211,6 @@ const deCommon: CommonSchema = {
     label: "Sprache",
     en: "Englisch",
     de: "Deutsch",
-  },
-  home: {
-    title: "Cosy Domain Provider",
-    description:
-      "Tailwind + shadcn-UI, Redux-State und TanStack Router sind jetzt verbunden.",
-    counterLabel: "Redux-Zählerstand",
-    increment: "Erhöhen",
-    decrement: "Verringern",
-    reset: "Zurücksetzen",
-  },
-  about: {
-    title: "Über dieses Setup",
-    description:
-      "Die App folgt jetzt einer skalierbaren Frontend-Struktur mit getrenntem UI, Seiten, Routing und State.",
-    points: {
-      ui: "• shadcn-Primitives liegen in components/ui.",
-      routing: "• Routing wird von TanStack Router verwaltet.",
-      state: "• Geteilter globaler State wird mit Redux Toolkit verwaltet.",
-      styling: "• Styling nutzt Tailwind-Utility-Klassen und Design-Tokens.",
-    },
   },
   login: {
     title: "Willkommen zurück",
