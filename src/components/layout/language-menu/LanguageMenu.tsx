@@ -1,9 +1,9 @@
 import { Languages } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import type { AppLanguage } from "@/i18n/resources";
+import { useLanguageMenuLogic } from "./useLanguageMenuLogic";
 
 type LanguageMenuProps = {
   onChangeLanguage: (language: AppLanguage) => Promise<void> | void;
@@ -11,57 +11,23 @@ type LanguageMenuProps = {
 
 export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
   const { t, i18n } = useTranslation();
-  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
-  const languageMenuRef = useRef<HTMLDivElement | null>(null);
-
-  const languageCode = i18n.language.toLowerCase().startsWith("de")
-    ? "DE"
-    : "EN";
-
-  useEffect(() => {
-    if (!languageMenuOpen) return;
-
-    const onPointerDown = (event: MouseEvent) => {
-      const target = event.target as Node;
-      if (!languageMenuRef.current?.contains(target)) {
-        setLanguageMenuOpen(false);
-      }
-    };
-
-    const onEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setLanguageMenuOpen(false);
-      }
-    };
-
-    window.addEventListener("mousedown", onPointerDown);
-    window.addEventListener("keydown", onEscape);
-
-    return () => {
-      window.removeEventListener("mousedown", onPointerDown);
-      window.removeEventListener("keydown", onEscape);
-    };
-  }, [languageMenuOpen]);
-
-  async function handleLanguageChange(language: AppLanguage) {
-    await onChangeLanguage(language);
-    setLanguageMenuOpen(false);
-  }
+  const { menuOpen, setMenuOpen, menuRef, languageCode, handleLanguageChange } =
+    useLanguageMenuLogic(onChangeLanguage, i18n.language);
 
   return (
-    <div ref={languageMenuRef} className="relative">
+    <div ref={menuRef} className="relative">
       <Button
         type="button"
         data-testid="language-menu-toggle-btn"
         size="sm"
         className="gap-1.5"
-        onClick={() => setLanguageMenuOpen((open) => !open)}
+        onClick={() => setMenuOpen((open) => !open)}
         title={t("language.label")}
       >
         <Languages size={14} />
         {languageCode}
       </Button>
-      {languageMenuOpen ? (
+      {menuOpen ? (
         <div
           role="menu"
           aria-label={t("language.label")}

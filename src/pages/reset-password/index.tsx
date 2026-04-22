@@ -1,23 +1,26 @@
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { AuthPageLayout } from "@/components/auth/auth-page-layout.tsx";
-import { PasswordInput } from "@/components/auth/password-input.tsx";
-import { ErrorMessage } from "@/components/pixel/error-message.tsx";
-import { Button } from "@/components/ui/button.tsx";
-import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions.ts";
-import { Route } from "@/routes/reset-password.tsx";
+
+import { AuthPageLayout } from "@/components/auth/auth-page-layout";
+import { PasswordInput } from "@/components/auth/password-input";
+import { ErrorMessage } from "@/components/pixel/error-message";
+import { Button } from "@/components/ui/button";
+
+import { useResetPasswordLogic } from "./useResetPasswordLogic";
 
 const ResetPasswordPage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { token } = Route.useSearch();
-  const { confirmPasswordReset } = useDataInteractions();
-  const [newPassword, setNewPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    token,
+    newPassword,
+    setNewPassword,
+    showPw,
+    setShowPw,
+    isSubmitting,
+    success,
+    error,
+    handleSubmit,
+  } = useResetPasswordLogic();
 
   if (!token) {
     return (
@@ -32,21 +35,6 @@ const ResetPasswordPage = () => {
       </AuthPageLayout>
     );
   }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
-    try {
-      await confirmPasswordReset(token, newPassword);
-      setSuccess(true);
-      setTimeout(() => void navigate({ to: "/login" }), 2000);
-    } catch {
-      setError(t("resetPassword.error"));
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <AuthPageLayout backButtonLink="/login">

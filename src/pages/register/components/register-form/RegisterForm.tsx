@@ -1,81 +1,36 @@
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
-import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
-import { useAppSelector } from "@/store/hooks";
 
-import { PasswordStrength } from "./password-strength";
-
-function OrDivider() {
-  const { t } = useTranslation();
-  return (
-    <div className="flex items-center gap-3 my-1">
-      <div
-        className="flex-1 h-[3px] opacity-40"
-        style={{ background: "var(--foreground)" }}
-      />
-      <span className="pixel text-[10px] opacity-70">
-        {t("register.orUseEmail")}
-      </span>
-      <div
-        className="flex-1 h-[3px] opacity-40"
-        style={{ background: "var(--foreground)" }}
-      />
-    </div>
-  );
-}
+import { PasswordStrength } from "../password-strength";
+import { OrDivider } from "./components/OrDivider";
+import { useRegisterFormLogic } from "./useRegisterFormLogic";
 
 export function RegisterForm() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { registerUser } = useDataInteractions();
-  const authState = useAppSelector((state) => state.auth.state);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
-  const [agreed, setAgreed] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const usernameValid =
-    username.trim().length >= 3 && username.trim().length <= 20;
-  const emailValid = useMemo(
-    () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
-    [email],
-  );
-  const passwordValid = password.length >= 8;
-  const passwordWeak = password.length > 0 && password.length < 8;
-  const confirmValid = password === confirmPassword;
-  const canSubmit =
-    usernameValid &&
-    emailValid &&
-    passwordValid &&
-    confirmValid &&
-    agreed &&
-    authState !== "loading";
-
-  const submitting = authState === "loading";
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setErrorMessage(null);
-    if (!canSubmit) return;
-    try {
-      await registerUser({
-        username: username.trim(),
-        email: email.trim(),
-        password,
-      });
-      await navigate({ to: "/dashboard" });
-    } catch {
-      setErrorMessage(t("register.error"));
-    }
-  }
+  const {
+    username,
+    setUsername,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    showPw,
+    setShowPw,
+    agreed,
+    setAgreed,
+    errorMessage,
+    passwordWeak,
+    confirmValid,
+    canSubmit,
+    submitting,
+    handleSubmit,
+  } = useRegisterFormLogic();
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">

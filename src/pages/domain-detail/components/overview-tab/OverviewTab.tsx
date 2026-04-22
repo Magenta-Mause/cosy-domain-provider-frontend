@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 
 import type { SubdomainDto } from "@/api/generated/model";
 import { ErrorMessage } from "@/components/pixel/error-message";
-import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
+
+import { DomainMetaCards } from "./components/DomainMetaCards";
 
 interface OverviewTabProps {
   domain: SubdomainDto | undefined;
@@ -46,20 +47,7 @@ export function OverviewTab({
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5">
       {!isCreateMode ? (
-        <div className="grid grid-cols-2 gap-4 mb-2">
-          <FlatPanel className="p-4">
-            <div className="pixel text-[10px] opacity-70">
-              {t("domainDetail.domainFqdn")}
-            </div>
-            <div className="text-lg mt-1.5">{domain?.fqdn ?? "—"}</div>
-          </FlatPanel>
-          <FlatPanel className="p-4">
-            <div className="pixel text-[10px] opacity-70">
-              {t("domainDetail.createdLabel")}
-            </div>
-            <div className="text-lg mt-1.5">{createdAt}</div>
-          </FlatPanel>
-        </div>
+        <DomainMetaCards domain={domain} createdAt={createdAt} />
       ) : null}
 
       <fieldset

@@ -1,14 +1,14 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 
+import { useHeroSectionLogic } from "./useHeroSectionLogic";
+
 export function HeroSection() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [subdomain, setSubdomain] = useState("");
+  const { subdomain, handleSubdomainChange, handleCheckAvailability } =
+    useHeroSectionLogic();
 
   return (
     <section
@@ -55,11 +55,7 @@ export function HeroSection() {
                   data-testid="home-subdomain-input"
                   className="pinput"
                   value={subdomain}
-                  onChange={(e) =>
-                    setSubdomain(
-                      e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""),
-                    )
-                  }
+                  onChange={(e) => handleSubdomainChange(e.target.value)}
                   placeholder="my-castle"
                   style={{ paddingRight: 170 }}
                 />
@@ -70,7 +66,7 @@ export function HeroSection() {
               <Button
                 type="button"
                 data-testid="home-check-btn"
-                onClick={() => void navigate({ to: "/register" })}
+                onClick={handleCheckAvailability}
               >
                 {t("hero.checkButton")}
               </Button>
