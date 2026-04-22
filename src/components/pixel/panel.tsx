@@ -24,7 +24,16 @@ export function FlatPanel({
   style,
 }: Omit<PanelProps, "withRibbon">) {
   return (
-    <div className={cn("panel-flat", className)} style={style}>
+    <div
+      className={cn(
+        "bg-[var(--secondary-background)] border-[3px] border-[var(--foreground)] rounded-[var(--radius)]",
+        className,
+      )}
+      style={{
+        boxShadow: "4px 4px 0 0 var(--shadow)",
+        ...style,
+      }}
+    >
       {children}
     </div>
   );

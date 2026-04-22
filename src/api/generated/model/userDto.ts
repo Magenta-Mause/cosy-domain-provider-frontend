@@ -9,4 +9,5 @@ export interface UserDto {
   uuid?: string;
   username?: string;
   email?: string;
+  verified?: boolean;
 }

@@ -10,6 +10,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
       username?: string;
       sub?: string;
       email?: string;
+      isVerified?: boolean;
       iat?: number;
       exp?: number;
       [key: string]: unknown;
@@ -24,6 +25,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
             ? decoded.upn
             : null,
       subject: decoded.sub ?? null,
+      isVerified: decoded.isVerified ?? null,
       issuedAt: typeof decoded.iat === "number" ? decoded.iat : null,
       expiresAt: typeof decoded.exp === "number" ? decoded.exp : null,
       claims: decoded,

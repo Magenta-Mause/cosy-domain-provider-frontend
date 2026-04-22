@@ -1,34 +1,25 @@
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
-import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
-import { useAppSelector } from "@/store/hooks";
+import { Button } from "@/components/ui/button";
+
+import { useLoginFormLogic } from "./useLoginFormLogic";
 
 export function LoginForm() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { loginUser } = useDataInteractions();
-  const authState = useAppSelector((state) => state.auth.state);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const submitting = authState === "loading";
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setErrorMessage(null);
-    try {
-      await loginUser({ email, password });
-      await navigate({ to: "/dashboard" });
-    } catch {
-      setErrorMessage(t("login.error"));
-    }
-  }
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    showPw,
+    setShowPw,
+    errorMessage,
+    submitting,
+    handleSubmit,
+  } = useLoginFormLogic();
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -73,7 +64,7 @@ export function LoginForm() {
 
       <div className="flex items-center justify-end">
         <Link
-          to="/"
+          to="/forgot-password"
           data-testid="login-forgot-password-link"
           className="text-base"
         >
@@ -81,14 +72,15 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <button
+      <Button
         type="submit"
         data-testid="login-submit-btn"
-        className="pbtn lg w-full"
+        size="lg"
+        className="w-full"
         disabled={!email || !password || submitting}
       >
         {submitting ? t("login.submitting") : t("login.submitButton")}
-      </button>
+      </Button>
 
       <p className="text-base text-center opacity-70">
         {t("login.noAccount")}{" "}

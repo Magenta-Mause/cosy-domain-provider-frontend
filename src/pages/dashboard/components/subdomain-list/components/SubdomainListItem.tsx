@@ -3,18 +3,11 @@ import { useTranslation } from "react-i18next";
 
 import type { SubdomainDto } from "@/api/generated/model";
 import { SubdomainDtoStatus } from "@/api/generated/model";
-import { DotLoader } from "@/components/pixel/dot-loader";
 import { Mailbox } from "@/components/pixel/mailbox";
 import { StatusDot } from "@/components/pixel/status-dot";
 import { SubdomainStatusBadge } from "@/components/pixel/subdomain-status-badge";
 
-interface SubdomainListProps {
-  subdomains: SubdomainDto[];
-  isLoading: boolean;
-  isError: boolean;
-}
-
-function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
+export function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -61,48 +54,5 @@ function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
         <span className="text-[22px] opacity-60">→</span>
       </div>
     </button>
-  );
-}
-
-export function SubdomainList({
-  subdomains,
-  isLoading,
-  isError,
-}: SubdomainListProps) {
-  const { t } = useTranslation();
-
-  if (isLoading) {
-    return (
-      <div className="panel-flat p-10 text-center text-lg">
-        <DotLoader />
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div
-        className="panel-flat p-6 text-center"
-        style={{ color: "var(--destructive)" }}
-      >
-        ⚠ {t("dashboard.loadError")}
-      </div>
-    );
-  }
-
-  if (subdomains.length === 0) {
-    return (
-      <div className="panel-flat p-6 text-center text-lg">
-        {t("dashboard.empty")}
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-3">
-      {subdomains.map((d) => (
-        <SubdomainListItem key={d.uuid} domain={d} />
-      ))}
-    </div>
   );
 }

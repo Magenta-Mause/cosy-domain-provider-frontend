@@ -6,12 +6,15 @@
  */
 
 export * from "./dnsEntry";
+export * from "./emailVerificationDto";
+export * from "./forgotPasswordDto";
 export * from "./loginDto";
 export * from "./loginParams";
 export * from "./loginResponseDto";
 export * from "./loginTokenMode";
 export * from "./registerParams";
 export * from "./registerTokenMode";
+export * from "./resetPasswordDto";
 export * from "./subdomainCreationDto";
 export * from "./subdomainDto";
 export * from "./subdomainDtoStatus";
