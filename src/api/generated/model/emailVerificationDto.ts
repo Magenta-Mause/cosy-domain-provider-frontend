@@ -5,9 +5,6 @@
  * OpenAPI spec version: v0
  */
 
-export interface UserDto {
-  uuid?: string;
-  username?: string;
-  email?: string;
-  verified?: boolean;
+export interface EmailVerificationDto {
+  token?: string;
 }

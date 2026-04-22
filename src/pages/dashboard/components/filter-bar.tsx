@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { SubdomainDtoStatus } from "@/api/generated/model";
+import { Button } from "@/components/ui/button";
 
 type FilterValue = "all" | SubdomainDtoStatus;
 
@@ -22,15 +23,16 @@ export function FilterBar({ filter, onChange }: FilterBarProps) {
   return (
     <div className="flex gap-2 mb-4 items-center">
       {filters.map(([k, l]) => (
-        <button
+        <Button
           key={k}
           type="button"
           data-testid={`dashboard-filter-${String(k).toLowerCase()}-btn`}
-          className={filter === k ? "pbtn sm" : "pbtn sm secondary"}
+          variant={filter === k ? "default" : "secondary"}
+          size="sm"
           onClick={() => onChange(k)}
         >
           {l}
-        </button>
+        </Button>
       ))}
     </div>
   );

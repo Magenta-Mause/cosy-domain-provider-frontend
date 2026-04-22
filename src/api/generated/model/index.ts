@@ -6,6 +6,7 @@
  */
 
 export * from "./dnsEntry";
+export * from "./emailVerificationDto";
 export * from "./loginDto";
 export * from "./loginParams";
 export * from "./loginResponseDto";

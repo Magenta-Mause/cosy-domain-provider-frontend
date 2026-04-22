@@ -5,6 +5,7 @@ import type { SubdomainDto } from "@/api/generated/model";
 import { SubdomainDtoStatus } from "@/api/generated/model";
 import { DotLoader } from "@/components/pixel/dot-loader";
 import { Mailbox } from "@/components/pixel/mailbox";
+import { FlatPanel } from "@/components/pixel/panel.tsx";
 import { StatusDot } from "@/components/pixel/status-dot";
 import { SubdomainStatusBadge } from "@/components/pixel/subdomain-status-badge";
 
@@ -12,6 +13,7 @@ interface SubdomainListProps {
   subdomains: SubdomainDto[];
   isLoading: boolean;
   isError: boolean;
+  isVerified: boolean;
 }
 
 function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
@@ -68,33 +70,34 @@ export function SubdomainList({
   subdomains,
   isLoading,
   isError,
+  isVerified,
 }: SubdomainListProps) {
   const { t } = useTranslation();
 
   if (isLoading) {
     return (
-      <div className="panel-flat p-10 text-center text-lg">
+      <FlatPanel className={"p-10 text-center text-lg"}>
         <DotLoader />
-      </div>
+      </FlatPanel>
     );
   }
 
   if (isError) {
     return (
-      <div
-        className="panel-flat p-6 text-center"
+      <FlatPanel
+        className="p-6 text-center"
         style={{ color: "var(--destructive)" }}
       >
         ⚠ {t("dashboard.loadError")}
-      </div>
+      </FlatPanel>
     );
   }
 
   if (subdomains.length === 0) {
     return (
-      <div className="panel-flat p-6 text-center text-lg">
-        {t("dashboard.empty")}
-      </div>
+      <FlatPanel className="p-6 text-center text-lg">
+        {isVerified ? t("dashboard.empty") : t("dashboard.emptyUnverified")}
+      </FlatPanel>
     );
   }
 

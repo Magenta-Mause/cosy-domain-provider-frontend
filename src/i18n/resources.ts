@@ -57,6 +57,8 @@ const enCommon = {
     title: "Your domains",
     description: "Subdomains you own on the Cosy network.",
     empty: "You do not have any subdomains yet.",
+    emptyUnverified:
+      "Your account needs to be verified before you can register subdomains.",
     register: "Register a domain",
     createNew: "Create new Domain",
     open: "Open",
@@ -252,6 +254,8 @@ const deCommon: CommonSchema = {
     title: "Deine Domains",
     description: "Subdomains, die du im Cosy-Netzwerk besitzt.",
     empty: "Du hast noch keine Subdomains.",
+    emptyUnverified:
+      "Dein Konto muss verifiziert werden, bevor du Subdomains registrieren kannst.",
     register: "Domain registrieren",
     createNew: "Neue Domain erstellen",
     open: "Öffnen",

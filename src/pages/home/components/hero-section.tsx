@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
+import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   const { t } = useTranslation();
@@ -66,14 +67,13 @@ export function HeroSection() {
                   .cosy-hosting.net
                 </span>
               </div>
-              <button
+              <Button
                 type="button"
                 data-testid="home-check-btn"
-                className="pbtn"
                 onClick={() => void navigate({ to: "/register" })}
               >
                 {t("hero.checkButton")}
-              </button>
+              </Button>
             </div>
           </FlatPanel>
 

@@ -3,6 +3,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 export interface AuthUser {
   username: string | null;
   email: string | null;
+  isVerified: boolean | null;
   subject: string | null;
   issuedAt: number | null;
   expiresAt: number | null;

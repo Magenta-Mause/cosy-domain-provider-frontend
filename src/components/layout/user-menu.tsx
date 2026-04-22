@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Button } from "@/components/ui/button";
+
 type UserMenuProps = {
   userName?: string | null;
   isLoggingOut: boolean;
@@ -41,10 +43,12 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
 
   return (
     <div ref={menuRef} className="relative">
-      <button
+      <Button
         type="button"
         data-testid="user-menu-toggle-btn"
-        className="pbtn sm secondary gap-2"
+        variant="secondary"
+        size="sm"
+        className="gap-2"
         disabled={isLoggingOut}
         onClick={() => setMenuOpen((open) => !open)}
         title={t("nav.userMenu")}
@@ -62,7 +66,7 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
           {initial}
         </span>
         {userName ?? t("nav.userMenu")}
-      </button>
+      </Button>
       {menuOpen ? (
         <div
           role="menu"
@@ -78,29 +82,35 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
             boxShadow: "4px 4px 0 0 var(--foreground)",
           }}
         >
-          <button
+          <Button
             type="button"
             data-testid="user-menu-change-username-btn"
-            className="pbtn sm ghost justify-start"
+            variant="ghost"
+            size="sm"
+            className="justify-start"
             title={t("nav.notImplemented")}
             onClick={() => setMenuOpen(false)}
             disabled
           >
             {t("nav.changeUsername")}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             data-testid="user-menu-change-password-btn"
-            className="pbtn sm ghost justify-start opacity-50 cursor-not-allowed"
+            variant="ghost"
+            size="sm"
+            className="justify-start"
             title={t("nav.notImplemented")}
             disabled
           >
             {t("nav.changePassword")}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             data-testid="user-menu-logout-btn"
-            className="pbtn sm ghost justify-start"
+            variant="ghost"
+            size="sm"
+            className="justify-start"
             disabled={isLoggingOut}
             onClick={async () => {
               try {
@@ -111,18 +121,20 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
             }}
           >
             {t("nav.logout")}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             data-testid="user-menu-delete-user-btn"
-            className="pbtn sm ghost justify-start"
+            variant="ghost"
+            size="sm"
+            className="justify-start"
             style={{ color: "var(--destructive)" }}
             title={t("nav.notImplemented")}
             onClick={() => setMenuOpen(false)}
             disabled
           >
             {t("nav.deleteUser")}
-          </button>
+          </Button>
         </div>
       ) : null}
     </div>

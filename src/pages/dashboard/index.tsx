@@ -1,7 +1,10 @@
 import { useNavigate } from "@tanstack/react-router";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import type { SubdomainDto } from "@/api/generated/model";
 import { AppHeader } from "@/components/layout/app-header";
+import { Button } from "@/components/ui/button";
+import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation.ts";
 import UserPricingCard from "@/pages/dashboard/components/user-pricing-card.tsx";
 import { useAppSelector } from "@/store/hooks";
 import { SubdomainList } from "./components/subdomain-list";
@@ -16,6 +19,15 @@ export function DashboardPage() {
     useAppSelector((state) => state.subdomains.state) === "loading";
   const isError =
     useAppSelector((state) => state.subdomains.state) === "failed";
+  const { isVerified } = useAuthInformation();
+
+  const buttonCallback = useCallback(() => {
+    if (!isVerified) {
+      navigate({ to: "/verify" });
+    } else {
+      navigate({ to: "/domain/$domainId", params: { domainId: "new" } });
+    }
+  }, [navigate, isVerified]);
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--background)" }}>
@@ -59,19 +71,18 @@ export function DashboardPage() {
                 {t("dashboard.title")}
               </h1>
             </div>
-            <button
+            <Button
               type="button"
               data-testid="dashboard-create-new-btn"
-              className="pbtn lg"
-              onClick={() =>
-                void navigate({
-                  to: "/domain/$domainId",
-                  params: { domainId: "new" },
-                })
-              }
+              size="lg"
+              onClick={buttonCallback}
             >
-              + {t("dashboard.createNew")}
-            </button>
+              {isVerified ? (
+                <>+ {t("dashboard.createNew")}</>
+              ) : (
+                <>Verify Account</>
+              )}
+            </Button>
           </div>
         </div>
       </div>
@@ -87,6 +98,7 @@ export function DashboardPage() {
           subdomains={subdomains}
           isLoading={isLoading}
           isError={isError}
+          isVerified={isVerified}
         />
       </div>
     </div>

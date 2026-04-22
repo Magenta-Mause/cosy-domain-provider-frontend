@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
+import { Button } from "@/components/ui/button";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { useAppSelector } from "@/store/hooks";
 
@@ -189,14 +190,15 @@ export function RegisterForm() {
 
       {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
 
-      <button
+      <Button
         type="submit"
         data-testid="register-submit-btn"
-        className="pbtn lg w-full"
+        size="lg"
+        className="w-full"
         disabled={!canSubmit}
       >
         {submitting ? t("register.submitting") : t("register.submitButton")}
-      </button>
+      </Button>
       <p className="text-lg text-center">
         {t("register.alreadyMovedIn")}{" "}
         <Link to="/login" data-testid="register-login-link">

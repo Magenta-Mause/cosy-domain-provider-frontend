@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Panel } from "@/components/pixel/panel";
+import { Button } from "@/components/ui/button";
 
 interface DangerTabProps {
   errorMessage: string | null;
@@ -35,15 +36,15 @@ export function DangerTab({
               {t("domainDetail.deleteDescription")}
             </div>
           </div>
-          <button
+          <Button
             type="button"
             data-testid="domain-detail-delete-btn"
-            className="pbtn destructive"
+            variant="destructive"
             disabled={isDeleting}
             onClick={onDelete}
           >
             {isDeleting ? t("dashboard.deleting") : t("dashboard.delete")}
-          </button>
+          </Button>
         </div>
       </Panel>
     </div>

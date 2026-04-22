@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import type { SubdomainDto } from "@/api/generated/model";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { FlatPanel } from "@/components/pixel/panel";
+import { Button } from "@/components/ui/button";
 
 interface OverviewTabProps {
   domain: SubdomainDto | undefined;
@@ -124,10 +125,10 @@ export function OverviewTab({
         >
           ← {t("domainDetail.backToDomains")}
         </Link>
-        <button
+        <Button
           type="submit"
           data-testid="domain-detail-submit-btn"
-          className="pbtn lg"
+          size="lg"
           disabled={!canSubmit}
         >
           {isSubmitting
@@ -135,7 +136,7 @@ export function OverviewTab({
             : isCreateMode
               ? t("domainDetail.createAction")
               : t("domainDetail.saveAction")}
-        </button>
+        </Button>
       </div>
     </form>
   );

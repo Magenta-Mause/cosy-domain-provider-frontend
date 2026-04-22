@@ -2,6 +2,7 @@ import { Languages } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Button } from "@/components/ui/button";
 import type { AppLanguage } from "@/i18n/resources";
 
 type LanguageMenuProps = {
@@ -49,16 +50,17 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
 
   return (
     <div ref={languageMenuRef} className="relative">
-      <button
+      <Button
         type="button"
         data-testid="language-menu-toggle-btn"
-        className="pbtn sm gap-1.5"
+        size="sm"
+        className="gap-1.5"
         onClick={() => setLanguageMenuOpen((open) => !open)}
         title={t("language.label")}
       >
         <Languages size={14} />
         {languageCode}
-      </button>
+      </Button>
       {languageMenuOpen ? (
         <div
           role="menu"
@@ -74,26 +76,30 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
             boxShadow: "4px 4px 0 0 var(--foreground)",
           }}
         >
-          <button
+          <Button
             type="button"
             data-testid="language-menu-en-btn"
-            className="pbtn sm ghost justify-start"
+            variant="ghost"
+            size="sm"
+            className="justify-start"
             onClick={() => {
               void handleLanguageChange("en");
             }}
           >
             {t("language.en")}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             data-testid="language-menu-de-btn"
-            className="pbtn sm ghost justify-start"
+            variant="ghost"
+            size="sm"
+            className="justify-start"
             onClick={() => {
               void handleLanguageChange("de");
             }}
           >
             {t("language.de")}
-          </button>
+          </Button>
         </div>
       ) : null}
     </div>

@@ -6,22 +6,21 @@ import { Scenery } from "@/components/pixel/scenery";
 interface AuthPageLayoutProps {
   children: React.ReactNode;
   maxWidth?: number;
+  backButtonLink?: string;
 }
 
 export function AuthPageLayout({
   children,
+  backButtonLink = "/",
   maxWidth = 420,
 }: AuthPageLayoutProps) {
   return (
     <Scenery>
       <Link
-        to="/"
+        to={backButtonLink}
         data-testid="auth-back-link"
-        className="absolute top-6 left-7 text-base no-underline z-[5]"
-        style={{
-          color: "oklch(0.95 0.08 70)",
-          border: "black thin solid",
-        }}
+        className="pbtn ghost absolute top-6 left-7 z-[5]"
+        style={{ color: "oklch(0.95 0.08 70)" }}
       >
         ← Back
       </Link>

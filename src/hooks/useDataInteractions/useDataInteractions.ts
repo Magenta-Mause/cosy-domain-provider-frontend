@@ -7,7 +7,9 @@ import {
   login,
   logout,
   register,
+  resendVerification,
   updateSubdomain,
+  verifyEmail,
 } from "@/api/generated/domain-provider-api";
 import type {
   LoginDto,
@@ -122,11 +124,30 @@ const useDataInteractions = () => {
     [dispatch],
   );
 
+  const verifyAccount = useCallback(
+    async (code: string) => {
+      try {
+        await verifyEmail({ token: code });
+        await refreshIdentityToken();
+      } catch (error) {
+        console.error(error);
+        throw new Error("Verification Failed");
+      }
+    },
+    [refreshIdentityToken],
+  );
+
+  const resendVerificationCode = useCallback(async () => {
+    await resendVerification();
+  }, []);
+
   return {
     refreshIdentityToken,
     loginUser,
     registerUser,
     logoutUser,
+    verifyAccount,
+    resendVerificationCode,
     createSubdomain: createSubdomainInteraction,
     updateSubdomain: updateSubdomainInteraction,
     deleteSubdomain: deleteSubdomainInteraction,
