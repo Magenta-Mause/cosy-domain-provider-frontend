@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { RotateCw } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AuthPageLayout } from "@/components/auth/auth-page-layout.tsx";
 import { ErrorMessage } from "@/components/pixel/error-message.tsx";
 import { Mailbox } from "@/components/pixel/mailbox.tsx";
@@ -13,9 +13,11 @@ import {
 } from "@/components/ui/input-otp.tsx";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation.ts";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions.ts";
+import { Route } from "@/routes/verify.tsx";
 
 const VerifyPage = () => {
   const { userEmail, isVerified } = useAuthInformation();
+  const { token: urlToken } = Route.useSearch();
   const [verificationToken, setVerificationToken] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [isResending, setIsResending] = useState<boolean>(false);
@@ -24,18 +26,28 @@ const VerifyPage = () => {
   const [resendError, setResendError] = useState<string | null>(null);
   const { verifyAccount, resendVerificationCode } = useDataInteractions();
 
-  const triggerVerification = async (token: string) => {
-    setIsVerifying(true);
-    setVerifyError(null);
-    try {
-      await verifyAccount(token);
-    } catch {
-      setVerifyError("That code didn't match. Double-check and try again.");
-      setVerificationToken("");
-    } finally {
-      setIsVerifying(false);
+  const triggerVerification = useCallback(
+    async (token: string) => {
+      setIsVerifying(true);
+      setVerifyError(null);
+      try {
+        await verifyAccount(token);
+      } catch {
+        setVerifyError("That code didn't match. Double-check and try again.");
+        setVerificationToken("");
+      } finally {
+        setIsVerifying(false);
+      }
+    },
+    [verifyAccount],
+  );
+
+  useEffect(() => {
+    if (urlToken && urlToken.length === 6) {
+      setVerificationToken(urlToken.toUpperCase());
+      void triggerVerification(urlToken);
     }
-  };
+  }, [urlToken, triggerVerification]);
 
   const triggerResend = async () => {
     setIsResending(true);

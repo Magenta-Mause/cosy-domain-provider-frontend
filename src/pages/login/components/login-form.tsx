@@ -74,7 +74,7 @@ export function LoginForm() {
 
       <div className="flex items-center justify-end">
         <Link
-          to="/"
+          to="/forgot-password"
           data-testid="login-forgot-password-link"
           className="text-base"
         >

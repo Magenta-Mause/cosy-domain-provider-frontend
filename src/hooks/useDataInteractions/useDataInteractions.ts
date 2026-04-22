@@ -4,10 +4,12 @@ import {
   createSubdomain,
   deleteSubdomain,
   fetchToken,
+  forgotPassword,
   login,
   logout,
   register,
   resendVerification,
+  resetPassword,
   updateSubdomain,
   verifyEmail,
 } from "@/api/generated/domain-provider-api";
@@ -141,6 +143,17 @@ const useDataInteractions = () => {
     await resendVerification();
   }, []);
 
+  const requestPasswordReset = useCallback(async (email: string) => {
+    await forgotPassword({ email });
+  }, []);
+
+  const confirmPasswordReset = useCallback(
+    async (token: string, newPassword: string) => {
+      await resetPassword({ token, newPassword });
+    },
+    [],
+  );
+
   return {
     refreshIdentityToken,
     loginUser,
@@ -148,6 +161,8 @@ const useDataInteractions = () => {
     logoutUser,
     verifyAccount,
     resendVerificationCode,
+    requestPasswordReset,
+    confirmPasswordReset,
     createSubdomain: createSubdomainInteraction,
     updateSubdomain: updateSubdomainInteraction,
     deleteSubdomain: deleteSubdomainInteraction,

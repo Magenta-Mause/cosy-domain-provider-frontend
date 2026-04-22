@@ -31,6 +31,29 @@ const enCommon = {
     registerLink: "Create one",
     forgotPassword: "Forgot password?",
   },
+  forgotPassword: {
+    title: "Forgot your password?",
+    description: "Enter your email and we'll send you a reset link.",
+    email: "Email",
+    submit: "Send reset link",
+    submitting: "Sending...",
+    success:
+      "Check your inbox! If that email is registered, you'll receive a reset link shortly.",
+    error: "Something went wrong. Please try again.",
+    backToLogin: "Back to login",
+  },
+  resetPassword: {
+    title: "Reset your password",
+    description: "Choose a new password for your account.",
+    newPassword: "New password",
+    submit: "Reset password",
+    submitting: "Resetting...",
+    success: "Password updated! You can now log in with your new password.",
+    error: "This link is invalid or has expired. Please request a new one.",
+    invalidToken: "No reset token found. Please request a new reset link.",
+    backToLogin: "Back to login",
+    requestNew: "Request a new link",
+  },
   register: {
     title: "Create your account",
     stakeTitle: "Stake your mailbox",
@@ -227,6 +250,33 @@ const deCommon: CommonSchema = {
     email: "Email",
     registerLink: "Jetzt erstellen",
     forgotPassword: "Passwort vergessen?",
+  },
+  forgotPassword: {
+    title: "Passwort vergessen?",
+    description:
+      "Gib deine E-Mail-Adresse ein und wir schicken dir einen Reset-Link.",
+    email: "E-Mail",
+    submit: "Reset-Link senden",
+    submitting: "Wird gesendet...",
+    success:
+      "Schau in dein Postfach! Falls diese E-Mail registriert ist, erhältst du in Kürze einen Link.",
+    error: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    backToLogin: "Zurück zum Login",
+  },
+  resetPassword: {
+    title: "Passwort zurücksetzen",
+    description: "Wähle ein neues Passwort für dein Konto.",
+    newPassword: "Neues Passwort",
+    submit: "Passwort zurücksetzen",
+    submitting: "Wird zurückgesetzt...",
+    success:
+      "Passwort aktualisiert! Du kannst dich jetzt mit deinem neuen Passwort anmelden.",
+    error:
+      "Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen an.",
+    invalidToken:
+      "Kein Reset-Token gefunden. Bitte fordere einen neuen Reset-Link an.",
+    backToLogin: "Zurück zum Login",
+    requestNew: "Neuen Link anfordern",
   },
   register: {
     title: "Konto erstellen",

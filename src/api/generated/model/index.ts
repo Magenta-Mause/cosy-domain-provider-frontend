@@ -19,3 +19,5 @@ export * from "./subdomainDtoStatus";
 export * from "./subdomainUpdateDto";
 export * from "./userCreationDto";
 export * from "./userDto";
+export * from './forgotPasswordDto';
+export * from './resetPasswordDto';
