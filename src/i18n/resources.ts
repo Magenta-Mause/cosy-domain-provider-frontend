@@ -30,6 +30,11 @@ const enCommon = {
     email: "Email",
     registerLink: "Create one",
     forgotPassword: "Forgot password?",
+    oauthDivider: "Or continue with",
+    oauthGoogle: "Continue with Google",
+    oauthGithub: "Continue with GitHub",
+    oauthDiscord: "Continue with Discord",
+    oauthError: "Sign-in failed. Please try again.",
   },
   forgotPassword: {
     title: "Forgot your password?",
@@ -72,6 +77,10 @@ const enCommon = {
     alreadyMovedIn: "Already moved in?",
     loginLink: "Log in",
     orUseEmail: "OR USE EMAIL",
+    oauthDivider: "Or sign up with",
+    oauthGoogle: "Sign up with Google",
+    oauthGithub: "Sign up with GitHub",
+    oauthDiscord: "Sign up with Discord",
     termsPrefix: "I accept the",
     termsLink: "terms",
     privacyPolicyLink: "privacy policy",
@@ -210,6 +219,16 @@ const enCommon = {
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
   },
+  passwordSetup: {
+    title: "Set a password",
+    description: "Add a password so you can also sign in with email.",
+    password: "Password",
+    confirm: "Confirm password",
+    submit: "Save password",
+    skip: "Skip for now",
+    mismatch: "Passwords do not match",
+    success: "Password saved",
+  },
 } as const;
 
 type DeepStringSchema<T> = {
@@ -250,6 +269,11 @@ const deCommon: CommonSchema = {
     email: "Email",
     registerLink: "Jetzt erstellen",
     forgotPassword: "Passwort vergessen?",
+    oauthDivider: "Oder weiter mit",
+    oauthGoogle: "Mit Google anmelden",
+    oauthGithub: "Mit GitHub anmelden",
+    oauthDiscord: "Mit Discord anmelden",
+    oauthError: "Anmeldung fehlgeschlagen. Bitte erneut versuchen.",
   },
   forgotPassword: {
     title: "Passwort vergessen?",
@@ -296,6 +320,10 @@ const deCommon: CommonSchema = {
     alreadyMovedIn: "Schon eingezogen?",
     loginLink: "Anmelden",
     orUseEmail: "ODER E-MAIL NUTZEN",
+    oauthDivider: "Oder registrieren mit",
+    oauthGoogle: "Mit Google registrieren",
+    oauthGithub: "Mit GitHub registrieren",
+    oauthDiscord: "Mit Discord registrieren",
     termsPrefix: "Ich akzeptiere die",
     termsLink: "AGB",
     privacyPolicyLink: "Datenschutzrichtlinie",
@@ -435,6 +463,17 @@ const deCommon: CommonSchema = {
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
+  },
+  passwordSetup: {
+    title: "Passwort festlegen",
+    description:
+      "Füge ein Passwort hinzu, um dich auch per E-Mail anmelden zu können.",
+    password: "Passwort",
+    confirm: "Passwort bestätigen",
+    submit: "Passwort speichern",
+    skip: "Jetzt überspringen",
+    mismatch: "Passwörter stimmen nicht überein",
+    success: "Passwort gespeichert",
   },
 };
 

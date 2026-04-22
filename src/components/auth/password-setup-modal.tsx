@@ -1,0 +1,108 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import { PasswordInput } from "@/components/auth/password-input";
+import { ErrorMessage } from "@/components/pixel/error-message";
+import { Button } from "@/components/ui/button";
+import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
+
+interface PasswordSetupModalProps {
+  onDismiss: () => void;
+}
+
+export function PasswordSetupModal({ onDismiss }: PasswordSetupModalProps) {
+  const { t } = useTranslation();
+  const { setupPassword } = useDataInteractions();
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [showPw, setShowPw] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (password !== confirm) {
+      setError(t("passwordSetup.mismatch"));
+      return;
+    }
+    setError(null);
+    setSubmitting(true);
+    try {
+      await setupPassword(password);
+    } catch {
+      setError(t("passwordSetup.mismatch"));
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="bg-background border border-border rounded-lg p-6 w-full max-w-sm flex flex-col gap-4 shadow-xl">
+        <div className="flex flex-col gap-1">
+          <h2 className="text-[18px] font-semibold">
+            {t("passwordSetup.title")}
+          </h2>
+          <p className="text-sm opacity-70">{t("passwordSetup.description")}</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
+            <label className="plabel" htmlFor="setup-password">
+              {t("passwordSetup.password")}
+            </label>
+            <PasswordInput
+              id="setup-password"
+              autoComplete="new-password"
+              required
+              minLength={8}
+              value={password}
+              onChange={setPassword}
+              showPw={showPw}
+              onToggleShow={() => setShowPw(!showPw)}
+              testId="setup-password-input"
+              toggleTestId="setup-toggle-password-btn"
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="plabel" htmlFor="setup-confirm">
+              {t("passwordSetup.confirm")}
+            </label>
+            <PasswordInput
+              id="setup-confirm"
+              autoComplete="new-password"
+              required
+              value={confirm}
+              onChange={setConfirm}
+              showPw={showPw}
+              onToggleShow={() => setShowPw(!showPw)}
+              testId="setup-confirm-input"
+            />
+          </div>
+
+          {error ? <ErrorMessage>{error}</ErrorMessage> : null}
+
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full"
+            disabled={!password || !confirm || submitting}
+            data-testid="setup-submit-btn"
+          >
+            {submitting ? "..." : t("passwordSetup.submit")}
+          </Button>
+        </form>
+
+        <button
+          type="button"
+          className="text-sm opacity-50 hover:opacity-80 text-center bg-transparent border-none cursor-pointer"
+          onClick={onDismiss}
+          data-testid="setup-skip-btn"
+        >
+          {t("passwordSetup.skip")}
+        </button>
+      </div>
+    </div>
+  );
+}

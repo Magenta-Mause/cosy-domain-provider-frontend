@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
+import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
@@ -37,6 +38,8 @@ export function RegisterForm() {
       <div className="flex flex-col gap-2">
         <h2 className="text-[22px]">{t("register.stakeTitle")}</h2>
       </div>
+
+      <OAuthButtons variant="register" />
 
       <OrDivider />
 

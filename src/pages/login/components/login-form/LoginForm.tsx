@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
+import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ export function LoginForm() {
     showPw,
     setShowPw,
     errorMessage,
+    oauthError,
     submitting,
     handleSubmit,
   } = useLoginFormLogic();
@@ -26,6 +28,10 @@ export function LoginForm() {
       <div className="flex flex-col gap-2">
         <h2 className="text-[22px]">{t("login.title")}</h2>
       </div>
+
+      {oauthError ? <ErrorMessage>{t("login.oauthError")}</ErrorMessage> : null}
+
+      <OAuthButtons variant="login" />
 
       <div className="flex flex-col gap-2">
         <label className="plabel" htmlFor="email">

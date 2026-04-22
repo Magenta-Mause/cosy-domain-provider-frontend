@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { setIdentityToken } from "@/api/axios-instance";
+import { customInstance, setIdentityToken } from "@/api/axios-instance";
 import {
   createSubdomain,
   deleteSubdomain,
@@ -20,7 +20,12 @@ import type {
 } from "@/api/generated/model";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading.ts";
 import { parseIdentityToken } from "@/lib/jwt";
-import { clearIdentity, setAuthState, setIdentity } from "@/store/auth-slice";
+import {
+  clearIdentity,
+  clearPasswordSetup,
+  setAuthState,
+  setIdentity,
+} from "@/store/auth-slice";
 import { useAppDispatch } from "@/store/hooks";
 import {
   clearSubdomains,
@@ -154,6 +159,26 @@ const useDataInteractions = () => {
     [],
   );
 
+  const initiateOAuth = useCallback(
+    (provider: "google" | "github" | "discord") => {
+      window.location.href = `/api/v1/auth/oauth/${provider}/authorize`;
+    },
+    [],
+  );
+
+  const setupPassword = useCallback(
+    async (password: string) => {
+      await customInstance({
+        method: "POST",
+        url: "/api/v1/auth/set-password",
+        data: { password },
+      });
+      await refreshIdentityToken();
+      dispatch(clearPasswordSetup());
+    },
+    [dispatch, refreshIdentityToken],
+  );
+
   return {
     refreshIdentityToken,
     loginUser,
@@ -166,6 +191,8 @@ const useDataInteractions = () => {
     createSubdomain: createSubdomainInteraction,
     updateSubdomain: updateSubdomainInteraction,
     deleteSubdomain: deleteSubdomainInteraction,
+    initiateOAuth,
+    setupPassword,
   };
 };
 

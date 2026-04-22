@@ -11,6 +11,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
       sub?: string;
       email?: string;
       isVerified?: boolean;
+      needsPasswordSetup?: boolean;
       iat?: number;
       exp?: number;
       [key: string]: unknown;
@@ -26,6 +27,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
             : null,
       subject: decoded.sub ?? null,
       isVerified: decoded.isVerified ?? null,
+      needsPasswordSetup: decoded.needsPasswordSetup === true,
       issuedAt: typeof decoded.iat === "number" ? decoded.iat : null,
       expiresAt: typeof decoded.exp === "number" ? decoded.exp : null,
       claims: decoded,
