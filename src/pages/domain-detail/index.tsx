@@ -1,6 +1,7 @@
 import { AppHeader } from "@/components/layout/app-header";
 import { DotLoader } from "@/components/pixel/dot-loader";
 import { FlatPanel } from "@/components/pixel/panel";
+import { CreateSubdomainForm } from "./components/create-subdomain-form";
 import { DangerTab } from "./components/danger-tab";
 import { DnsTab } from "./components/dns-tab";
 import { DomainDetailHeader } from "./components/domain-detail-header.tsx";
@@ -56,18 +57,16 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
         {!isCreateMode ? (
           <DomainTabBar activeTab={activeTab} onChange={setActiveTab} />
         ) : null}
-        <FlatPanel className={`p-7 rounded-tl-none`}>
-          {isCreateMode || activeTab === "overview" ? (
-            <OverviewTab
-              domain={domain}
-              isCreateMode={isCreateMode}
+        <FlatPanel className={`p-7 ${!isCreateMode && "rounded-tl-none"}`}>
+          {isCreateMode ? (
+            <CreateSubdomainForm
               isPlus={isPlus}
               isVerified={isVerified}
               label={label}
               onLabelChange={setLabel}
               targetIp={targetIp}
               onTargetIpChange={setTargetIp}
-              errorMessage={activeTab === "overview" ? errorMessage : null}
+              errorMessage={errorMessage}
               isSubmitting={isSubmitting}
               isDeleting={isDeleting}
               hasSubmitted={hasSubmitted}
@@ -75,6 +74,21 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
               labelAvailability={labelAvailability}
               namingMode={namingMode}
               onNamingModeChange={setNamingMode}
+              ipValid={ipValid}
+              canSubmit={canSubmit}
+              onSubmit={handleSubmit}
+            />
+          ) : null}
+          {!isCreateMode && activeTab === "overview" ? (
+            <OverviewTab
+              domain={domain}
+              label={label}
+              targetIp={targetIp}
+              onTargetIpChange={setTargetIp}
+              errorMessage={activeTab === "overview" ? errorMessage : null}
+              isSubmitting={isSubmitting}
+              isDeleting={isDeleting}
+              hasSubmitted={hasSubmitted}
               ipValid={ipValid}
               canSubmit={canSubmit}
               createdAt={createdAt}

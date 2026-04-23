@@ -78,8 +78,7 @@ export function UserMenuDropdown({
         data-testid="user-menu-delete-user-btn"
         variant="ghost"
         size="sm"
-        className="justify-start text-destructive"
-        title={t("nav.notImplemented")}
+        className="justify-start !text-destructive"
         onClick={onDelete}
       >
         {t("nav.deleteUser")}

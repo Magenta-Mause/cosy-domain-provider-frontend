@@ -1,55 +1,73 @@
 import { useTranslation } from "react-i18next";
 
-import type { SubdomainDto } from "@/api/generated/model";
 import { ErrorMessage } from "@/components/pixel/error-message";
+import type { LabelAvailability, NamingMode } from "@/pages/domain-detail/lib";
 
-import { DomainMetaCards } from "./components/domain-meta-cards.tsx";
-import { OverviewActions } from "./components/overview-actions";
-import { ReadonlyLabelField } from "./components/readonly-label-field";
-import { TargetIpField } from "./components/target-ip-field";
+import { CreateModeFields } from "./overview-tab/components/create-mode-fields";
+import { OverviewActions } from "./overview-tab/components/overview-actions";
+import { TargetIpField } from "./overview-tab/components/target-ip-field";
 
-interface OverviewTabProps {
-  domain: SubdomainDto | undefined;
+interface CreateSubdomainFormProps {
+  isPlus: boolean;
+  isVerified: boolean | null;
   label: string;
+  onLabelChange: (v: string) => void;
   targetIp: string;
   onTargetIpChange: (v: string) => void;
   errorMessage: string | null;
   isSubmitting: boolean;
   isDeleting: boolean;
   hasSubmitted: boolean;
+  labelValid: boolean;
+  labelAvailability: LabelAvailability;
+  namingMode: NamingMode;
+  onNamingModeChange: (mode: NamingMode) => void;
   ipValid: boolean;
   canSubmit: boolean;
-  createdAt: string;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export function OverviewTab({
-  domain,
+export function CreateSubdomainForm({
+  isPlus,
+  isVerified,
   label,
+  onLabelChange,
   targetIp,
   onTargetIpChange,
   errorMessage,
   isSubmitting,
   isDeleting,
   hasSubmitted,
+  labelValid,
+  labelAvailability,
+  namingMode,
+  onNamingModeChange,
   ipValid,
   canSubmit,
-  createdAt,
   onSubmit,
-}: OverviewTabProps) {
+}: CreateSubdomainFormProps) {
   const { t } = useTranslation();
+
+  const labelInvalid = hasSubmitted && namingMode === "custom" && !labelValid;
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5">
-      <DomainMetaCards domain={domain} createdAt={createdAt} />
-
       <fieldset
         className="border-none p-0 m-0 flex flex-col gap-10"
         disabled={isSubmitting || isDeleting}
       >
         <legend className="sr-only">{t("domainDetail.formLegend")}</legend>
 
-        <ReadonlyLabelField label={label} />
+        <CreateModeFields
+          isPlus={isPlus}
+          isVerified={isVerified}
+          label={label}
+          onLabelChange={onLabelChange}
+          labelInvalid={labelInvalid}
+          labelAvailability={labelAvailability}
+          namingMode={namingMode}
+          onNamingModeChange={onNamingModeChange}
+        />
 
         <TargetIpField
           targetIp={targetIp}
@@ -64,7 +82,7 @@ export function OverviewTab({
       <OverviewActions
         canSubmit={canSubmit}
         isSubmitting={isSubmitting}
-        isCreateMode={false}
+        isCreateMode
       />
     </form>
   );
