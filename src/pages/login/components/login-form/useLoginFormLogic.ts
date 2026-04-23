@@ -11,6 +11,7 @@ export function useLoginFormLogic() {
   const { loginUser } = useDataInteractions();
   const authState = useAppSelector((state) => state.auth.state);
   const { oauthError } = Route.useSearch();
+  const [step, setStep] = useState<1 | 2>(1);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -20,6 +21,10 @@ export function useLoginFormLogic() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (step === 1) {
+      setStep(2);
+      return;
+    }
     setErrorMessage(null);
     try {
       await loginUser({ email, password });
@@ -29,7 +34,14 @@ export function useLoginFormLogic() {
     }
   }
 
+  function goBack() {
+    setStep(1);
+    setPassword("");
+    setErrorMessage(null);
+  }
+
   return {
+    step,
     email,
     setEmail,
     password,
@@ -40,5 +52,6 @@ export function useLoginFormLogic() {
     oauthError: oauthError === true,
     submitting,
     handleSubmit,
+    goBack,
   };
 }

@@ -12,6 +12,7 @@ export function useRegisterFormLogic() {
   const { registerUser } = useDataInteractions();
   const authState = useAppSelector((state) => state.auth.state);
 
+  const [step, setStep] = useState<1 | 2>(1);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,6 +38,10 @@ export function useRegisterFormLogic() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (step === 1) {
+      if (emailValid) setStep(2);
+      return;
+    }
     setErrorMessage(null);
     if (!canSubmit) return;
     try {
@@ -51,7 +56,15 @@ export function useRegisterFormLogic() {
     }
   }
 
+  function goBack() {
+    setStep(1);
+    setPassword("");
+    setConfirmPassword("");
+    setErrorMessage(null);
+  }
+
   return {
+    step,
     username,
     setUsername,
     email,
@@ -70,5 +83,6 @@ export function useRegisterFormLogic() {
     canSubmit,
     submitting,
     handleSubmit,
+    goBack,
   };
 }

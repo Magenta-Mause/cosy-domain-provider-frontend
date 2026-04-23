@@ -36,6 +36,8 @@ const enCommon = {
     oauthGithub: "Continue with GitHub",
     oauthDiscord: "Continue with Discord",
     oauthError: "Sign-in failed. Please try again.",
+    orEmail: "OR USE EMAIL",
+    emailContinue: "Continue →",
   },
   forgotPassword: {
     title: "Forgot your password?",
@@ -78,6 +80,7 @@ const enCommon = {
     alreadyMovedIn: "Already moved in?",
     loginLink: "Log in",
     orUseEmail: "OR USE EMAIL",
+    emailContinue: "Continue →",
     oauthDivider: "Or sign up with",
     oauthGoogle: "Sign up with Google",
     oauthGithub: "Sign up with GitHub",
@@ -309,6 +312,8 @@ const deCommon: CommonSchema = {
     oauthGithub: "Mit GitHub anmelden",
     oauthDiscord: "Mit Discord anmelden",
     oauthError: "Anmeldung fehlgeschlagen. Bitte erneut versuchen.",
+    orEmail: "ODER E-MAIL NUTZEN",
+    emailContinue: "Weiter →",
   },
   forgotPassword: {
     title: "Passwort vergessen?",
@@ -355,6 +360,7 @@ const deCommon: CommonSchema = {
     alreadyMovedIn: "Schon eingezogen?",
     loginLink: "Anmelden",
     orUseEmail: "ODER E-MAIL NUTZEN",
+    emailContinue: "Weiter →",
     oauthDivider: "Oder registrieren mit",
     oauthGoogle: "Mit Google registrieren",
     oauthGithub: "Mit GitHub registrieren",
