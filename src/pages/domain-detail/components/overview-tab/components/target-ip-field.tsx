@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { InputField } from "@/components/ui/input-field";
+import { FormField } from "@/components/ui/form-field";
 
 interface TargetIpFieldProps {
   targetIp: string;
@@ -18,7 +18,7 @@ export function TargetIpField({
   const { t } = useTranslation();
 
   return (
-    <InputField
+    <FormField
       id="targetIp"
       label={t("createSubdomain.targetIp")}
       value={targetIp}

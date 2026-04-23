@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
+import { FormField } from "@/components/ui/form-field";
 
 import { PasswordStrength } from "../password-strength";
 import { OrDivider } from "./components/or-divider";
@@ -43,7 +43,7 @@ export function RegisterForm() {
 
       <OrDivider />
 
-      <InputField
+      <FormField
         id="username"
         label={t("register.username")}
         type="text"
@@ -57,7 +57,7 @@ export function RegisterForm() {
         testId="register-username-input"
       />
 
-      <InputField
+      <FormField
         id="email"
         label={t("register.email")}
         type="email"

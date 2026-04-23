@@ -1,3 +1,7 @@
+export const USERNAME_MIN = 3;
+export const USERNAME_MAX = 20;
+export const PASSWORD_MIN = 8;
+
 export const SUBDOMAIN_LABEL_PATTERN = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
 
 export const IPV4_PATTERN =
@@ -15,4 +19,17 @@ export function isValidIpv4(value: string) {
 
 export function isValidEmail(value: string) {
   return EMAIL_PATTERN.test(value);
+}
+
+export function isValidUsername(value: string): boolean {
+  const trimmed = value.trim();
+  return trimmed.length >= USERNAME_MIN && trimmed.length <= USERNAME_MAX;
+}
+
+export function isValidPassword(value: string): boolean {
+  return value.length >= PASSWORD_MIN;
+}
+
+export function isPasswordWeak(value: string): boolean {
+  return value.length > 0 && value.length < PASSWORD_MIN;
 }
