@@ -1,6 +1,8 @@
+import type React from "react";
+
 import { ErrorMessage } from "@/components/pixel/error-message";
 
-interface InputFieldProps {
+interface FormFieldProps {
   id: string;
   label: string;
   type?: string;
@@ -12,7 +14,10 @@ interface InputFieldProps {
   disabled?: boolean;
   readOnly?: boolean;
   invalid?: boolean;
-  endDecorator?: string;
+  /** Text suffix shown inside the right edge of the input (e.g. ".play.cosy-hosting.net"). */
+  suffix?: string;
+  /** Arbitrary right-side slot, e.g. a password visibility toggle button. */
+  endDecorator?: React.ReactNode;
   testId?: string;
   hint?: string;
   autoComplete?: string;
@@ -21,7 +26,7 @@ interface InputFieldProps {
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
 }
 
-export function InputField({
+export function FormField({
   id,
   label,
   type = "text",
@@ -33,6 +38,7 @@ export function InputField({
   disabled,
   readOnly,
   invalid,
+  suffix,
   endDecorator,
   testId,
   hint,
@@ -40,11 +46,9 @@ export function InputField({
   minLength,
   maxLength,
   inputMode,
-}: InputFieldProps) {
+}: FormFieldProps) {
   const isInvalid = invalid || !!error;
-  const decoratorPadding = endDecorator
-    ? endDecorator.length * 9 + 28
-    : undefined;
+  const suffixPadding = suffix ? suffix.length * 9 + 28 : undefined;
 
   return (
     <div className="flex flex-col gap-2">
@@ -55,7 +59,7 @@ export function InputField({
         <input
           id={id}
           data-testid={testId}
-          className={`pinput${isInvalid ? " invalid" : ""}${readOnly || disabled ? " opacity-50 select-none" : ""}`}
+          className={`pinput${isInvalid ? " invalid" : ""}${readOnly || disabled ? " opacity-50 select-none" : ""}${endDecorator ? " pr-12" : ""}`}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -67,14 +71,17 @@ export function InputField({
           minLength={minLength}
           maxLength={maxLength}
           inputMode={inputMode}
-          style={
-            decoratorPadding ? { paddingRight: decoratorPadding } : undefined
-          }
+          style={suffixPadding ? { paddingRight: suffixPadding } : undefined}
         />
-        {endDecorator && (
+        {suffix && (
           <span className="absolute right-[14px] top-1/2 -translate-y-1/2 text-lg opacity-70 pointer-events-none">
-            {endDecorator}
+            {suffix}
           </span>
+        )}
+        {endDecorator && (
+          <div className="absolute right-[10px] top-1/2 -translate-y-1/2 flex items-center">
+            {endDecorator}
+          </div>
         )}
       </div>
       {hint && !error && <div className="text-base opacity-[0.65]">{hint}</div>}

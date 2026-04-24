@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { InputField } from "@/components/ui/input-field";
+import { FormField } from "@/components/ui/form-field";
 
 interface ReadonlyLabelFieldProps {
   label: string;
@@ -10,19 +10,19 @@ interface ReadonlyLabelFieldProps {
 export function ReadonlyLabelField({ label, fqdn }: ReadonlyLabelFieldProps) {
   const { t } = useTranslation();
 
-  const endDecorator = fqdn
+  const suffix = fqdn
     ? fqdn.slice(fqdn.indexOf("."))
     : ".play.cosy-hosting.net";
 
   return (
-    <InputField
+    <FormField
       id="label"
       label={t("createSubdomain.label")}
       value={label}
       onChange={() => {}}
       readOnly
       disabled
-      endDecorator={endDecorator}
+      suffix={suffix}
       testId="domain-detail-label-input"
       hint={t("domainDetail.labelReadonly")}
     />

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
+import { FormField } from "@/components/ui/form-field";
 
 import { useForgotPasswordLogic } from "./useForgotPasswordLogic";
 
@@ -31,7 +31,7 @@ const ForgotPasswordPage = () => {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <InputField
+            <FormField
               id="email"
               label={t("forgotPassword.email")}
               type="email"

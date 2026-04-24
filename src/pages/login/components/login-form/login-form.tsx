@@ -5,7 +5,7 @@ import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
+import { FormField } from "@/components/ui/form-field";
 
 import { useLoginFormLogic } from "./useLoginFormLogic";
 
@@ -50,7 +50,7 @@ export function LoginForm() {
             />
           </div>
 
-          <InputField
+          <FormField
             id="email"
             label={t("login.email")}
             type="email"

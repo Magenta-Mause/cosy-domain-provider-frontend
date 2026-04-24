@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { Badge } from "@/components/pixel/badge";
 import { ErrorMessage } from "@/components/pixel/error-message";
-import { InputField } from "@/components/ui/input-field";
+import { FormField } from "@/components/ui/form-field";
 import type { LabelAvailability, NamingMode } from "@/pages/domain-detail/lib";
 
 import { LabelAvailabilityIndicator } from "./label-availability-indicator";
@@ -80,7 +80,7 @@ export function CreateModeFields({
 
       {namingMode === "custom" && isPlus ? (
         <div className="flex flex-col gap-2">
-          <InputField
+          <FormField
             id="label"
             label={t("createSubdomain.label")}
             value={label}
@@ -90,7 +90,7 @@ export function CreateModeFields({
             placeholder="my-castle"
             required
             invalid={labelInvalid}
-            endDecorator=".play.cosy-hosting.net"
+            suffix=".play.cosy-hosting.net"
             testId="domain-detail-label-input"
             hint={t("createSubdomain.labelHint")}
           />

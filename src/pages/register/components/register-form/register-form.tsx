@@ -5,7 +5,7 @@ import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
+import { FormField } from "@/components/ui/form-field";
 
 import { PasswordStrength } from "../password-strength";
 import { useRegisterFormLogic } from "./useRegisterFormLogic";
@@ -59,7 +59,7 @@ export function RegisterForm() {
             />
           </div>
 
-          <InputField
+          <FormField
             id="email"
             label={t("register.email")}
             type="email"
@@ -92,7 +92,7 @@ export function RegisterForm() {
             ← {email}
           </button>
 
-          <InputField
+          <FormField
             id="username"
             label={t("register.username")}
             type="text"
