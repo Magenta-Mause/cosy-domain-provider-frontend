@@ -369,6 +369,15 @@ const enCommon = {
     back: "← Back",
     yes: "Yes",
     no: "No",
+    fieldSubdomainId: "Subdomain ID",
+    fieldTargetIpv6: "Target IPv6",
+    fieldUpdated: "Updated",
+    fieldOwnerUuid: "Owner ID",
+    dnsEntriesSection: "DNS Entries",
+    noDnsEntries: "No DNS entries",
+    colDnsName: "Name",
+    colDnsType: "Type",
+    colDnsValue: "Value",
   },
 } as const;
 
@@ -764,6 +773,15 @@ const deCommon: CommonSchema = {
     back: "← Zurück",
     yes: "Ja",
     no: "Nein",
+    fieldSubdomainId: "Subdomain-ID",
+    fieldTargetIpv6: "Ziel-IPv6",
+    fieldUpdated: "Aktualisiert",
+    fieldOwnerUuid: "Inhaber-ID",
+    dnsEntriesSection: "DNS-Einträge",
+    noDnsEntries: "Keine DNS-Einträge",
+    colDnsName: "Name",
+    colDnsType: "Typ",
+    colDnsValue: "Wert",
   },
 };
 

@@ -24,7 +24,9 @@ import { Route as DomainDomainIdRouteImport } from './routes/domain.$domainId'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminSubdomainsRouteImport } from './routes/admin.subdomains'
 import { Route as AdminUsersIndexRouteImport } from './routes/admin.users.index'
+import { Route as AdminSubdomainsIndexRouteImport } from './routes/admin.subdomains.index'
 import { Route as AdminUsersUserIdRouteImport } from './routes/admin.users.$userId'
+import { Route as AdminSubdomainsSubdomainUuidRouteImport } from './routes/admin.subdomains.$subdomainUuid'
 
 const VerifyRoute = VerifyRouteImport.update({
   id: '/verify',
@@ -101,11 +103,22 @@ const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminUsersRoute,
 } as any)
+const AdminSubdomainsIndexRoute = AdminSubdomainsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminSubdomainsRoute,
+} as any)
 const AdminUsersUserIdRoute = AdminUsersUserIdRouteImport.update({
   id: '/$userId',
   path: '/$userId',
   getParentRoute: () => AdminUsersRoute,
 } as any)
+const AdminSubdomainsSubdomainUuidRoute =
+  AdminSubdomainsSubdomainUuidRouteImport.update({
+    id: '/$subdomainUuid',
+    path: '/$subdomainUuid',
+    getParentRoute: () => AdminSubdomainsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -118,11 +131,13 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/verify': typeof VerifyRoute
-  '/admin/subdomains': typeof AdminSubdomainsRoute
+  '/admin/subdomains': typeof AdminSubdomainsRouteWithChildren
   '/admin/users': typeof AdminUsersRouteWithChildren
   '/domain/$domainId': typeof DomainDomainIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/subdomains/$subdomainUuid': typeof AdminSubdomainsSubdomainUuidRoute
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/admin/subdomains/': typeof AdminSubdomainsIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -135,10 +150,11 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/verify': typeof VerifyRoute
-  '/admin/subdomains': typeof AdminSubdomainsRoute
   '/domain/$domainId': typeof DomainDomainIdRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/subdomains/$subdomainUuid': typeof AdminSubdomainsSubdomainUuidRoute
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/admin/subdomains': typeof AdminSubdomainsIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -153,11 +169,13 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/verify': typeof VerifyRoute
-  '/admin/subdomains': typeof AdminSubdomainsRoute
+  '/admin/subdomains': typeof AdminSubdomainsRouteWithChildren
   '/admin/users': typeof AdminUsersRouteWithChildren
   '/domain/$domainId': typeof DomainDomainIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/subdomains/$subdomainUuid': typeof AdminSubdomainsSubdomainUuidRoute
   '/admin/users/$userId': typeof AdminUsersUserIdRoute
+  '/admin/subdomains/': typeof AdminSubdomainsIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
 }
 export interface FileRouteTypes {
@@ -177,7 +195,9 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/domain/$domainId'
     | '/admin/'
+    | '/admin/subdomains/$subdomainUuid'
     | '/admin/users/$userId'
+    | '/admin/subdomains/'
     | '/admin/users/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -190,10 +210,11 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/settings'
     | '/verify'
-    | '/admin/subdomains'
     | '/domain/$domainId'
     | '/admin'
+    | '/admin/subdomains/$subdomainUuid'
     | '/admin/users/$userId'
+    | '/admin/subdomains'
     | '/admin/users'
   id:
     | '__root__'
@@ -211,7 +232,9 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/domain/$domainId'
     | '/admin/'
+    | '/admin/subdomains/$subdomainUuid'
     | '/admin/users/$userId'
+    | '/admin/subdomains/'
     | '/admin/users/'
   fileRoutesById: FileRoutesById
 }
@@ -336,6 +359,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersIndexRouteImport
       parentRoute: typeof AdminUsersRoute
     }
+    '/admin/subdomains/': {
+      id: '/admin/subdomains/'
+      path: '/'
+      fullPath: '/admin/subdomains/'
+      preLoaderRoute: typeof AdminSubdomainsIndexRouteImport
+      parentRoute: typeof AdminSubdomainsRoute
+    }
     '/admin/users/$userId': {
       id: '/admin/users/$userId'
       path: '/$userId'
@@ -343,8 +373,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersUserIdRouteImport
       parentRoute: typeof AdminUsersRoute
     }
+    '/admin/subdomains/$subdomainUuid': {
+      id: '/admin/subdomains/$subdomainUuid'
+      path: '/$subdomainUuid'
+      fullPath: '/admin/subdomains/$subdomainUuid'
+      preLoaderRoute: typeof AdminSubdomainsSubdomainUuidRouteImport
+      parentRoute: typeof AdminSubdomainsRoute
+    }
   }
 }
+
+interface AdminSubdomainsRouteChildren {
+  AdminSubdomainsSubdomainUuidRoute: typeof AdminSubdomainsSubdomainUuidRoute
+  AdminSubdomainsIndexRoute: typeof AdminSubdomainsIndexRoute
+}
+
+const AdminSubdomainsRouteChildren: AdminSubdomainsRouteChildren = {
+  AdminSubdomainsSubdomainUuidRoute: AdminSubdomainsSubdomainUuidRoute,
+  AdminSubdomainsIndexRoute: AdminSubdomainsIndexRoute,
+}
+
+const AdminSubdomainsRouteWithChildren = AdminSubdomainsRoute._addFileChildren(
+  AdminSubdomainsRouteChildren,
+)
 
 interface AdminUsersRouteChildren {
   AdminUsersUserIdRoute: typeof AdminUsersUserIdRoute
@@ -361,13 +412,13 @@ const AdminUsersRouteWithChildren = AdminUsersRoute._addFileChildren(
 )
 
 interface AdminRouteChildren {
-  AdminSubdomainsRoute: typeof AdminSubdomainsRoute
+  AdminSubdomainsRoute: typeof AdminSubdomainsRouteWithChildren
   AdminUsersRoute: typeof AdminUsersRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
-  AdminSubdomainsRoute: AdminSubdomainsRoute,
+  AdminSubdomainsRoute: AdminSubdomainsRouteWithChildren,
   AdminUsersRoute: AdminUsersRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
 }

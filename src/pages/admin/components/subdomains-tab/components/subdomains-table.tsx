@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
@@ -21,6 +21,7 @@ export function SubdomainsTable({
   onToggleSort,
 }: SubdomainsTableProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const headers: { label: string; sortKey?: SortKey }[] = [
     { label: t("admin.colLabel"), sortKey: "label" },
@@ -57,31 +58,40 @@ export function SubdomainsTable({
           </div>
         ))}
         {subdomains.map((s) => (
-          <Fragment key={s.uuid}>
-            <div className="px-3 py-2.5 border-t border-foreground/10 truncate font-mono">
+          <div
+            key={s.uuid}
+            className="contents cursor-pointer group"
+            onClick={() =>
+              navigate({
+                to: "/admin/subdomains/$subdomainUuid",
+                params: { subdomainUuid: s.uuid },
+              })
+            }
+          >
+            <div className="px-3 py-2.5 border-t border-foreground/10 truncate font-mono group-hover:bg-foreground/5 transition-colors">
               {s.label}
             </div>
-            <div className="px-3 py-2.5 border-t border-foreground/10 truncate opacity-70">
+            <div className="px-3 py-2.5 border-t border-foreground/10 truncate opacity-70 group-hover:bg-foreground/5 transition-colors">
               {s.fqdn ?? "—"}
             </div>
             <div
-              className={`px-3 py-2.5 border-t border-foreground/10 ${subdomainStatusColor(s.status)}`}
+              className={`px-3 py-2.5 border-t border-foreground/10 group-hover:bg-foreground/5 transition-colors ${subdomainStatusColor(s.status)}`}
             >
               {s.status}
             </div>
-            <div className="px-3 py-2.5 border-t border-foreground/10 opacity-70">
+            <div className="px-3 py-2.5 border-t border-foreground/10 opacity-70 group-hover:bg-foreground/5 transition-colors">
               {s.labelMode}
             </div>
-            <div className="px-3 py-2.5 border-t border-foreground/10 truncate opacity-70">
+            <div className="px-3 py-2.5 border-t border-foreground/10 truncate opacity-70 group-hover:bg-foreground/5 transition-colors">
               {s.targetIp ?? "—"}
             </div>
-            <div className="px-3 py-2.5 border-t border-foreground/10 truncate opacity-70">
+            <div className="px-3 py-2.5 border-t border-foreground/10 truncate opacity-70 group-hover:bg-foreground/5 transition-colors">
               {s.ownerEmail}
             </div>
-            <div className="px-3 py-2.5 border-t border-foreground/10 opacity-70">
+            <div className="px-3 py-2.5 border-t border-foreground/10 opacity-70 group-hover:bg-foreground/5 transition-colors">
               {new Date(s.createdAt).toLocaleDateString()}
             </div>
-          </Fragment>
+          </div>
         ))}
       </div>
     </FlatPanel>
