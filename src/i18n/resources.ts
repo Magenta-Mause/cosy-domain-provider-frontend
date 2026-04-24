@@ -212,22 +212,21 @@ const enCommon = {
     titleLine1: "Pick a home",
     titleLine2: "on the internet.",
     description:
-      "Cosy Domain Provider gives your self-hosted Cosy server a friendly address on play.cosy-hosting.net.",
+      "Cosy Domain Provider gives you access to a free subdomain on play.cosy-hosting.net.",
     claimLabel: "Claim your address",
     checkButton: "Check →",
-    benefit1: "✓ Free tier: 1 random address",
+    benefit1: "✓ Get one random adress for free",
   },
   features: {
-    title: "Three stops at the post office",
-    subtitle: "Everything you need to mail packets to your home server.",
+    title: "Easily setup your own subdomain",
+    subtitle: "Get everything done in 3 steps",
     stop1Title: "Claim an address",
-    stop1Body:
-      "Pick a free subdomain on play.cosy-hosting.net or bring a custom one with Cosy+.",
+    stop1Body: "Create a free subdomain on play.cosy-hosting.net.",
     stop2Title: "Verify & connect",
     stop2Body:
       "One-time token pasted into your Cosy instance. We handle the DNS.",
     stop3Title: "Ride the wire",
-    stop3Body: "Automatic Let's Encrypt TLS, renewed while you sleep.",
+    stop3Body: "Use your subdomain.",
   },
   pricing: {
     title: "Two ways to move in",
@@ -237,7 +236,6 @@ const enCommon = {
     freeTitle: "Random mailbox",
     freePrice: "€0 / forever",
     freeFeature1: "✓ One auto-generated subdomain",
-    freeFeature2: "✓ Unlimited renewals",
     freeLimitation: "✗ Only random subdomain",
     freeButton: "Get a random address",
     plusBadge: "Cosy+",
@@ -633,10 +631,10 @@ const deCommon: CommonSchema = {
     titleLine1: "Such dir ein Zuhause",
     titleLine2: "im Internet.",
     description:
-      "Cosy Domain Provider gibt deinem selbst gehosteten Cosy-Server eine freundliche Adresse auf play.cosy-hosting.net.",
+      "Cosy Domain Provider gibt dir zugriff auf eine kostenlose Adresse auf play.cosy-hosting.net.",
     claimLabel: "Deine Adresse sichern",
     checkButton: "Prüfen →",
-    benefit1: "✓ Kostenlos: 1 zufällige Adresse",
+    benefit1: "✓ Erhalte eine zufällige Adresse umsonst",
   },
   features: {
     title: "Drei Haltestellen an der Post",
@@ -658,7 +656,6 @@ const deCommon: CommonSchema = {
     freeTitle: "Zufällige Subdomain",
     freePrice: "€0 / für immer",
     freeFeature1: "✓ Eine automatisch generierte Subdomain",
-    freeFeature2: "✓ Unbegrenzte Erneuerungen",
     freeLimitation: "✗ Subdomain nicht frei wählbar",
     freeButton: "Zufällige Adresse erhalten",
     plusBadge: "Cosy+",

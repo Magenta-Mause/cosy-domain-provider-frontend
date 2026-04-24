@@ -27,7 +27,6 @@ export function PricingSection() {
                 </div>
                 <ul className="list-none p-0 m-0 stack-sm">
                   <li>{t("pricing.freeFeature1")}</li>
-                  <li>{t("pricing.freeFeature2")}</li>
                   <li className="opacity-[0.55]">
                     {t("pricing.freeLimitation")}
                   </li>

@@ -36,34 +36,40 @@ export function LandingNav() {
         </a>
       </nav>
 
-      <LanguageMenu onChangeLanguage={handleLanguageChange} />
+      <LanguageMenu
+        onChangeLanguage={handleLanguageChange}
+        buttonVariant={"secondary"}
+        className="mx-5"
+      />
 
-      {isUserLoggedIn ? (
-        <Link
-          to="/dashboard"
-          data-testid="home-dashboard-link"
-          className="pbtn sm"
-        >
-          {t("landingNav.myDashboard")}
-        </Link>
-      ) : (
-        <>
+      <div className={"flex gap-3"}>
+        {isUserLoggedIn ? (
           <Link
-            to="/login"
-            data-testid="home-login-link"
-            className="pbtn sm secondary"
-          >
-            {t("nav.login")}
-          </Link>
-          <Link
-            to="/register"
-            data-testid="home-signup-link"
+            to="/dashboard"
+            data-testid="home-dashboard-link"
             className="pbtn sm"
           >
-            {t("landingNav.signUp")}
+            {t("landingNav.myDashboard")}
           </Link>
-        </>
-      )}
+        ) : (
+          <>
+            <Link
+              to="/login"
+              data-testid="home-login-link"
+              className="pbtn sm secondary"
+            >
+              {t("nav.login")}
+            </Link>
+            <Link
+              to="/register"
+              data-testid="home-signup-link"
+              className="pbtn sm"
+            >
+              {t("landingNav.signUp")}
+            </Link>
+          </>
+        )}
+      </div>
     </header>
   );
 }

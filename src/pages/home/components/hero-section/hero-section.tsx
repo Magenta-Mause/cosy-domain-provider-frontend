@@ -92,7 +92,8 @@ export function HeroSection() {
               <img
                 src={mailBoxImage}
                 alt={"Cosy Mailbox"}
-                className={"w-[110%]"}
+                className={"w-[110%] select-none"}
+                draggable={false}
               />
             </div>
           </FlatPanel>
