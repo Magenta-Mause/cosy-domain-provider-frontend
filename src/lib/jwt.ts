@@ -11,6 +11,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
       sub?: string;
       email?: string;
       isVerified?: boolean;
+      needsPasswordSetup?: boolean;
       iat?: number;
       exp?: number;
       [key: string]: unknown;
@@ -26,6 +27,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
             : null,
       subject: decoded.sub ?? null,
       isVerified: decoded.isVerified ?? null,
+      needsPasswordSetup: decoded.needsPasswordSetup === true,
       plan:
         decoded.plan === "PLUS" || decoded.plan === "FREE"
           ? decoded.plan

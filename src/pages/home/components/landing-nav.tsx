@@ -1,36 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
-import cosyIcon from "@/assets/cosy-logo.webp";
+import { CosyLogo } from "@/components/layout/cosy-logo";
+import { LanguageMenu } from "@/components/layout/language-menu";
+import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 
 export function LandingNav() {
   const { t } = useTranslation();
   const { isUserLoggedIn } = useAuthInformation();
+  const { handleLanguageChange } = useLanguageChange();
 
   return (
     <header className="flex items-center gap-4 relative z-[3] px-8 py-5">
-      <Link
-        to="/dashboard"
-        data-testid="home-logo-link"
-        className="flex items-center gap-2.5 no-underline hover:no-underline"
-      >
-        <img src={cosyIcon} alt="Cosy" className="h-12" />
-        <div className="text-left pt-[3px]">
-          <div
-            className="pixel text-base"
-            style={{ color: "oklch(0.95 0.05 70)" }}
-          >
-            COSY
-          </div>
-          <div
-            className="text-sm mt-0.5 opacity-[0.85]"
-            style={{ color: "oklch(0.92 0.04 60)" }}
-          >
-            Domain Provider
-          </div>
-        </div>
-      </Link>
+      <CosyLogo testId="home-logo" />
 
       <div className="flex-1" />
 
@@ -52,6 +35,8 @@ export function LandingNav() {
           {t("landingNav.pricing")}
         </a>
       </nav>
+
+      <LanguageMenu onChangeLanguage={handleLanguageChange} />
 
       {isUserLoggedIn ? (
         <Link

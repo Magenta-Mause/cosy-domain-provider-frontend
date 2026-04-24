@@ -1,10 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { PasswordSetupModal } from "@/components/auth/password-setup-modal";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
 import { useAppSelector } from "@/store/hooks";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { bootstrapAuth } = useDataLoading();
   const bootstrapped = useAppSelector((state) => state.auth.bootstrapped);
+  const userSubject = useAppSelector((state) => state.auth.user?.subject);
+  const needsPasswordSetup = useAppSelector(
+    (state) => state.auth.user?.needsPasswordSetup === true,
+  );
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    setDismissed(false);
+  }, [userSubject]);
 
   useEffect(() => {
     let cancelled = false;
@@ -26,5 +36,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {needsPasswordSetup && !dismissed ? (
+        <PasswordSetupModal onDismiss={() => setDismissed(true)} />
+      ) : null}
+    </>
+  );
 }

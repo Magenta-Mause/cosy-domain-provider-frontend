@@ -4,6 +4,7 @@ export interface AuthUser {
   username: string | null;
   email: string | null;
   isVerified: boolean | null;
+  needsPasswordSetup: boolean;
   plan: "FREE" | "PLUS" | null;
   subject: string | null;
   issuedAt: number | null;
@@ -50,9 +51,19 @@ const authSlice = createSlice({
     markBootstrapped: (state) => {
       state.bootstrapped = true;
     },
+    clearPasswordSetup: (state) => {
+      if (state.user) {
+        state.user.needsPasswordSetup = false;
+      }
+    },
   },
 });
 
-export const { setAuthState, setIdentity, clearIdentity, markBootstrapped } =
-  authSlice.actions;
+export const {
+  setAuthState,
+  setIdentity,
+  clearIdentity,
+  markBootstrapped,
+  clearPasswordSetup,
+} = authSlice.actions;
 export const authReducer = authSlice.reducer;
