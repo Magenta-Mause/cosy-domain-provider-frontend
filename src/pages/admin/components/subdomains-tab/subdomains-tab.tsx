@@ -15,8 +15,7 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
 
   if (isLoading)
     return <p className="text-sm opacity-60 py-4">{t("admin.loading")}</p>;
-  if (error)
-    return <p className="text-sm text-destructive py-4">{error}</p>;
+  if (error) return <p className="text-sm text-destructive py-4">{error}</p>;
 
   return (
     <div className="flex flex-col gap-4">

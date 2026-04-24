@@ -1,14 +1,19 @@
-import { useNavigate, useRouter } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
+import { Button } from "@/components/ui/button";
+import { FormField } from "@/components/ui/form-field";
 
 import type { AdminSubdomain } from "../../../lib";
 import { DetailField } from "../../users-tab/components/detail-field";
 import { StatusBadge } from "../../users-tab/components/status-badge";
+import { useSubdomainDetailLogic } from "./useSubdomainDetailLogic";
 
 interface SubdomainDetailProps {
   subdomain: AdminSubdomain;
+  adminKey: string;
+  onSaved: () => void;
 }
 
 function deriveDnsEntries(subdomain: AdminSubdomain) {
@@ -23,18 +28,43 @@ function deriveDnsEntries(subdomain: AdminSubdomain) {
   return entries;
 }
 
-export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
+export function SubdomainDetail({
+  subdomain,
+  adminKey,
+  onSaved,
+}: SubdomainDetailProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const router = useRouter();
   const dnsEntries = deriveDnsEntries(subdomain);
+
+  const {
+    domainSuffix,
+    targetIp,
+    setTargetIp,
+    targetIpv6,
+    setTargetIpv6,
+    isSavingIps,
+    saveIpsError,
+    ipsUnchanged,
+    handleSaveIps,
+    label,
+    setLabel,
+    isSavingLabel,
+    saveLabelError,
+    labelUnchanged,
+    handleSaveLabel,
+    isDeleting,
+    deleteError,
+    handleDeleteSubdomain,
+    handleBack,
+  } = useSubdomainDetailLogic(subdomain, adminKey, onSaved);
 
   return (
     <div className="flex flex-col gap-5">
       <div>
         <button
           type="button"
-          onClick={() => router.history.back()}
+          onClick={handleBack}
           className="pbtn sm secondary"
         >
           {t("admin.back")}
@@ -59,7 +89,9 @@ export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
         <DetailField label={t("admin.colStatus")}>
           <StatusBadge status={subdomain.status} />
         </DetailField>
-        <DetailField label={t("admin.colMode")}>{subdomain.labelMode}</DetailField>
+        <DetailField label={t("admin.colMode")}>
+          {subdomain.labelMode}
+        </DetailField>
 
         <DetailField label={t("admin.colTargetIpv4")}>
           <span className="font-mono">{subdomain.targetIp ?? "—"}</span>
@@ -114,16 +146,18 @@ export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
             className="grid text-sm"
             style={{ gridTemplateColumns: "3fr 1fr 4fr" }}
           >
-            {[t("admin.colDnsName"), t("admin.colDnsType"), t("admin.colDnsValue")].map(
-              (h) => (
-                <div
-                  key={h}
-                  className="px-3 py-2 bg-btn-primary text-btn-secondary font-bold"
-                >
-                  {h}
-                </div>
-              ),
-            )}
+            {[
+              t("admin.colDnsName"),
+              t("admin.colDnsType"),
+              t("admin.colDnsValue"),
+            ].map((h) => (
+              <div
+                key={h}
+                className="px-3 py-2 bg-btn-primary text-btn-secondary font-bold"
+              >
+                {h}
+              </div>
+            ))}
             {dnsEntries.length === 0 && (
               <div className="col-span-3 px-3 py-4 opacity-50 text-center">
                 {t("admin.noDnsEntries")}
@@ -145,6 +179,90 @@ export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
           </div>
         </FlatPanel>
       </div>
+
+      <FlatPanel className="px-5 py-4 flex flex-col gap-3">
+        <h3 className="text-sm font-semibold opacity-70 uppercase tracking-wide">
+          {t("admin.editIpsSection")}
+        </h3>
+        <div className="flex items-end gap-5">
+          <FormField
+            id="target-ip"
+            label={t("admin.colTargetIpv4")}
+            value={targetIp}
+            onChange={setTargetIp}
+            placeholder="1.2.3.4"
+            inputMode="decimal"
+          />
+          <FormField
+            id="target-ipv6"
+            label={t("admin.fieldTargetIpv6")}
+            value={targetIpv6}
+            onChange={setTargetIpv6}
+            placeholder="2001:db8::1"
+          />
+          <Button
+            type="button"
+            size="sm"
+            onClick={handleSaveIps}
+            disabled={isSavingIps || ipsUnchanged}
+            className="h-[50px] shrink-0"
+          >
+            {isSavingIps ? t("admin.savingIps") : t("admin.saveIps")}
+          </Button>
+        </div>
+        {saveIpsError && (
+          <p className="text-sm text-destructive">{saveIpsError}</p>
+        )}
+      </FlatPanel>
+
+      <FlatPanel className="px-5 py-4 flex flex-col gap-3">
+        <h3 className="text-sm font-semibold opacity-70 uppercase tracking-wide">
+          {t("admin.renameSection")}
+        </h3>
+        <div className="flex items-end gap-5">
+          <FormField
+            id="label"
+            label={t("admin.fieldNewLabel")}
+            value={label}
+            onChange={setLabel}
+            suffix={domainSuffix}
+            minLength={3}
+            maxLength={45}
+          />
+          <Button
+            type="button"
+            size="sm"
+            onClick={handleSaveLabel}
+            disabled={isSavingLabel || labelUnchanged}
+            className="h-[50px] shrink-0"
+          >
+            {isSavingLabel ? t("admin.savingLabel") : t("admin.saveLabel")}
+          </Button>
+        </div>
+        {saveLabelError && (
+          <p className="text-sm text-destructive">{saveLabelError}</p>
+        )}
+      </FlatPanel>
+
+      <FlatPanel className="px-5 py-4 flex flex-col gap-3 border border-destructive/40">
+        <h3 className="text-sm font-semibold text-destructive uppercase tracking-wide">
+          {t("admin.dangerZone")}
+        </h3>
+        <div className="flex items-center gap-5">
+          <Button
+            type="button"
+            variant="destructive"
+            size="sm"
+            onClick={handleDeleteSubdomain}
+            disabled={isDeleting}
+          >
+            {t("admin.deleteSubdomain")}
+          </Button>
+          {deleteError && (
+            <p className="text-sm text-destructive">{deleteError}</p>
+          )}
+        </div>
+      </FlatPanel>
     </div>
   );
 }

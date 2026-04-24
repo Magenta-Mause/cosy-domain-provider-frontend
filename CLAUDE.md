@@ -2,6 +2,10 @@
 
 React SPA for managing `cosy-hosting.net` subdomains. Backend: `../cosy-domain-provider` (Spring Boot).
 
+## Cross-repo work
+
+If a task touches the backend (adding endpoints, changing DTOs, understanding API behaviour), **read `../cosy-domain-provider/CLAUDE.md` before starting.** It documents the controller/service/repository layer rules, DTO package conventions, admin method naming, and formatting requirements that must be followed on the backend side.
+
 ## Commands
 
 ```bash

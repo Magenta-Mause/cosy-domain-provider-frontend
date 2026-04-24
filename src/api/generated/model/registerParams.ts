@@ -7,5 +7,8 @@
 import type { RegisterTokenMode } from "./registerTokenMode";
 
 export type RegisterParams = {
+  /**
+   * COOKIE sets httpOnly cookie, DIRECT returns token in body
+   */
   tokenMode?: RegisterTokenMode;
 };

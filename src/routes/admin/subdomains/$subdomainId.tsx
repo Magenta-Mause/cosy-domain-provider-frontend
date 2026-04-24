@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 
 import { SubdomainDetail } from "@/pages/admin/components/subdomains-tab";
 import { ADMIN_KEY_STORAGE, adminApi } from "@/pages/admin/lib";
@@ -13,5 +13,14 @@ export const Route = createFileRoute("/admin/subdomains/$subdomainId")({
 
 function RouteComponent() {
   const subdomain = Route.useLoaderData();
-  return <SubdomainDetail subdomain={subdomain} />;
+  const router = useRouter();
+  const adminKey = sessionStorage.getItem(ADMIN_KEY_STORAGE) ?? "";
+
+  return (
+    <SubdomainDetail
+      subdomain={subdomain}
+      adminKey={adminKey}
+      onSaved={() => router.invalidate()}
+    />
+  );
 }

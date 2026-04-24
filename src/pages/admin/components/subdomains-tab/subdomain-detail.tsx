@@ -2,9 +2,8 @@ import { useRouter } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
-
-import { DetailField } from "../detail-field";
 import type { AdminSubdomain } from "../../lib";
+import { DetailField } from "../detail-field";
 import { subdomainStatusColor } from "./lib";
 
 interface SubdomainDetailProps {
@@ -18,7 +17,11 @@ export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-3 items-start">
-        <button type="button" onClick={() => router.history.back()} className="pbtn sm secondary">
+        <button
+          type="button"
+          onClick={() => router.history.back()}
+          className="pbtn sm secondary"
+        >
           {t("admin.back")}
         </button>
       </div>
@@ -41,7 +44,9 @@ export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
             {subdomain.status}
           </span>
         </DetailField>
-        <DetailField label={t("admin.colMode")}>{subdomain.labelMode}</DetailField>
+        <DetailField label={t("admin.colMode")}>
+          {subdomain.labelMode}
+        </DetailField>
 
         <DetailField label={t("admin.colTargetIpv4")}>
           {subdomain.targetIp ?? "—"}

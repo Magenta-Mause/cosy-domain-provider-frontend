@@ -47,6 +47,16 @@ async function request<T>(
   return res.json() as Promise<T>;
 }
 
+async function requestVoid(
+  url: string,
+  key: string,
+  init?: RequestInit,
+): Promise<void> {
+  const res = await fetch(url, { ...init, headers: headers(key) });
+  if (res.status === 401) throw new Error("UNAUTHORIZED");
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+}
+
 export const adminApi = {
   getSubdomains: (key: string) =>
     request<AdminSubdomain[]>(`${BASE}/subdomains`, key),
@@ -54,10 +64,42 @@ export const adminApi = {
   getSubdomainDetail: (key: string, uuid: string) =>
     request<AdminSubdomain>(`${BASE}/subdomains/${uuid}`, key),
 
+  updateSubdomainIps: (
+    key: string,
+    uuid: string,
+    body: { targetIp?: string; targetIpv6?: string },
+  ) =>
+    request<AdminSubdomain>(`${BASE}/subdomains/${uuid}`, key, {
+      method: "PUT",
+      body: JSON.stringify(body),
+    }),
+
+  relabelSubdomain: (key: string, uuid: string, label: string) =>
+    request<AdminSubdomain>(`${BASE}/subdomains/${uuid}/label`, key, {
+      method: "PATCH",
+      body: JSON.stringify({ label }),
+    }),
+
+  deleteSubdomain: (key: string, uuid: string) =>
+    requestVoid(`${BASE}/subdomains/${uuid}`, key, { method: "DELETE" }),
+
   getUsers: (key: string) => request<AdminUser[]>(`${BASE}/users`, key),
 
   getUserDetail: (key: string, uuid: string) =>
     request<AdminUserDetail>(`${BASE}/users/${uuid}`, key),
+
+  updateUser: (
+    key: string,
+    uuid: string,
+    body: { username?: string; email?: string },
+  ) =>
+    request<AdminUser>(`${BASE}/users/${uuid}`, key, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+    }),
+
+  deleteUser: (key: string, uuid: string) =>
+    requestVoid(`${BASE}/users/${uuid}`, key, { method: "DELETE" }),
 
   setMaxSubdomainOverride: (key: string, uuid: string, value: number | null) =>
     request(`${BASE}/users/${uuid}/max-subdomain-override`, key, {

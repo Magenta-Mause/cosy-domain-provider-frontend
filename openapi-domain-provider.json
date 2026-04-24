@@ -4,22 +4,67 @@
   "servers": [
     { "url": "http://localhost:8080", "description": "Generated server url" }
   ],
+  "tags": [
+    { "name": "User", "description": "User management (admin)" },
+    {
+      "name": "Subdomain",
+      "description": "Subdomain creation and management for the authenticated user"
+    },
+    {
+      "name": "OAuth",
+      "description": "OAuth2 social login (Google, GitHub, Discord)"
+    },
+    {
+      "name": "Admin",
+      "description": "Admin-only endpoints protected by a shared secret key"
+    },
+    {
+      "name": "Billing",
+      "description": "Stripe billing portal and subscription checkout"
+    },
+    {
+      "name": "Authorization",
+      "description": "Authentication, registration, and account management"
+    },
+    {
+      "name": "Stripe Webhook",
+      "description": "Stripe event webhook consumer (internal — not for client use)"
+    }
+  ],
   "paths": {
     "/api/v1/subdomain/{uuid}": {
       "get": {
-        "tags": ["subdomain-controller"],
+        "tags": ["Subdomain"],
+        "summary": "Get a specific subdomain owned by the authenticated user",
         "operationId": "getSubdomain",
         "parameters": [
           {
             "name": "uuid",
             "in": "path",
+            "description": "Subdomain UUID",
             "required": true,
             "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Subdomain returned",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          },
+          "403": {
+            "description": "Not owned by the current user",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          },
+          "404": {
+            "description": "Subdomain not found",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/SubdomainDto" }
@@ -29,12 +74,14 @@
         }
       },
       "put": {
-        "tags": ["subdomain-controller"],
+        "tags": ["Subdomain"],
+        "summary": "Update the target IP of a subdomain",
         "operationId": "updateSubdomain",
         "parameters": [
           {
             "name": "uuid",
             "in": "path",
+            "description": "Subdomain UUID",
             "required": true,
             "schema": { "type": "string" }
           }
@@ -49,7 +96,23 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Subdomain updated",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          },
+          "403": {
+            "description": "Not owned by the current user",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          },
+          "404": {
+            "description": "Subdomain not found",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/SubdomainDto" }
@@ -59,22 +122,185 @@
         }
       },
       "delete": {
-        "tags": ["subdomain-controller"],
+        "tags": ["Subdomain"],
+        "summary": "Delete a subdomain and its DNS record",
         "operationId": "deleteSubdomain",
         "parameters": [
           {
             "name": "uuid",
             "in": "path",
+            "description": "Subdomain UUID",
             "required": true,
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "204": { "description": "Subdomain deleted" },
+          "403": { "description": "Not owned by the current user" },
+          "404": { "description": "Subdomain not found" }
+        }
+      }
+    },
+    "/api/v1/admin/subdomains/{uuid}": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get a single subdomain by UUID",
+        "operationId": "getSubdomain_1",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "Subdomain UUID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subdomain returned",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "404": {
+            "description": "Subdomain not found",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update the target IP addresses of a subdomain",
+        "operationId": "updateSubdomainTargetIp",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "Subdomain UUID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SubdomainUpdateDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Subdomain updated",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "404": {
+            "description": "Subdomain not found",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete a subdomain",
+        "operationId": "deleteSubdomain_1",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "Subdomain UUID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Subdomain deleted" },
+          "401": { "description": "Invalid admin key" },
+          "404": { "description": "Subdomain not found" }
+        }
       }
     },
     "/api/v1/user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "List all users",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "User list returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/UserDto" }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
-        "tags": ["user-controller"],
+        "tags": ["User"],
+        "summary": "Create a new user and send verification email",
         "operationId": "createUser",
         "requestBody": {
           "content": {
@@ -86,7 +312,13 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "User created",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
+          },
+          "409": {
+            "description": "Email already in use",
             "content": {
               "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
             }
@@ -94,12 +326,14 @@
         }
       },
       "delete": {
-        "tags": ["user-controller"],
+        "tags": ["User"],
+        "summary": "Delete the authenticated user and all their subdomains",
         "operationId": "deleteUser",
-        "responses": { "200": { "description": "OK" } }
+        "responses": { "204": { "description": "User deleted" } }
       },
       "patch": {
-        "tags": ["user-controller"],
+        "tags": ["User"],
+        "summary": "Update username or password of the authenticated user",
         "operationId": "updateUser",
         "requestBody": {
           "content": {
@@ -111,7 +345,13 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "User updated",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
+          },
+          "401": {
+            "description": "Current password incorrect",
             "content": {
               "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
             }
@@ -121,11 +361,12 @@
     },
     "/api/v1/subdomain": {
       "get": {
-        "tags": ["subdomain-controller"],
+        "tags": ["Subdomain"],
+        "summary": "List all subdomains owned by the authenticated user",
         "operationId": "listMySubdomains",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Subdomain list returned",
             "content": {
               "*/*": {
                 "schema": {
@@ -138,7 +379,8 @@
         }
       },
       "post": {
-        "tags": ["subdomain-controller"],
+        "tags": ["Subdomain"],
+        "summary": "Create a new subdomain",
         "operationId": "createSubdomain",
         "requestBody": {
           "content": {
@@ -149,8 +391,32 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Subdomain created",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          },
+          "400": {
+            "description": "Label reserved or invalid",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          },
+          "409": {
+            "description": "Label already taken",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          },
+          "429": {
+            "description": "Subdomain limit reached for this plan",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/SubdomainDto" }
@@ -162,12 +428,15 @@
     },
     "/api/v1/stripe-events": {
       "post": {
-        "tags": ["stripe-webhook-controller"],
+        "tags": ["Stripe Webhook"],
+        "summary": "Consume a Stripe webhook event",
+        "description": "Verifies the Stripe-Signature header and processes the event.",
         "operationId": "consumeEvent",
         "parameters": [
           {
             "name": "Stripe-Signature",
             "in": "header",
+            "description": "Stripe webhook signature header",
             "required": true,
             "schema": { "type": "string" }
           }
@@ -178,7 +447,11 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Event processed",
+            "content": { "*/*": { "schema": { "type": "string" } } }
+          },
+          "400": {
+            "description": "Invalid Stripe signature",
             "content": { "*/*": { "schema": { "type": "string" } } }
           }
         }
@@ -186,11 +459,33 @@
     },
     "/api/v1/billing/checkout": {
       "post": {
-        "tags": ["billing-controller"],
+        "tags": ["Billing"],
+        "summary": "Get Stripe checkout URL to upgrade to Plus",
+        "description": "Requires a verified email address.",
         "operationId": "getCheckoutUrl",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Checkout URL returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingPortalResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingPortalResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Email not verified",
             "content": {
               "*/*": {
                 "schema": {
@@ -204,7 +499,8 @@
     },
     "/api/v1/auth/verify": {
       "post": {
-        "tags": ["authorization-controller"],
+        "tags": ["Authorization"],
+        "summary": "Verify email address with the code sent on registration",
         "operationId": "verifyEmail",
         "requestBody": {
           "content": {
@@ -214,12 +510,37 @@
           },
           "required": true
         },
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "204": { "description": "Email verified" },
+          "401": { "description": "Invalid or expired verification code" }
+        }
+      }
+    },
+    "/api/v1/auth/set-password": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "Set initial password for OAuth-created accounts",
+        "description": "Only available when needsPasswordSetup is true (OAuth accounts without a password).",
+        "operationId": "setPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SetPasswordDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": { "description": "Password set" },
+          "401": { "description": "Not authenticated" },
+          "409": { "description": "Password already set" }
+        }
       }
     },
     "/api/v1/auth/reset-password": {
       "post": {
-        "tags": ["authorization-controller"],
+        "tags": ["Authorization"],
+        "summary": "Complete password reset using token from email",
         "operationId": "resetPassword",
         "requestBody": {
           "content": {
@@ -229,24 +550,33 @@
           },
           "required": true
         },
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "204": { "description": "Password reset successfully" },
+          "400": { "description": "Invalid or expired reset token" }
+        }
       }
     },
     "/api/v1/auth/resend-verification": {
       "post": {
-        "tags": ["authorization-controller"],
+        "tags": ["Authorization"],
+        "summary": "Resend email verification code",
         "operationId": "resendVerification",
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "204": { "description": "Verification email sent" },
+          "409": { "description": "Email already verified" }
+        }
       }
     },
     "/api/v1/auth/register": {
       "post": {
-        "tags": ["authorization-controller"],
+        "tags": ["Authorization"],
+        "summary": "Register a new user account",
         "operationId": "register",
         "parameters": [
           {
             "name": "tokenMode",
             "in": "query",
+            "description": "COOKIE sets httpOnly cookie, DIRECT returns token in body",
             "required": false,
             "schema": {
               "type": "string",
@@ -264,8 +594,16 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Account created",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/LoginResponseDto" }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already in use",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/LoginResponseDto" }
@@ -277,19 +615,22 @@
     },
     "/api/v1/auth/logout": {
       "post": {
-        "tags": ["authorization-controller"],
+        "tags": ["Authorization"],
+        "summary": "Logout — clears the refresh token cookie",
         "operationId": "logout",
-        "responses": { "200": { "description": "OK" } }
+        "responses": { "204": { "description": "Logged out" } }
       }
     },
     "/api/v1/auth/login": {
       "post": {
-        "tags": ["authorization-controller"],
+        "tags": ["Authorization"],
+        "summary": "Login with email and password",
         "operationId": "login",
         "parameters": [
           {
             "name": "tokenMode",
             "in": "query",
+            "description": "COOKIE sets httpOnly cookie, DIRECT returns token in body",
             "required": false,
             "schema": {
               "type": "string",
@@ -308,7 +649,15 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Login successful",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/LoginResponseDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/LoginResponseDto" }
@@ -320,7 +669,8 @@
     },
     "/api/v1/auth/forgot-password": {
       "post": {
-        "tags": ["authorization-controller"],
+        "tags": ["Authorization"],
+        "summary": "Initiate password reset — sends reset link to email",
         "operationId": "forgotPassword",
         "requestBody": {
           "content": {
@@ -330,24 +680,315 @@
           },
           "required": true
         },
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "204": {
+            "description": "Reset email sent (always, to avoid enumeration)"
+          }
+        }
       }
     },
-    "/api/v1/subdomain/check": {
+    "/api/v1/admin/users/{uuid}": {
       "get": {
-        "tags": ["subdomain-controller"],
-        "operationId": "checkLabelAvailability",
+        "tags": ["Admin"],
+        "summary": "Get user detail including their subdomains",
+        "operationId": "getUserDetail",
         "parameters": [
           {
-            "name": "label",
-            "in": "query",
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "User UUID",
             "required": true,
             "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "User detail returned",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminUserDetailDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminUserDetailDto" }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminUserDetailDto" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete a user and all their subdomains",
+        "operationId": "deleteUser_1",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "User UUID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "User deleted" },
+          "401": { "description": "Invalid admin key" },
+          "404": { "description": "User not found" }
+        }
+      },
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Update a user's username and/or email",
+        "operationId": "updateUser_1",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "User UUID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminUserUpdateDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User updated",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminUserDto" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminUserDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminUserDto" }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminUserDto" }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already in use",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminUserDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/users/{uuid}/max-subdomain-override": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Override the maximum subdomain count for a user",
+        "operationId": "setMaxSubdomainOverride",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "User UUID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": { "type": "integer", "format": "int32" }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Override updated",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/subdomains/{uuid}/label": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Rename a subdomain label",
+        "operationId": "relabelSubdomain",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "Subdomain UUID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSubdomainRelabelDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Subdomain relabeled",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "404": {
+            "description": "Subdomain not found",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          },
+          "409": {
+            "description": "Label reserved or already taken",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/subdomain/check": {
+      "get": {
+        "tags": ["Subdomain"],
+        "summary": "Check whether a subdomain label is available",
+        "operationId": "checkLabelAvailability",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "description": "Subdomain label to check (without parent domain)",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Availability result returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabelAvailabilityDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Label is reserved or invalid",
             "content": {
               "*/*": {
                 "schema": {
@@ -359,32 +1000,24 @@
         }
       }
     },
-    "/api/v1/route": {
-      "get": {
-        "tags": ["route-controller"],
-        "operationId": "getRoutes",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/DnsEntry" }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/billing/portal": {
       "get": {
-        "tags": ["billing-controller"],
+        "tags": ["Billing"],
+        "summary": "Get Stripe billing portal URL for the authenticated user",
         "operationId": "getBillingPortalUrl",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Portal URL returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingPortalResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated",
             "content": {
               "*/*": {
                 "schema": {
@@ -398,7 +1031,8 @@
     },
     "/api/v1/auth/token": {
       "get": {
-        "tags": ["authorization-controller"],
+        "tags": ["Authorization"],
+        "summary": "Exchange refresh token cookie for a short-lived identity token",
         "operationId": "fetchToken",
         "parameters": [
           {
@@ -410,8 +1044,155 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Identity token returned",
             "content": { "*/*": { "schema": { "type": "string" } } }
+          },
+          "400": {
+            "description": "Missing or invalid refresh token cookie",
+            "content": { "*/*": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/oauth/{provider}/callback": {
+      "get": {
+        "tags": ["OAuth"],
+        "summary": "Handle OAuth2 callback",
+        "description": "Exchanges the authorization code for a token, resolves or creates the local user, and sets the refresh token cookie. Redirects to the frontend on success or failure.",
+        "operationId": "callback",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "OAuth provider name (google, github, discord)",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Authorization code returned by the provider",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State parameter for CSRF validation",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to frontend (dashboard on success, /login?oauthError=true on failure, including upstream OAuth errors)"
+          },
+          "400": {
+            "description": "Invalid or expired state / unknown provider (ResponseStatusException propagated)"
+          },
+          "502": {
+            "description": "Token exchange or user-info fetch failed (ResponseStatusException propagated)"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/oauth/{provider}/authorize": {
+      "get": {
+        "tags": ["OAuth"],
+        "summary": "Initiate OAuth2 authorization flow",
+        "description": "Redirects the user to the provider's authorization page. Supported providers: google, github, discord.",
+        "operationId": "authorize",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "OAuth provider name (google, github, discord)",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "302": { "description": "Redirect to provider authorization URL" },
+          "400": { "description": "Unknown provider" }
+        }
+      }
+    },
+    "/api/v1/admin/users": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all users",
+        "operationId": "getAllUsers_1",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User list returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/AdminUserDto" }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/AdminUserDto" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/subdomains": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all subdomains",
+        "operationId": "getAllSubdomains",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subdomain list returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+                }
+              }
+            }
           }
         }
       }
@@ -433,6 +1214,15 @@
           "atLeastOneIpProvided": { "type": "boolean" }
         }
       },
+      "DnsEntry": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "ttl": { "type": "integer", "format": "int64" },
+          "values": { "type": "array", "items": { "type": "string" } }
+        }
+      },
       "SubdomainDto": {
         "type": "object",
         "properties": {
@@ -445,13 +1235,33 @@
             "type": "string",
             "enum": ["PENDING", "ACTIVE", "FAILED"]
           },
+          "labelMode": { "type": "string", "enum": ["CUSTOM", "RANDOM"] },
           "createdAt": { "type": "string", "format": "date-time" },
           "updatedAt": { "type": "string", "format": "date-time" },
           "dnsEntries": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/DnsEntry" }
+          }
+        }
+      },
+      "AdminSubdomainDto": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "label": { "type": "string" },
+          "fqdn": { "type": "string" },
+          "targetIp": { "type": "string" },
+          "targetIpv6": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING", "ACTIVE", "FAILED"]
           },
-          "labelMode": { "type": "string", "enum": ["CUSTOM", "RANDOM"] }
+          "labelMode": { "type": "string", "enum": ["CUSTOM", "RANDOM"] },
+          "ownerUuid": { "type": "string" },
+          "ownerUsername": { "type": "string" },
+          "ownerEmail": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
         }
       },
       "UserCreationDto": {
@@ -473,9 +1283,10 @@
           "uuid": { "type": "string" },
           "username": { "type": "string" },
           "email": { "type": "string" },
-          "verified": { "type": "boolean" },
+          "needsPasswordSetup": { "type": "boolean" },
           "tier": { "type": "string", "enum": ["FREE", "PLUS"] },
-          "maxSubdomainCount": { "type": "integer", "format": "int32" }
+          "maxSubdomainCount": { "type": "integer", "format": "int32" },
+          "verified": { "type": "boolean" }
         }
       },
       "SubdomainCreationDto": {
@@ -500,6 +1311,17 @@
       "EmailVerificationDto": {
         "type": "object",
         "properties": { "token": { "type": "string" } }
+      },
+      "SetPasswordDto": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "maxLength": 2147483647,
+            "minLength": 8
+          }
+        },
+        "required": ["password"]
       },
       "ResetPasswordDto": {
         "type": "object",
@@ -544,6 +1366,40 @@
           }
         }
       },
+      "AdminUserUpdateDto": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string", "maxLength": 20, "minLength": 3 },
+          "email": { "type": "string", "format": "email" }
+        }
+      },
+      "AdminUserDto": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "username": { "type": "string" },
+          "email": { "type": "string" },
+          "tier": { "type": "string", "enum": ["FREE", "PLUS"] },
+          "maxSubdomainCount": { "type": "integer", "format": "int32" },
+          "maxSubdomainCountOverride": { "type": "integer", "format": "int32" },
+          "subdomainCount": { "type": "integer", "format": "int64" },
+          "planExpiresAt": { "type": "string", "format": "date-time" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "verified": { "type": "boolean" }
+        }
+      },
+      "AdminSubdomainRelabelDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "maxLength": 45,
+            "minLength": 3,
+            "pattern": "^[a-z0-9-]+$"
+          }
+        },
+        "required": ["label"]
+      },
       "LabelAvailabilityDto": {
         "type": "object",
         "properties": {
@@ -551,18 +1407,23 @@
           "reason": { "type": "string" }
         }
       },
-      "DnsEntry": {
+      "AdminUserDetailDto": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "type": { "type": "string" },
-          "ttl": { "type": "integer", "format": "int64" },
-          "values": { "type": "array", "items": { "type": "string" } }
+          "uuid": { "type": "string" },
+          "username": { "type": "string" },
+          "email": { "type": "string" },
+          "tier": { "type": "string", "enum": ["FREE", "PLUS"] },
+          "maxSubdomainCount": { "type": "integer", "format": "int32" },
+          "maxSubdomainCountOverride": { "type": "integer", "format": "int32" },
+          "planExpiresAt": { "type": "string", "format": "date-time" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "subdomains": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AdminSubdomainDto" }
+          },
+          "verified": { "type": "boolean" }
         }
-      },
-      "SubdomainDtoLabelMode": {
-        "type": "string",
-        "enum": ["CUSTOM", "RANDOM"]
       }
     }
   }

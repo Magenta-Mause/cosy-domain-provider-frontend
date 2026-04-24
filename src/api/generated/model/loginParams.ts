@@ -7,5 +7,8 @@
 import type { LoginTokenMode } from "./loginTokenMode";
 
 export type LoginParams = {
+  /**
+   * COOKIE sets httpOnly cookie, DIRECT returns token in body
+   */
   tokenMode?: LoginTokenMode;
 };

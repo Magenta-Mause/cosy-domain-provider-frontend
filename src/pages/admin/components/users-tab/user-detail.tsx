@@ -24,6 +24,17 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
     saveError,
     isUnchanged,
     handleSaveOverride,
+    username,
+    setUsername,
+    email,
+    setEmail,
+    isSavingUser,
+    saveUserError,
+    isUserUnchanged,
+    handleSaveUser,
+    isDeleting,
+    deleteError,
+    handleDeleteUser,
     handleBack,
     handleSubdomainClick,
   } = useUserDetailLogic(detail, adminKey, onSaved);
@@ -31,7 +42,11 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-3 items-start">
-        <button type="button" onClick={handleBack} className="pbtn sm secondary">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="pbtn sm secondary"
+        >
           {t("admin.back")}
         </button>
       </div>
@@ -77,6 +92,41 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
         </DetailField>
       </FlatPanel>
 
+      <FlatPanel className="px-5 py-4 flex flex-col gap-3">
+        <h3 className="text-sm font-semibold opacity-70 uppercase tracking-wide">
+          {t("admin.editUserSection")}
+        </h3>
+        <div className="flex items-end gap-5">
+          <FormField
+            id="username"
+            label={t("admin.fieldUsername")}
+            value={username}
+            onChange={setUsername}
+            minLength={3}
+            maxLength={20}
+          />
+          <FormField
+            id="email"
+            label={t("admin.fieldEmail")}
+            type="email"
+            value={email}
+            onChange={setEmail}
+          />
+          <Button
+            type="button"
+            size="sm"
+            onClick={handleSaveUser}
+            disabled={isSavingUser || isUserUnchanged}
+            className="h-[50px] shrink-0"
+          >
+            {isSavingUser ? t("admin.savingUser") : t("admin.saveUser")}
+          </Button>
+        </div>
+        {saveUserError && (
+          <p className="text-sm text-destructive">{saveUserError}</p>
+        )}
+      </FlatPanel>
+
       <FlatPanel className="px-5 py-4 flex gap-3 flex-col">
         <div className="flex-1 w-full flex items-end gap-5">
           <FormField
@@ -93,7 +143,7 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
             size="sm"
             onClick={handleSaveOverride}
             disabled={isSaving || isUnchanged}
-            className="h-[50px] mt-auto"
+            className="h-[50px] mt-auto shrink-0"
           >
             {isSaving ? t("admin.savingOverride") : t("admin.saveOverride")}
           </Button>
@@ -109,6 +159,26 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
           onSubdomainClick={handleSubdomainClick}
         />
       </div>
+
+      <FlatPanel className="px-5 py-4 flex flex-col gap-3 border border-destructive/40">
+        <h3 className="text-sm font-semibold text-destructive uppercase tracking-wide">
+          {t("admin.dangerZone")}
+        </h3>
+        <div className="flex items-center gap-5">
+          <Button
+            type="button"
+            variant="destructive"
+            size="sm"
+            onClick={handleDeleteUser}
+            disabled={isDeleting}
+          >
+            {t("admin.deleteUser")}
+          </Button>
+          {deleteError && (
+            <p className="text-sm text-destructive">{deleteError}</p>
+          )}
+        </div>
+      </FlatPanel>
     </div>
   );
 }

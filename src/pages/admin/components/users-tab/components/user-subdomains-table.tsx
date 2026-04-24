@@ -10,7 +10,10 @@ interface UserSubdomainsTableProps {
   onSubdomainClick: (subdomainId: string) => void;
 }
 
-export function UserSubdomainsTable({ subdomains, onSubdomainClick }: UserSubdomainsTableProps) {
+export function UserSubdomainsTable({
+  subdomains,
+  onSubdomainClick,
+}: UserSubdomainsTableProps) {
   const { t } = useTranslation();
 
   const columns: ColumnDef<AdminSubdomain>[] = [

@@ -1,8 +1,8 @@
-import { Link } from "@tanstack/react-router";
+import { Link, type LinkProps } from "@tanstack/react-router";
 import cosyIcon from "@/assets/cosy-logo.webp";
 
 interface CosyLogoProps {
-  linkTo?: string;
+  linkTo?: LinkProps["to"];
   testId?: string;
 }
 
@@ -29,9 +29,8 @@ export function CosyLogo({ linkTo, testId }: CosyLogoProps) {
   }
 
   return (
-    // biome-ignore lint/suspicious/noExplicitAny: dynamic route string
     <Link
-      to={linkTo as any}
+      to={linkTo}
       data-testid={testId}
       className="flex items-center gap-2.5 no-underline! hover:no-underline"
     >

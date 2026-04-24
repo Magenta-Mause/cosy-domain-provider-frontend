@@ -27,7 +27,8 @@ export function UsersTable({ users, onUserClick }: UsersTableProps) {
       width: "2fr",
       compare: (a, b) => a.uuid.localeCompare(b.uuid),
       cell: (u) => <span className="truncate w-full">{u.uuid}</span>,
-      cellClassName: "font-mono text-xs opacity-60 flex items-center overflow-hidden",
+      cellClassName:
+        "font-mono text-xs opacity-60 flex items-center overflow-hidden",
     },
     {
       id: "tier",
@@ -65,9 +66,7 @@ export function UsersTable({ users, onUserClick }: UsersTableProps) {
         (a.planExpiresAt ? new Date(a.planExpiresAt).getTime() : 0) -
         (b.planExpiresAt ? new Date(b.planExpiresAt).getTime() : 0),
       cell: (u) =>
-        u.planExpiresAt
-          ? new Date(u.planExpiresAt).toLocaleDateString()
-          : "—",
+        u.planExpiresAt ? new Date(u.planExpiresAt).toLocaleDateString() : "—",
       cellClassName: "opacity-60",
     },
   ];

@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { PageHeader } from "@/components/layout/page-header";

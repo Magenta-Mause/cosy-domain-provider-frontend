@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 
 import { CosyLogo } from "@/components/layout/cosy-logo";
 import { LanguageMenu } from "@/components/layout/language-menu";
-import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
+import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
 
 export function LandingNav() {
   const { t } = useTranslation();

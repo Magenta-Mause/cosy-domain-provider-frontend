@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, type LinkProps } from "@tanstack/react-router";
 
 import { LanguageMenu } from "@/components/layout/language-menu";
 import { Panel } from "@/components/pixel/panel";
@@ -8,7 +8,7 @@ import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
 interface AuthPageLayoutProps {
   children: React.ReactNode;
   maxWidth?: number;
-  backButtonLink?: string;
+  backButtonLink?: LinkProps["to"];
 }
 
 export function AuthPageLayout({
@@ -21,7 +21,7 @@ export function AuthPageLayout({
   return (
     <Scenery>
       <Link
-        to={backButtonLink as any}
+        to={backButtonLink}
         data-testid="auth-back-link"
         className="pbtn ghost absolute top-6 left-7 z-[5]"
         style={{ color: "oklch(0.95 0.08 70)" }}

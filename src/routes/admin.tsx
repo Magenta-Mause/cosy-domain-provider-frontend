@@ -1,4 +1,8 @@
-import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Outlet,
+  useRouterState,
+} from "@tanstack/react-router";
 import { AdminAuthGate } from "@/pages/admin";
 
 export const Route = createFileRoute("/admin")({
