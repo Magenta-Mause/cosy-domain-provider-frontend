@@ -28,6 +28,8 @@ interface FormFieldProps {
 }
 ```
 
+## Rules
+
 - **No raw `<input>` with manual label/error wiring** — always use `FormField`.
 - **`suffix`** is for static text decorators that overlay the input (the text is absolutely positioned; `paddingRight` is computed automatically from string length).
 - **`endDecorator`** is the slot for interactive elements like a password visibility toggle. The input gets `pr-12` automatically when `endDecorator` is set.
