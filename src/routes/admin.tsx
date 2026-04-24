@@ -1,6 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { AdminPage } from "@/pages/admin";
+import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
+import { AdminAuthGate } from "@/pages/admin";
 
 export const Route = createFileRoute("/admin")({
-  component: AdminPage,
+  component: RouteComponent,
 });
+
+function RouteComponent() {
+  const { location } = useRouterState();
+  const activeTab = location.pathname.startsWith("/admin/users")
+    ? "users"
+    : "subdomains";
+
+  return <AdminAuthGate activeTab={activeTab} outlet={<Outlet />} />;
+}

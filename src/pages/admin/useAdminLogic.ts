@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ADMIN_KEY_STORAGE, type AdminUserDetail } from "./lib";
-
-export type AdminView = "dashboard" | "user-detail";
+import { ADMIN_KEY_STORAGE } from "./lib";
 
 export function useAdminLogic() {
   const [key, setKey] = useState<string>(
@@ -9,16 +7,9 @@ export function useAdminLogic() {
   );
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const [activeTab, setActiveTab] = useState<"subdomains" | "users">(
-    "subdomains",
-  );
-  const [view, setView] = useState<AdminView>("dashboard");
-  const [selectedUserDetail, setSelectedUserDetail] =
-    useState<AdminUserDetail | null>(null);
 
   useEffect(() => {
-    const stored = sessionStorage.getItem(ADMIN_KEY_STORAGE);
-    if (stored) setIsAuthenticated(true);
+    if (sessionStorage.getItem(ADMIN_KEY_STORAGE)) setIsAuthenticated(true);
   }, []);
 
   const login = useCallback(async (inputKey: string) => {
@@ -43,32 +34,7 @@ export function useAdminLogic() {
     sessionStorage.removeItem(ADMIN_KEY_STORAGE);
     setKey("");
     setIsAuthenticated(false);
-    setView("dashboard");
-    setSelectedUserDetail(null);
   }, []);
 
-  const openUserDetail = useCallback((detail: AdminUserDetail) => {
-    setSelectedUserDetail(detail);
-    setView("user-detail");
-  }, []);
-
-  const backToDashboard = useCallback(() => {
-    setView("dashboard");
-    setSelectedUserDetail(null);
-  }, []);
-
-  return {
-    key,
-    isAuthenticated,
-    loginError,
-    login,
-    logout,
-    activeTab,
-    setActiveTab,
-    view,
-    selectedUserDetail,
-    setSelectedUserDetail,
-    openUserDetail,
-    backToDashboard,
-  };
+  return { key, isAuthenticated, loginError, login, logout };
 }

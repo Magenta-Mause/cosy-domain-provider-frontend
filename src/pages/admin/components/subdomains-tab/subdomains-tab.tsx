@@ -66,9 +66,24 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
     <div className="flex flex-col gap-4">
       <div className="flex gap-4">
         {[
-          { label: "TOTAL", value: total, sub: "subdomains registered", color: "text-btn-primary" },
-          { label: "FAILED", value: failed, sub: "provisioning errors", color: "text-destructive" },
-          { label: "ACTIVE", value: total - failed, sub: "online", color: "text-green-400" },
+          {
+            label: "TOTAL",
+            value: total,
+            sub: "subdomains registered",
+            color: "text-btn-primary",
+          },
+          {
+            label: "FAILED",
+            value: failed,
+            sub: "provisioning errors",
+            color: "text-destructive",
+          },
+          {
+            label: "ACTIVE",
+            value: total - failed,
+            sub: "online",
+            color: "text-green-600",
+          },
         ].map((s) => (
           <FlatPanel key={s.label} className="p-4 flex-1">
             <div className="pixel text-[10px] opacity-70">{s.label}</div>
@@ -110,7 +125,7 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
           {sorted.map((s) => {
             const statusColor =
               s.status === "ACTIVE"
-                ? "text-green-400"
+                ? "text-green-600"
                 : s.status === "FAILED"
                   ? "text-destructive"
                   : "text-yellow-400";

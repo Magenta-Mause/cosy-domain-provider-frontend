@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -7,16 +8,11 @@ import { type AdminSubdomain, type AdminUserDetail, adminApi } from "../../lib";
 interface UserDetailProps {
   detail: AdminUserDetail;
   adminKey: string;
-  onBack: () => void;
-  onUpdate: (updated: AdminUserDetail) => void;
+  onSaved: () => void;
 }
 
-export function UserDetail({
-  detail,
-  adminKey,
-  onBack,
-  onUpdate,
-}: UserDetailProps) {
+export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
+  const navigate = useNavigate();
   const [overrideInput, setOverrideInput] = useState(
     detail.maxSubdomainCountOverride !== null
       ? String(detail.maxSubdomainCountOverride)
@@ -31,8 +27,7 @@ export function UserDetail({
     try {
       const value = overrideInput.trim() === "" ? null : Number(overrideInput);
       await adminApi.setMaxSubdomainOverride(adminKey, detail.uuid, value);
-      const updated = await adminApi.getUserDetail(adminKey, detail.uuid);
-      onUpdate(updated);
+      onSaved();
     } catch {
       setSaveError("Failed to save override.");
     } finally {
@@ -43,7 +38,7 @@ export function UserDetail({
   const StatusBadge = ({ status }: { status: AdminSubdomain["status"] }) => {
     const color =
       status === "ACTIVE"
-        ? "text-green-400"
+        ? "text-green-600"
         : status === "FAILED"
           ? "text-destructive"
           : "text-yellow-400";
@@ -55,7 +50,7 @@ export function UserDetail({
       <div className="flex items-center gap-3">
         <button
           type="button"
-          onClick={onBack}
+          onClick={() => navigate({ to: "/admin/users" })}
           className="pbtn sm secondary"
         >
           ← Back
