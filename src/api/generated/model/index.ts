@@ -20,6 +20,8 @@ export * from "./registerTokenMode";
 export * from "./resetPasswordDto";
 export * from "./subdomainCreationDto";
 export * from "./subdomainDto";
+export * from "./subdomainDtoLabelMode";
+export * from "./subdomainDtoLabelModeProperty";
 export * from "./subdomainDtoStatus";
 export * from "./subdomainUpdateDto";
 export * from "./updateUserDto";

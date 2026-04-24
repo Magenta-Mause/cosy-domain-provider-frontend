@@ -481,7 +481,7 @@ const deCommon: CommonSchema = {
     upgradeCta: "Auf Cosy+ upgraden, um ein eigenes Label zu wählen →",
     planSection: "Plan",
     randomName: "Zufällige Subdomain",
-    customName: "Eigener Subdomain",
+    customName: "Eigene Subdomain",
     upgradeRequired: "Du brauchst Cosy+, um eine eigene Subdomain zu wählen.",
     upgradeBtn: "Auf Cosy+ upgraden →",
     verifyFirst: "Du musst dein Konto verifizieren, bevor du upgraden kannst.",

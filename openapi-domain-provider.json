@@ -450,7 +450,8 @@
           "dnsEntries": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/DnsEntry" }
-          }
+          },
+          "labelMode": { "type": "string", "enum": ["CUSTOM", "RANDOM"] }
         }
       },
       "UserCreationDto": {
@@ -558,6 +559,10 @@
           "ttl": { "type": "integer", "format": "int64" },
           "values": { "type": "array", "items": { "type": "string" } }
         }
+      },
+      "SubdomainDtoLabelMode": {
+        "type": "string",
+        "enum": ["CUSTOM", "RANDOM"]
       }
     }
   }

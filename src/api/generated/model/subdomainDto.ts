@@ -6,6 +6,7 @@
  */
 
 import type { DnsEntry } from "./dnsEntry";
+import type { SubdomainDtoLabelModeProperty } from "./subdomainDtoLabelModeProperty";
 import type { SubdomainDtoStatus } from "./subdomainDtoStatus";
 
 export interface SubdomainDto {
@@ -18,4 +19,5 @@ export interface SubdomainDto {
   createdAt?: string;
   updatedAt?: string;
   dnsEntries?: DnsEntry[];
+  labelMode?: SubdomainDtoLabelModeProperty;
 }
