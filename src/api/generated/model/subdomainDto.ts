@@ -4,6 +4,8 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+
+import type { DnsEntry } from "./dnsEntry";
 import type { SubdomainDtoStatus } from "./subdomainDtoStatus";
 
 export interface SubdomainDto {
@@ -11,8 +13,9 @@ export interface SubdomainDto {
   label?: string;
   fqdn?: string;
   targetIp?: string;
+  targetIpv6?: string;
   status?: SubdomainDtoStatus;
   createdAt?: string;
   updatedAt?: string;
-  targetIpv6?: string;
+  dnsEntries?: DnsEntry[];
 }

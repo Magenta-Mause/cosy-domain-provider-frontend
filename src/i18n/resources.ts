@@ -187,7 +187,8 @@ const enCommon = {
     createdLabel: "CREATED",
     dnsRecords: "DNS records",
     dnsManagedFor: "Managed automatically for",
-    dnsTargetIp: "Target IP:",
+    dnsNoRecords:
+      "No DNS records configured. Add an IP address above and save.",
   },
   status: {
     pending: "Pending",
@@ -514,7 +515,8 @@ const deCommon: CommonSchema = {
     createdLabel: "ERSTELLT",
     dnsRecords: "DNS-Einträge",
     dnsManagedFor: "Automatisch verwaltet für",
-    dnsTargetIp: "Ziel-IP:",
+    dnsNoRecords:
+      "Keine DNS-Einträge konfiguriert. Füge oben eine IP-Adresse hinzu und speichere.",
   },
   status: {
     pending: "Ausstehend",

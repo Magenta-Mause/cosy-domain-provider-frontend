@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
-
+import mailBoxImage from "@/assets/mailBox.png";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
-
 import { useHeroSectionLogic } from "./useHeroSectionLogic";
 
 export function HeroSection() {
@@ -86,7 +85,7 @@ export function HeroSection() {
             style={{ background: "oklch(0.75 0.08 58)" }}
           >
             <div
-              className="w-[88%] h-[88%] flex flex-col items-center justify-center gap-2.5 p-3 text-center"
+              className="w-[95%] h-[95%] flex flex-col items-center justify-center gap-2.5 p-3 text-center"
               style={{
                 background:
                   "repeating-linear-gradient(45deg, oklch(0.75 0.08 58) 0 8px, oklch(0.8 0.06 58) 8px 16px)",
@@ -95,14 +94,11 @@ export function HeroSection() {
                 color: "var(--foreground)",
               }}
             >
-              <div className="pixel text-xs">[ hero pixel art ]</div>
-              <div className="text-lg opacity-80">
-                A cosy pixel-art post office with
-                <br />
-                mailboxes labeled with subdomains.
-                <br />
-                Cat on the roof is recommended.
-              </div>
+              <img
+                src={mailBoxImage}
+                alt={"Cosy Mailbox"}
+                className={"w-[110%]"}
+              />
             </div>
           </FlatPanel>
         </div>
