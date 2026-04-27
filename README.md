@@ -1,4 +1,4 @@
-# Cosy Domain Provider Frontend
+# Cosy Domain Provider Frontend 
 
 React + Vite frontend scaffolded with:
 - Tailwind CSS
