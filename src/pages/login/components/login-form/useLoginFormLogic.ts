@@ -19,7 +19,8 @@ export function useLoginFormLogic() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
   const [challengeToken, setChallengeToken] = useState<string | null>(null);
-  const [totpCode, setTotpCode] = useState("");
+  const [totpCode, setTotpCodeRaw] = useState("");
+  const setTotpCode = (value: string) => setTotpCodeRaw(value.toUpperCase());
   const [totpError, setTotpError] = useState<string | null>(null);
 
   const submitting = authState === "loading";
