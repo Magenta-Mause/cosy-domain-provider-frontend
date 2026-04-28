@@ -38,6 +38,7 @@ jobs:
           push: true
           build-args: |
             VITE_TURNSTILE_SITE_KEY=${{ secrets.VITE_TURNSTILE_SITE_KEY }}
+            VITE_STAGING_AUTH_ENABLED=true
           tags: |
             ghcr.io/${{ env.IMAGE_NAME }}:staging-${{ env.SHORT_SHA }}
             ghcr.io/${{ env.IMAGE_NAME }}:staging-latest

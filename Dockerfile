@@ -4,6 +4,7 @@ COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 COPY . .
 ARG VITE_TURNSTILE_SITE_KEY
+ARG VITE_STAGING_AUTH_ENABLED
 RUN bun run build
 
 FROM nginx:alpine
