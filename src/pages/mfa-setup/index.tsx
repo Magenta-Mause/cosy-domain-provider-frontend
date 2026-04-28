@@ -3,7 +3,7 @@ import { MfaSetupPage } from "./mfa-setup-page";
 
 const MfaSetupRoute = () => {
   return (
-    <AuthPageLayout backButtonLink="/dashboard">
+    <AuthPageLayout backButtonLink={null}>
       <MfaSetupPage />
     </AuthPageLayout>
   );

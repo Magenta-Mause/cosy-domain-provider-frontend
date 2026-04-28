@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
+import { isPasswordWeak } from "@/lib/validators";
+import { PasswordStrength } from "@/pages/register/components/password-strength";
 
 interface SetPasswordViewProps {
   password: string;
@@ -25,6 +27,10 @@ export function SetPasswordView({
 }: SetPasswordViewProps) {
   const { t } = useTranslation();
 
+  const passwordWeak = isPasswordWeak(password);
+  const confirmMismatch = confirmPassword.length > 0 && password !== confirmPassword;
+  const canSubmit = !passwordWeak && !confirmMismatch && password.length > 0 && confirmPassword.length > 0;
+
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-5">
@@ -44,6 +50,10 @@ export function SetPasswordView({
             value={password}
             onChange={onPasswordChange}
           />
+          <PasswordStrength password={password} />
+          {passwordWeak && password.length > 0 ? (
+            <ErrorMessage>{t("register.passwordTooShort")}</ErrorMessage>
+          ) : null}
         </div>
         <div className="flex flex-col gap-2">
           <label className="plabel" htmlFor="verify-confirm">
@@ -56,13 +66,16 @@ export function SetPasswordView({
             value={confirmPassword}
             onChange={onConfirmChange}
           />
+          {confirmMismatch ? (
+            <ErrorMessage>{t("passwordSetup.mismatch")}</ErrorMessage>
+          ) : null}
         </div>
         {passwordError ? <ErrorMessage>{passwordError}</ErrorMessage> : null}
         <Button
           type="submit"
           size="lg"
           className="w-full"
-          disabled={!password || !confirmPassword || isSettingPassword}
+          disabled={!canSubmit || isSettingPassword}
         >
           {isSettingPassword
             ? t("passwordSetup.submitting")

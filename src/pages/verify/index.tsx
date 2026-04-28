@@ -32,7 +32,7 @@ const VerifyPage = () => {
   } = useVerifyLogic();
 
   return (
-    <AuthPageLayout backButtonLink="/dashboard">
+    <AuthPageLayout backButtonLink={null}>
       {stage === "password" ? (
         <SetPasswordView
           password={password}

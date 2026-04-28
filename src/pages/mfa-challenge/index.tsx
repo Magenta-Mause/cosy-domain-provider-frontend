@@ -16,7 +16,7 @@ const MfaChallengePage = () => {
     useMfaChallengeLogic();
 
   return (
-    <AuthPageLayout backButtonLink="/login">
+    <AuthPageLayout backButtonLink={null}>
       <div className="flex flex-col gap-4">
         <h2 className="text-[22px]">{t("login.mfaTitle")}</h2>
         <p className="text-base opacity-70">{t("login.mfaDescription")}</p>
