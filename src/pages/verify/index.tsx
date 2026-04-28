@@ -1,11 +1,15 @@
+import { useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
 import { sanitizeVerificationCode } from "@/pages/verify/lib.ts";
+import { useAppSelector } from "@/store/hooks";
 import { SendEmailView } from "./components/send-email-view";
-import { VerifiedView } from "./components/verified-view";
 import { VerifyForm } from "./components/verify-form";
 import { useVerifyLogic } from "./useVerifyLogic";
 
 const VerifyPage = () => {
+  const navigate = useNavigate();
+  const isMfaEnabled = useAppSelector((state) => state.auth.user?.isMfaEnabled === true);
   const {
     userEmail,
     isVerified,
@@ -25,13 +29,11 @@ const VerifyPage = () => {
     triggerResend,
   } = useVerifyLogic();
 
-  if (isVerified) {
-    return (
-      <AuthPageLayout backButtonLink="/dashboard">
-        <VerifiedView />
-      </AuthPageLayout>
-    );
-  }
+  useEffect(() => {
+    if (isVerified && !isMfaEnabled) {
+      void navigate({ to: "/mfa-setup" });
+    }
+  }, [isVerified, isMfaEnabled, navigate]);
 
   return (
     <AuthPageLayout backButtonLink="/dashboard">

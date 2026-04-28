@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
@@ -10,6 +11,7 @@ export function useVerifyLogic() {
   const { userEmail, isVerified } = useAuthInformation();
   const { token: urlToken } = Route.useSearch();
   const { verifyAccount, resendVerificationCode } = useDataInteractions();
+  const navigate = useNavigate();
 
   const [stage, setStage] = useState<Stage>("send");
   const [verificationToken, setVerificationToken] = useState("");
@@ -26,6 +28,7 @@ export function useVerifyLogic() {
       setVerifyError(null);
       try {
         await verifyAccount(token);
+        await navigate({ to: "/mfa-setup" });
       } catch {
         setVerifyError("That code didn't match. Double-check and try again.");
         setVerificationToken("");
@@ -33,7 +36,7 @@ export function useVerifyLogic() {
         setIsVerifying(false);
       }
     },
-    [verifyAccount],
+    [verifyAccount, navigate],
   );
 
   useEffect(() => {
