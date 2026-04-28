@@ -15,7 +15,6 @@ export function useLoginFormLogic() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
@@ -94,8 +93,6 @@ export function useLoginFormLogic() {
     setEmail,
     password,
     setPassword,
-    showPw,
-    setShowPw,
     errorMessage,
     oauthError: oauthError === true,
     submitting,

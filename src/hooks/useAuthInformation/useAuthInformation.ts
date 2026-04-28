@@ -32,6 +32,7 @@ const useAuthInformation = () => {
       userName: auth.user?.username ?? null,
       userEmail: auth.user?.email ?? null,
       isVerified: auth.user?.isVerified ?? null,
+      needsPasswordSetup: auth.user?.needsPasswordSetup ?? false,
       isMfaEnabled: auth.user?.isMfaEnabled ?? false,
       userTier: auth.user?.tier ?? null,
       maxSubdomainCount: auth.user?.maxSubdomainCount ?? null,

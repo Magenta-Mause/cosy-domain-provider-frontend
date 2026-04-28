@@ -303,11 +303,13 @@ const enCommon = {
   passwordSetup: {
     title: "Set a password",
     description: "Add a password so you can also sign in with email.",
+    descriptionOauth:
+      "Before verifying your email, create a password for your account. You'll use this to log in with email in addition to your social login.",
     password: "Password",
     confirm: "Confirm password",
     submit: "Save password",
+    submitContinue: "Set password →",
     submitting: "Saving...",
-    skip: "Skip for now",
     mismatch: "Passwords do not match",
     error: "Unable to set password. Please try again.",
     success: "Password saved",
@@ -759,11 +761,13 @@ const deCommon: CommonSchema = {
     title: "Passwort festlegen",
     description:
       "Füge ein Passwort hinzu, um dich auch per E-Mail anmelden zu können.",
+    descriptionOauth:
+      "Erstelle vor der E-Mail-Verifizierung ein Passwort für dein Konto. Du kannst dich damit zusätzlich zu deiner Social-Login-Methode auch per E-Mail anmelden.",
     password: "Passwort",
     confirm: "Passwort bestätigen",
     submit: "Passwort speichern",
+    submitContinue: "Passwort festlegen →",
     submitting: "Wird gespeichert...",
-    skip: "Jetzt überspringen",
     mismatch: "Passwörter stimmen nicht überein",
     error: "Passwort konnte nicht gesetzt werden. Bitte erneut versuchen.",
     success: "Passwort gespeichert",

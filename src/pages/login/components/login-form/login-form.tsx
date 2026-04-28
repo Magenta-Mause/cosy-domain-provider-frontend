@@ -24,8 +24,6 @@ export function LoginForm() {
     setEmail,
     password,
     setPassword,
-    showPw,
-    setShowPw,
     errorMessage,
     oauthError,
     submitting,
@@ -148,8 +146,6 @@ export function LoginForm() {
               required
               value={password}
               onChange={setPassword}
-              showPw={showPw}
-              onToggleShow={() => setShowPw(!showPw)}
               testId="login-password-input"
               toggleTestId="login-toggle-password-btn"
             />

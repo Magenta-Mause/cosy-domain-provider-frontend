@@ -1,18 +1,13 @@
-import { useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
 import { sanitizeVerificationCode } from "@/pages/verify/lib.ts";
-import { useAppSelector } from "@/store/hooks";
 import { SendEmailView } from "./components/send-email-view";
+import { SetPasswordView } from "./components/set-password-view";
 import { VerifyForm } from "./components/verify-form";
 import { useVerifyLogic } from "./useVerifyLogic";
 
 const VerifyPage = () => {
-  const navigate = useNavigate();
-  const isMfaEnabled = useAppSelector((state) => state.auth.user?.isMfaEnabled === true);
   const {
     userEmail,
-    isVerified,
     stage,
     verificationToken,
     setVerificationToken,
@@ -27,17 +22,28 @@ const VerifyPage = () => {
     triggerVerification,
     triggerSendEmail,
     triggerResend,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    passwordError,
+    isSettingPassword,
+    triggerPasswordSetup,
   } = useVerifyLogic();
-
-  useEffect(() => {
-    if (isVerified && !isMfaEnabled) {
-      void navigate({ to: "/mfa-setup" });
-    }
-  }, [isVerified, isMfaEnabled, navigate]);
 
   return (
     <AuthPageLayout backButtonLink="/dashboard">
-      {stage === "send" ? (
+      {stage === "password" ? (
+        <SetPasswordView
+          password={password}
+          confirmPassword={confirmPassword}
+          passwordError={passwordError}
+          isSettingPassword={isSettingPassword}
+          onPasswordChange={setPassword}
+          onConfirmChange={setConfirmPassword}
+          onSubmit={(e) => void triggerPasswordSetup(e)}
+        />
+      ) : stage === "send" ? (
         <SendEmailView
           userEmail={userEmail}
           isSending={isSending}
