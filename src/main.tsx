@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import "./index.css";
 import "@/i18n/config";
 import { AuthProvider } from "@/providers/auth-provider";
+import { StagingAuthProvider } from "@/providers/staging-auth-provider";
 import { router } from "@/router";
 import { store } from "@/store/store";
 
@@ -28,9 +29,11 @@ createRoot(rootElement).render(
   <StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <RouterProvider router={router} />
-        </AuthProvider>
+        <StagingAuthProvider>
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
+        </StagingAuthProvider>
       </QueryClientProvider>
     </Provider>
   </StrictMode>,

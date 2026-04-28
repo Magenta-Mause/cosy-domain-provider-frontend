@@ -405,6 +405,15 @@ const enCommon = {
       "Are you sure you want to delete this user? All their subdomains and DNS records will also be deleted.",
     deleteUserError: "Failed to delete user.",
   },
+  stagingAuth: {
+    title: "Staging Environment",
+    description: "This environment is restricted. Enter the staging credentials to continue.",
+    username: "Username",
+    password: "Password",
+    submit: "Unlock",
+    submitting: "Verifying...",
+    error: "Invalid credentials. Please try again.",
+  },
 } as const;
 
 type DeepStringSchema<T> = {
@@ -834,6 +843,16 @@ const deCommon: CommonSchema = {
     deleteUserConfirm:
       "Bist du sicher, dass du diesen Benutzer löschen möchtest? Alle Subdomains und DNS-Einträge werden ebenfalls gelöscht.",
     deleteUserError: "Benutzer konnte nicht gelöscht werden.",
+  },
+  stagingAuth: {
+    title: "Staging-Umgebung",
+    description:
+      "Diese Umgebung ist eingeschränkt. Gib die Staging-Zugangsdaten ein, um fortzufahren.",
+    username: "Benutzername",
+    password: "Passwort",
+    submit: "Entsperren",
+    submitting: "Wird geprüft...",
+    error: "Ungültige Zugangsdaten. Bitte erneut versuchen.",
   },
 };
 
