@@ -8,6 +8,11 @@ React + Vite frontend scaffolded with:
 - i18next + react-i18next for localization
 - Biome for linting and formatting
 
+## Prerequisites
+
+- [Bun](https://bun.sh/) v1.0 or higher
+- Backend running at `http://localhost:8080` (only needed for `bun gen:api`)
+
 ## Scripts
 
 - `bun dev` - start development server
@@ -37,8 +42,17 @@ Translation keys are compile-time checked:
 
 ## OpenAPI + Orval flow
 
-1. In backend (`/home/janne/cosy-domain-provider`), run the app so OpenAPI is exposed at `http://localhost:8080/v3/api-docs`.
-2. In this frontend, run `npm run gen:api`.
+1. Start the backend so OpenAPI is exposed at `http://localhost:8080/v3/api-docs` (see [Backend README](https://github.com/Magenta-Mause/Cosy-Domain-Provider-Backend)).
+2. In this frontend, run `bun gen:api`.
 3. Orval generates:
    - client: `src/api/generated/domain-provider-api.ts`
    - models: `src/api/generated/model/*`
+
+---
+
+## Related repositories
+
+| Repository | Description |
+|---|---|
+| [Cosy-Domain-Provider-Backend](https://github.com/Magenta-Mause/Cosy-Domain-Provider-Backend) | Spring Boot backend — start this before running the frontend |
+| [Cosy-Domain-Provider-Systemtest](https://github.com/Magenta-Mause/Cosy-Domain-Provider-Systemtest) | Playwright end-to-end tests — requires both backend and frontend to be running |
