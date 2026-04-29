@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
+import { CosyLogo } from "@/components/layout/cosy-logo";
 import { PageHeader } from "@/components/layout/page-header";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,7 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-6">
         <div className="w-full max-w-sm flex flex-col gap-5">
+          <CosyLogo linkTo="/" />
           <div>
             <div
               className="pixel text-[11px] mb-1"
@@ -81,33 +83,34 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
     },
   ];
 
+  const exitButton = (
+    <button
+      type="button"
+      onClick={logout}
+      className="pbtn sm secondary shrink-0"
+    >
+      {t("admin.exitPortal")}
+    </button>
+  );
+
   return (
     <div className="min-h-screen bg-background">
-      <PageHeader maxWidth={1200}>
-        <div className="flex items-end gap-4 mb-4">
-          <div className="flex-1 flex flex-col gap-2">
-            <div
-              className="pixel text-[11px]"
-              style={{ color: "oklch(0.92 0.05 70)" }}
-            >
-              {t("admin.label")}
-            </div>
-            <h1
-              style={{
-                color: "oklch(0.95 0.08 70)",
-                textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
-              }}
-            >
-              {t("admin.title")}
-            </h1>
-          </div>
-          <button
-            type="button"
-            onClick={logout}
-            className="pbtn sm secondary shrink-0"
+      <PageHeader maxWidth={1200} headerRightSlot={exitButton} headerLogoLinkTo="/admin/subdomains">
+        <div className="flex flex-col gap-2 mb-4">
+          <div
+            className="pixel text-[11px]"
+            style={{ color: "oklch(0.92 0.05 70)" }}
           >
-            {t("admin.signOut")}
-          </button>
+            {t("admin.label")}
+          </div>
+          <h1
+            style={{
+              color: "oklch(0.95 0.08 70)",
+              textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
+            }}
+          >
+            {t("admin.title")}
+          </h1>
         </div>
 
         <div

@@ -7,6 +7,7 @@ interface DashboardBannerProps {
   isVerified: boolean;
   isMfaEnabled: boolean;
   isSlotsExhausted: boolean;
+  domainCreationEnabled: boolean;
   userTier: "FREE" | "PLUS" | null;
   onCreateNew: () => void;
 }
@@ -15,16 +16,21 @@ export function DashboardBanner({
   isVerified,
   isMfaEnabled,
   isSlotsExhausted,
+  domainCreationEnabled,
   userTier,
   onCreateNew,
 }: DashboardBannerProps) {
   const { t } = useTranslation();
 
-  const tooltipText = isSlotsExhausted
-    ? userTier === "PLUS"
-      ? t("dashboard.slotsExhaustedPlus")
-      : t("dashboard.slotsExhaustedFree")
-    : null;
+  const isButtonDisabled = !domainCreationEnabled || isSlotsExhausted;
+
+  const tooltipText = !domainCreationEnabled
+    ? t("dashboard.creationDisabled")
+    : isSlotsExhausted
+      ? userTier === "PLUS"
+        ? t("dashboard.slotsExhaustedPlus")
+        : t("dashboard.slotsExhaustedFree")
+      : null;
 
   return (
     <PageHeader>
@@ -52,7 +58,7 @@ export function DashboardBanner({
             data-testid="dashboard-create-new-btn"
             size="lg"
             onClick={onCreateNew}
-            disabled={isSlotsExhausted}
+            disabled={isButtonDisabled}
           >
             {!isVerified ? (
               t("dashboard.verifyAccount")

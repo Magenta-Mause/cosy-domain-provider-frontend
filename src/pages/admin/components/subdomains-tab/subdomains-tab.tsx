@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 
+import { KillSwitchPanel } from "./components/kill-switch-panel";
 import { SubdomainStats } from "./components/subdomain-stats";
 import { SubdomainsTable } from "./components/subdomains-table";
 import { useSubdomainsTabLogic } from "./useSubdomainsTabLogic";
@@ -19,6 +20,7 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
 
   return (
     <div className="flex flex-col gap-4">
+      <KillSwitchPanel adminKey={adminKey} />
       <SubdomainStats total={total} failed={failed} />
       <SubdomainsTable
         subdomains={subdomains}

@@ -144,6 +144,8 @@ const enCommon = {
       "You have used all your subdomain slots. Upgrade to Cosy+ to get access to 5 subdomains.",
     slotsExhaustedPlus:
       "You have used all your subdomain slots. If you need more subdomains, please contact the Cosy team.",
+    creationDisabled:
+      "Domain registration is currently disabled by the admin.",
   },
   createSubdomain: {
     title: "Register a new subdomain",
@@ -354,6 +356,7 @@ const enCommon = {
     label: "ADMIN",
     title: "Admin Dashboard",
     signOut: "Sign out",
+    exitPortal: "Exit Admin Portal",
     tabSubdomains: "Subdomains",
     tabUsers: "Users",
     adminKey: "Admin Key",
@@ -443,6 +446,14 @@ const enCommon = {
     deleteUserConfirm:
       "Are you sure you want to delete this user? All their subdomains and DNS records will also be deleted.",
     deleteUserError: "Failed to delete user.",
+    killSwitchTitle: "Domain Creation",
+    killSwitchDescription:
+      "When disabled, no new subdomains can be registered by any user.",
+    killSwitchEnabled: "Enabled",
+    killSwitchDisabled: "Disabled",
+    killSwitchEnable: "Enable",
+    killSwitchDisable: "Disable",
+    killSwitchToggling: "Updating...",
   },
   stagingAuth: {
     title: "Staging Environment",
@@ -617,6 +628,8 @@ const deCommon: CommonSchema = {
       "Du hast alle deine Subdomain-Slots belegt. Upgrade auf Cosy+, um Zugang zu 5 Subdomains zu erhalten.",
     slotsExhaustedPlus:
       "Du hast alle deine Subdomain-Slots belegt. Falls du mehr Subdomains benötigst, kontaktiere bitte das Cosy-Team.",
+    creationDisabled:
+      "Die Domain-Registrierung wurde vom Admin deaktiviert.",
   },
   createSubdomain: {
     title: "Neue Subdomain registrieren",
@@ -838,6 +851,7 @@ const deCommon: CommonSchema = {
     label: "ADMIN",
     title: "Admin-Dashboard",
     signOut: "Abmelden",
+    exitPortal: "Admin-Portal verlassen",
     tabSubdomains: "Subdomains",
     tabUsers: "Benutzer",
     adminKey: "Admin-Schlüssel",
@@ -927,6 +941,14 @@ const deCommon: CommonSchema = {
     deleteUserConfirm:
       "Bist du sicher, dass du diesen Benutzer löschen möchtest? Alle Subdomains und DNS-Einträge werden ebenfalls gelöscht.",
     deleteUserError: "Benutzer konnte nicht gelöscht werden.",
+    killSwitchTitle: "Domain-Erstellung",
+    killSwitchDescription:
+      "Wenn deaktiviert, können keine neuen Subdomains von Benutzern registriert werden.",
+    killSwitchEnabled: "Aktiv",
+    killSwitchDisabled: "Deaktiviert",
+    killSwitchEnable: "Aktivieren",
+    killSwitchDisable: "Deaktivieren",
+    killSwitchToggling: "Wird aktualisiert...",
   },
   stagingAuth: {
     title: "Staging-Umgebung",

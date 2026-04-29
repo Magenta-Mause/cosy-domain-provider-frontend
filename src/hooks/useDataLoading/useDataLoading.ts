@@ -13,6 +13,7 @@ import {
   setIdentity,
 } from "@/store/auth-slice";
 import { useAppDispatch } from "@/store/hooks";
+import { setDomainCreationEnabled } from "@/store/settings-slice";
 import {
   setSubdomains,
   setSubdomainsError,
@@ -40,6 +41,15 @@ const useDataLoading = () => {
 
   const bootstrapAuth = useCallback(async () => {
     dispatch(setAuthState("loading"));
+
+    try {
+      const res = await fetch("/api/v1/settings");
+      const data = (await res.json()) as { domainCreationEnabled: boolean };
+      dispatch(setDomainCreationEnabled(data.domainCreationEnabled ?? true));
+    } catch {
+      // defaults to enabled if unreachable
+    }
+
     try {
       const token = await fetchToken();
       setIdentityToken(token);

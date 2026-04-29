@@ -106,6 +106,18 @@ export const adminApi = {
       method: "PATCH",
       body: JSON.stringify({ maxSubdomainCountOverride: value }),
     }),
+
+  getSettings: (key: string) => request<AdminSettings>(`${BASE}/settings`, key),
+
+  updateSettings: (key: string, body: Partial<AdminSettings>) =>
+    request<AdminSettings>(`${BASE}/settings`, key, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+    }),
 };
+
+export interface AdminSettings {
+  domainCreationEnabled: boolean;
+}
 
 export const ADMIN_KEY_STORAGE = "admin_key";
