@@ -302,7 +302,7 @@ const enCommon = {
     madeBy: "Made with ❤️ by Medalheads",
     githubLabel: "Medalheads on GitHub",
     legalNav: "Legal",
-    impressum: "Impressum",
+    impressum: "Legal Notice",
     datenschutz: "Privacy Policy",
     agb: "Terms of Service",
   },

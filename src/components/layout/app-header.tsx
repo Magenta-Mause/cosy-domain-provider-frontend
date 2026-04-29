@@ -14,7 +14,6 @@ export function AppHeader() {
     userName,
     isUserLoggedIn,
     isLoggingOut,
-    handleLanguageChange,
     handleLogout,
     handleDelete,
   } = useAppHeaderLogic();
@@ -28,7 +27,7 @@ export function AppHeader() {
 
       <TierBadge tier={userTier ?? "FREE"} />
 
-      <LanguageMenu onChangeLanguage={handleLanguageChange} />
+      <LanguageMenu />
       {isUserLoggedIn ? (
         <UserMenu
           userName={userName}

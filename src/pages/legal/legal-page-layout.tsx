@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
+import { LanguageMenu } from "@/components/layout/language-menu";
 import { FlatPanel } from "@/components/pixel/panel";
 
 interface LegalPageLayoutProps {
@@ -52,17 +53,20 @@ export function LegalPageLayout({ title, children }: LegalPageLayoutProps) {
         />
       </div>
 
+      <Link
+        to="/"
+        className="pbtn ghost fixed top-6 left-7 z-[5]"
+        style={{ color: "oklch(0.95 0.08 70)" }}
+        data-testid="legal-back-link"
+      >
+        {t("legal.back")}
+      </Link>
+
+      <div className="fixed top-6 right-7 z-[5]">
+        <LanguageMenu />
+      </div>
+
       <div className="relative z-[2] max-w-2xl mx-auto">
-        <div className="sticky top-6 z-10 mb-4">
-          <Link
-            to="/"
-            className="text-sm opacity-60 hover:opacity-100 transition-opacity inline-flex items-center gap-1 cursor-pointer"
-            style={{ color: "oklch(0.92 0.04 60)" }}
-            data-testid="legal-back-link"
-          >
-            {t("legal.back")}
-          </Link>
-        </div>
         <FlatPanel className="p-8">
           <h1 className="text-2xl font-bold mb-8">{title}</h1>
           <div className="space-y-6 text-base leading-relaxed">{children}</div>

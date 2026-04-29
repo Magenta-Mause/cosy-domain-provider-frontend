@@ -23,9 +23,9 @@ export function AppFooter() {
         >
           <GitHubIcon />
         </a>
-        <span className="opacity-40">·</span>
+        <span className="opacity-40 text-xl">·</span>
         <span>{t("footer.madeBy")}</span>
-        <span className="opacity-40">·</span>
+        <span className="opacity-40 text-xl">·</span>
         <nav aria-label={t("footer.legalNav")} className="flex items-center gap-3">
           <Link
             to="/impressum"
@@ -34,7 +34,7 @@ export function AppFooter() {
           >
             {t("footer.impressum")}
           </Link>
-          <span className="opacity-40">·</span>
+          <span className="opacity-40 text-xl">·</span>
           <Link
             to="/datenschutz"
             className="text-foreground hover:opacity-100 transition-opacity"
@@ -42,7 +42,7 @@ export function AppFooter() {
           >
             {t("footer.datenschutz")}
           </Link>
-          <span className="opacity-40">·</span>
+          <span className="opacity-40 text-xl">·</span>
           <Link
             to="/agb"
             className="text-foreground hover:opacity-100 transition-opacity"
