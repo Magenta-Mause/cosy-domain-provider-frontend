@@ -28,7 +28,7 @@ export function AppFooter() {
         <span className="opacity-40 text-xl">·</span>
         <nav aria-label={t("footer.legalNav")} className="flex items-center gap-3">
           <Link
-            to="/impressum"
+            to="/legal-notice"
             className="text-foreground hover:opacity-100 transition-opacity"
             data-testid="footer-impressum-link"
           >
@@ -36,7 +36,7 @@ export function AppFooter() {
           </Link>
           <span className="opacity-40 text-xl">·</span>
           <Link
-            to="/datenschutz"
+            to="/privacy"
             className="text-foreground hover:opacity-100 transition-opacity"
             data-testid="footer-datenschutz-link"
           >
@@ -44,7 +44,7 @@ export function AppFooter() {
           </Link>
           <span className="opacity-40 text-xl">·</span>
           <Link
-            to="/agb"
+            to="/terms"
             className="text-foreground hover:opacity-100 transition-opacity"
             data-testid="footer-agb-link"
           >

@@ -10,18 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerifyRouteImport } from './routes/verify'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MfaSetupRouteImport } from './routes/mfa-setup'
 import { Route as MfaChallengeRouteImport } from './routes/mfa-challenge'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BillingRouteImport } from './routes/billing'
-import { Route as AgbRouteImport } from './routes/agb'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -36,6 +36,11 @@ import { Route as AdminSubdomainsSubdomainIdRouteImport } from './routes/admin/s
 const VerifyRoute = VerifyRouteImport.update({
   id: '/verify',
   path: '/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -53,6 +58,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MfaSetupRoute = MfaSetupRouteImport.update({
   id: '/mfa-setup',
   path: '/mfa-setup',
@@ -68,19 +78,14 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ImpressumRoute = ImpressumRouteImport.update({
-  id: '/impressum',
-  path: '/impressum',
+const LegalNoticeRoute = LegalNoticeRouteImport.update({
+  id: '/legal-notice',
+  path: '/legal-notice',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DatenschutzRoute = DatenschutzRouteImport.update({
-  id: '/datenschutz',
-  path: '/datenschutz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -91,11 +96,6 @@ const DashboardRoute = DashboardRouteImport.update({
 const BillingRoute = BillingRouteImport.update({
   id: '/billing',
   path: '/billing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgbRoute = AgbRouteImport.update({
-  id: '/agb',
-  path: '/agb',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -153,18 +153,18 @@ const AdminSubdomainsSubdomainIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
-  '/agb': typeof AgbRoute
   '/billing': typeof BillingRoute
   '/dashboard': typeof DashboardRoute
-  '/datenschutz': typeof DatenschutzRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/impressum': typeof ImpressumRoute
+  '/legal-notice': typeof LegalNoticeRoute
   '/login': typeof LoginRoute
   '/mfa-challenge': typeof MfaChallengeRoute
   '/mfa-setup': typeof MfaSetupRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
   '/verify': typeof VerifyRoute
   '/admin/subdomains': typeof AdminSubdomainsRouteWithChildren
   '/admin/users': typeof AdminUsersRouteWithChildren
@@ -177,18 +177,18 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/agb': typeof AgbRoute
   '/billing': typeof BillingRoute
   '/dashboard': typeof DashboardRoute
-  '/datenschutz': typeof DatenschutzRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/impressum': typeof ImpressumRoute
+  '/legal-notice': typeof LegalNoticeRoute
   '/login': typeof LoginRoute
   '/mfa-challenge': typeof MfaChallengeRoute
   '/mfa-setup': typeof MfaSetupRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
   '/verify': typeof VerifyRoute
   '/domain/$domainId': typeof DomainDomainIdRoute
   '/admin': typeof AdminIndexRoute
@@ -201,18 +201,18 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
-  '/agb': typeof AgbRoute
   '/billing': typeof BillingRoute
   '/dashboard': typeof DashboardRoute
-  '/datenschutz': typeof DatenschutzRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/impressum': typeof ImpressumRoute
+  '/legal-notice': typeof LegalNoticeRoute
   '/login': typeof LoginRoute
   '/mfa-challenge': typeof MfaChallengeRoute
   '/mfa-setup': typeof MfaSetupRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
   '/verify': typeof VerifyRoute
   '/admin/subdomains': typeof AdminSubdomainsRouteWithChildren
   '/admin/users': typeof AdminUsersRouteWithChildren
@@ -228,18 +228,18 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
-    | '/agb'
     | '/billing'
     | '/dashboard'
-    | '/datenschutz'
     | '/forgot-password'
-    | '/impressum'
+    | '/legal-notice'
     | '/login'
     | '/mfa-challenge'
     | '/mfa-setup'
+    | '/privacy'
     | '/register'
     | '/reset-password'
     | '/settings'
+    | '/terms'
     | '/verify'
     | '/admin/subdomains'
     | '/admin/users'
@@ -252,18 +252,18 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/agb'
     | '/billing'
     | '/dashboard'
-    | '/datenschutz'
     | '/forgot-password'
-    | '/impressum'
+    | '/legal-notice'
     | '/login'
     | '/mfa-challenge'
     | '/mfa-setup'
+    | '/privacy'
     | '/register'
     | '/reset-password'
     | '/settings'
+    | '/terms'
     | '/verify'
     | '/domain/$domainId'
     | '/admin'
@@ -275,18 +275,18 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
-    | '/agb'
     | '/billing'
     | '/dashboard'
-    | '/datenschutz'
     | '/forgot-password'
-    | '/impressum'
+    | '/legal-notice'
     | '/login'
     | '/mfa-challenge'
     | '/mfa-setup'
+    | '/privacy'
     | '/register'
     | '/reset-password'
     | '/settings'
+    | '/terms'
     | '/verify'
     | '/admin/subdomains'
     | '/admin/users'
@@ -301,18 +301,18 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
-  AgbRoute: typeof AgbRoute
   BillingRoute: typeof BillingRoute
   DashboardRoute: typeof DashboardRoute
-  DatenschutzRoute: typeof DatenschutzRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
-  ImpressumRoute: typeof ImpressumRoute
+  LegalNoticeRoute: typeof LegalNoticeRoute
   LoginRoute: typeof LoginRoute
   MfaChallengeRoute: typeof MfaChallengeRoute
   MfaSetupRoute: typeof MfaSetupRoute
+  PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SettingsRoute: typeof SettingsRoute
+  TermsRoute: typeof TermsRoute
   VerifyRoute: typeof VerifyRoute
   DomainDomainIdRoute: typeof DomainDomainIdRoute
 }
@@ -324,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/verify'
       fullPath: '/verify'
       preLoaderRoute: typeof VerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -347,6 +354,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mfa-setup': {
       id: '/mfa-setup'
       path: '/mfa-setup'
@@ -368,11 +382,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/impressum': {
-      id: '/impressum'
-      path: '/impressum'
-      fullPath: '/impressum'
-      preLoaderRoute: typeof ImpressumRouteImport
+    '/legal-notice': {
+      id: '/legal-notice'
+      path: '/legal-notice'
+      fullPath: '/legal-notice'
+      preLoaderRoute: typeof LegalNoticeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -380,13 +394,6 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/datenschutz': {
-      id: '/datenschutz'
-      path: '/datenschutz'
-      fullPath: '/datenschutz'
-      preLoaderRoute: typeof DatenschutzRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -401,13 +408,6 @@ declare module '@tanstack/react-router' {
       path: '/billing'
       fullPath: '/billing'
       preLoaderRoute: typeof BillingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agb': {
-      id: '/agb'
-      path: '/agb'
-      fullPath: '/agb'
-      preLoaderRoute: typeof AgbRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -528,18 +528,18 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
-  AgbRoute: AgbRoute,
   BillingRoute: BillingRoute,
   DashboardRoute: DashboardRoute,
-  DatenschutzRoute: DatenschutzRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
-  ImpressumRoute: ImpressumRoute,
+  LegalNoticeRoute: LegalNoticeRoute,
   LoginRoute: LoginRoute,
   MfaChallengeRoute: MfaChallengeRoute,
   MfaSetupRoute: MfaSetupRoute,
+  PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SettingsRoute: SettingsRoute,
+  TermsRoute: TermsRoute,
   VerifyRoute: VerifyRoute,
   DomainDomainIdRoute: DomainDomainIdRoute,
 }

@@ -146,7 +146,7 @@ export function RegisterForm() {
             />
             {t("register.termsPrefix")}{" "}
             <Link
-              to="/agb"
+              to="/terms"
               target="_blank"
               rel="noopener noreferrer"
               className="underline text-inherit [font-size:inherit]"
@@ -156,7 +156,7 @@ export function RegisterForm() {
             </Link>
             {" "}&{" "}
             <Link
-              to="/datenschutz"
+              to="/privacy"
               target="_blank"
               rel="noopener noreferrer"
               className="underline text-inherit [font-size:inherit]"
