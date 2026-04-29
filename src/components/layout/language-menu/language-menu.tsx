@@ -2,24 +2,19 @@ import { Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Button, type ButtonProps } from "@/components/ui/button";
-import type { AppLanguage } from "@/i18n/resources";
+import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
 import { cn } from "@/lib/utils.ts";
 import { useLanguageMenuLogic } from "./useLanguageMenuLogic";
 
 type LanguageMenuProps = {
-  onChangeLanguage: (language: AppLanguage) => Promise<void> | void;
   buttonVariant?: ButtonProps["variant"];
   className?: ButtonProps["className"];
   style?: ButtonProps["style"];
 };
 
-export function LanguageMenu({
-  onChangeLanguage,
-  buttonVariant,
-  className,
-  style,
-}: LanguageMenuProps) {
+export function LanguageMenu({ buttonVariant, className, style }: LanguageMenuProps) {
   const { t, i18n } = useTranslation();
+  const { handleLanguageChange: onChangeLanguage } = useLanguageChange();
   const { menuOpen, setMenuOpen, menuRef, languageCode, handleLanguageChange } =
     useLanguageMenuLogic(onChangeLanguage, i18n.language);
 

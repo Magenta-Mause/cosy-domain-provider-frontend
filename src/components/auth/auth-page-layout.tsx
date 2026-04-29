@@ -1,10 +1,10 @@
 import { Link, type LinkProps } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import { LanguageMenu } from "@/components/layout/language-menu";
 import { UserMenu } from "@/components/layout/user-menu";
 import { Panel } from "@/components/pixel/panel";
 import { Scenery } from "@/components/pixel/scenery";
-import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
 
 import { useAuthPageLayoutLogic } from "./useAuthPageLayoutLogic";
 
@@ -19,7 +19,7 @@ export function AuthPageLayout({
   backButtonLink = "/",
   maxWidth = 420,
 }: AuthPageLayoutProps) {
-  const { handleLanguageChange } = useLanguageChange();
+  const { t } = useTranslation();
   const { userName, isUserLoggedIn, isLoggingOut, handleLogout, handleDelete } =
     useAuthPageLayoutLogic();
 
@@ -32,11 +32,11 @@ export function AuthPageLayout({
           className="pbtn ghost absolute top-6 left-7 z-[5]"
           style={{ color: "oklch(0.95 0.08 70)" }}
         >
-          ← Back
+          {t("legal.back")}
         </Link>
       ) : null}
       <div className="absolute top-6 right-7 z-[5] flex items-center gap-3">
-        <LanguageMenu onChangeLanguage={handleLanguageChange} />
+        <LanguageMenu />
         {isUserLoggedIn ? (
           <UserMenu
             userName={userName}

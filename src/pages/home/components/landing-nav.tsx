@@ -4,12 +4,9 @@ import { useTranslation } from "react-i18next";
 import { CosyLogo } from "@/components/layout/cosy-logo";
 import { LanguageMenu } from "@/components/layout/language-menu";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
-import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
-
 export function LandingNav() {
   const { t } = useTranslation();
   const { isUserLoggedIn } = useAuthInformation();
-  const { handleLanguageChange } = useLanguageChange();
 
   return (
     <header className="flex items-center gap-4 relative z-[3] px-8 py-5">
@@ -36,11 +33,7 @@ export function LandingNav() {
         </a>
       </nav>
 
-      <LanguageMenu
-        onChangeLanguage={handleLanguageChange}
-        buttonVariant={"secondary"}
-        className="mx-5"
-      />
+      <LanguageMenu buttonVariant={"secondary"} className="mx-5" />
 
       <div className={"flex gap-3"}>
         {isUserLoggedIn ? (

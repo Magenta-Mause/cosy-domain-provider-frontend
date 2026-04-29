@@ -2,14 +2,12 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
-import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
 import { router } from "@/router";
 
 export function useAppHeaderLogic() {
   const { t } = useTranslation();
   const { logoutUser, deleteUser, userName, isUserLoggedIn, userTier } =
     useAuthInformation();
-  const { handleLanguageChange } = useLanguageChange();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -34,7 +32,6 @@ export function useAppHeaderLogic() {
     isUserLoggedIn,
     userTier,
     isLoggingOut,
-    handleLanguageChange,
     handleLogout,
     handleDelete,
   };
