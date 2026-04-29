@@ -53,15 +53,17 @@ export function LegalPageLayout({ title, children }: LegalPageLayoutProps) {
       </div>
 
       <div className="relative z-[2] max-w-2xl mx-auto">
-        <Link
-          to="/"
-          className="text-sm hover:opacity-100 transition-opacity mb-8 inline-block"
-          style={{ color: "oklch(0.92 0.04 60)", opacity: 0.75 }}
-          data-testid="legal-back-link"
-        >
-          {t("legal.back")}
-        </Link>
-        <FlatPanel className="p-8 mt-4">
+        <div className="sticky top-6 z-10 mb-4">
+          <Link
+            to="/"
+            className="text-sm opacity-60 hover:opacity-100 transition-opacity inline-flex items-center gap-1 cursor-pointer"
+            style={{ color: "oklch(0.92 0.04 60)" }}
+            data-testid="legal-back-link"
+          >
+            {t("legal.back")}
+          </Link>
+        </div>
+        <FlatPanel className="p-8">
           <h1 className="text-2xl font-bold mb-8">{title}</h1>
           <div className="space-y-6 text-base leading-relaxed">{children}</div>
         </FlatPanel>

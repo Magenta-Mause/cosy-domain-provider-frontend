@@ -12,36 +12,40 @@ export function AppFooter() {
       className="border-t py-5 px-6 bg-background"
       style={{ borderTopColor: "var(--foreground-muted)" }}
     >
-      <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm opacity-60">
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-foreground opacity-60">
         <a
           href="https://github.com/magenta-mause"
           target="_blank"
           rel="noopener noreferrer"
           aria-label={t("footer.githubLabel")}
-          className="hover:opacity-100 transition-opacity"
+          className="text-foreground hover:opacity-100 transition-opacity"
           data-testid="footer-github-link"
         >
           <GitHubIcon />
         </a>
+        <span className="opacity-40">·</span>
         <span>{t("footer.madeBy")}</span>
-        <nav aria-label={t("footer.legalNav")} className="flex gap-4">
+        <span className="opacity-40">·</span>
+        <nav aria-label={t("footer.legalNav")} className="flex items-center gap-3">
           <Link
             to="/impressum"
-            className="hover:opacity-100 transition-opacity"
+            className="text-foreground hover:opacity-100 transition-opacity"
             data-testid="footer-impressum-link"
           >
             {t("footer.impressum")}
           </Link>
+          <span className="opacity-40">·</span>
           <Link
             to="/datenschutz"
-            className="hover:opacity-100 transition-opacity"
+            className="text-foreground hover:opacity-100 transition-opacity"
             data-testid="footer-datenschutz-link"
           >
             {t("footer.datenschutz")}
           </Link>
+          <span className="opacity-40">·</span>
           <Link
             to="/agb"
-            className="hover:opacity-100 transition-opacity"
+            className="text-foreground hover:opacity-100 transition-opacity"
             data-testid="footer-agb-link"
           >
             {t("footer.agb")}
