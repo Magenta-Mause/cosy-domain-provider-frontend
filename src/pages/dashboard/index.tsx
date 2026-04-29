@@ -13,6 +13,7 @@ export function DashboardPage() {
     isMfaEnabled,
     userTier,
     isSlotsExhausted,
+    domainCreationEnabled,
     handleCreateNew,
   } = useDashboardLogic();
 
@@ -22,6 +23,7 @@ export function DashboardPage() {
         isVerified={isVerified}
         isMfaEnabled={isMfaEnabled}
         isSlotsExhausted={isSlotsExhausted}
+        domainCreationEnabled={domainCreationEnabled}
         userTier={userTier}
         onCreateNew={handleCreateNew}
       />

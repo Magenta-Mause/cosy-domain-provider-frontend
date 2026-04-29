@@ -19,6 +19,9 @@ export function useDashboardLogic() {
 
   const isSlotsExhausted =
     maxSubdomainCount !== null && subdomains.length >= maxSubdomainCount;
+  const domainCreationEnabled = useAppSelector(
+    (state) => state.settings.domainCreationEnabled,
+  );
 
   const handleCreateNew = useCallback(() => {
     if (!isVerified) {
@@ -38,6 +41,7 @@ export function useDashboardLogic() {
     isMfaEnabled,
     userTier,
     isSlotsExhausted,
+    domainCreationEnabled,
     handleCreateNew,
   };
 }
