@@ -55,9 +55,9 @@ export function DashboardBanner({
             disabled={isSlotsExhausted}
           >
             {!isVerified ? (
-              <>{t("dashboard.verifyAccount")}</>
+              t("dashboard.verifyAccount")
             ) : !isMfaEnabled ? (
-              <>{t("dashboard.setupMfa")}</>
+              t("dashboard.setupMfa")
             ) : (
               <>+ {t("dashboard.createNew")}</>
             )}

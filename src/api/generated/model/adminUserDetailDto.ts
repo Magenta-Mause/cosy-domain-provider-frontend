@@ -4,8 +4,9 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { AdminUserDetailDtoTier } from './adminUserDetailDtoTier';
-import type { AdminSubdomainDto } from './adminSubdomainDto';
+
+import type { AdminSubdomainDto } from "./adminSubdomainDto";
+import type { AdminUserDetailDtoTier } from "./adminUserDetailDtoTier";
 
 export interface AdminUserDetailDto {
   uuid?: string;

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { Route } from "@/routes/mfa-challenge";
@@ -14,7 +14,7 @@ export function useMfaChallengeLogic() {
   const [totpError, setTotpError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleConfirm = async () => {
+  const handleConfirm = useCallback(async () => {
     if (totpCode.length !== 6 || isSubmitting) return;
     setIsSubmitting(true);
     setTotpError(null);
@@ -31,14 +31,20 @@ export function useMfaChallengeLogic() {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [
+    totpCode,
+    isSubmitting,
+    completeMfaChallenge,
+    challengeToken,
+    navigate,
+    t,
+  ]);
 
   useEffect(() => {
     if (totpCode.length === 6) {
       void handleConfirm();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totpCode]);
+  }, [totpCode, handleConfirm]);
 
   return { totpCode, setTotpCode, totpError, isSubmitting, handleConfirm };
 }

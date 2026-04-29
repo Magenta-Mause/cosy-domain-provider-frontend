@@ -28,8 +28,13 @@ export function SetPasswordView({
   const { t } = useTranslation();
 
   const passwordWeak = isPasswordWeak(password);
-  const confirmMismatch = confirmPassword.length > 0 && password !== confirmPassword;
-  const canSubmit = !passwordWeak && !confirmMismatch && password.length > 0 && confirmPassword.length > 0;
+  const confirmMismatch =
+    confirmPassword.length > 0 && password !== confirmPassword;
+  const canSubmit =
+    !passwordWeak &&
+    !confirmMismatch &&
+    password.length > 0 &&
+    confirmPassword.length > 0;
 
   return (
     <div className="flex flex-col gap-10">

@@ -1,7 +1,7 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
+import { useNavigate } from "@tanstack/react-router";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { Route } from "@/routes/login";
 import { useAppSelector } from "@/store/hooks";
@@ -54,7 +54,7 @@ export function useLoginFormLogic() {
     }
   }
 
-  async function handleTotpSubmit() {
+  const handleTotpSubmit = useCallback(async () => {
     if (!challengeToken || totpCode.length !== 6) return;
     setTotpError(null);
     try {
@@ -68,14 +68,13 @@ export function useLoginFormLogic() {
       setTotpError(t("login.mfaError"));
       setTotpCode("");
     }
-  }
+  }, [challengeToken, totpCode, completeMfaChallenge, navigate, t]);
 
   useEffect(() => {
     if (totpCode.length === 6 && step === 3) {
       void handleTotpSubmit();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totpCode, step]);
+  }, [totpCode, step, handleTotpSubmit]);
 
   function goBack() {
     setStep(1);

@@ -2,7 +2,11 @@ import { useTranslation } from "react-i18next";
 import { FormField } from "@/components/ui/form-field";
 import { useStagingAuthProviderLogic } from "./useStagingAuthProviderLogic";
 
-export function StagingAuthProvider({ children }: { children: React.ReactNode }) {
+export function StagingAuthProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   if (import.meta.env.VITE_STAGING_AUTH_ENABLED !== "true") {
     return <>{children}</>;
   }
@@ -12,8 +16,17 @@ export function StagingAuthProvider({ children }: { children: React.ReactNode })
 
 function StagingAuthGate({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation();
-  const { authenticated, checking, username, setUsername, password, setPassword, error, submitting, login } =
-    useStagingAuthProviderLogic();
+  const {
+    authenticated,
+    checking,
+    username,
+    setUsername,
+    password,
+    setPassword,
+    error,
+    submitting,
+    login,
+  } = useStagingAuthProviderLogic();
 
   if (checking) {
     return (
@@ -34,7 +47,9 @@ function StagingAuthGate({ children }: { children: React.ReactNode }) {
           <h1 className="text-xl font-semibold text-foreground">
             {t("stagingAuth.title")}
           </h1>
-          <p className="text-sm text-muted-foreground">{t("stagingAuth.description")}</p>
+          <p className="text-sm text-muted-foreground">
+            {t("stagingAuth.description")}
+          </p>
         </div>
         <form
           className="flex flex-col gap-4"
@@ -61,7 +76,11 @@ function StagingAuthGate({ children }: { children: React.ReactNode }) {
             required
             error={error ? t("stagingAuth.error") : null}
           />
-          <button type="submit" className="pbutton w-full" disabled={submitting}>
+          <button
+            type="submit"
+            className="pbutton w-full"
+            disabled={submitting}
+          >
             {submitting ? t("stagingAuth.submitting") : t("stagingAuth.submit")}
           </button>
         </form>

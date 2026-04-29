@@ -7,7 +7,7 @@ import { router } from "@/router";
 
 export function useAppHeaderLogic() {
   const { t } = useTranslation();
-  const { logoutUser, deleteUser, userName, isUserLoggedIn } =
+  const { logoutUser, deleteUser, userName, isUserLoggedIn, userTier } =
     useAuthInformation();
   const { handleLanguageChange } = useLanguageChange();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -32,6 +32,7 @@ export function useAppHeaderLogic() {
   return {
     userName,
     isUserLoggedIn,
+    userTier,
     isLoggingOut,
     handleLanguageChange,
     handleLogout,
