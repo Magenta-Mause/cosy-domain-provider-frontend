@@ -4,8 +4,9 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { AdminSubdomainDtoStatus } from './adminSubdomainDtoStatus';
-import type { AdminSubdomainDtoLabelMode } from './adminSubdomainDtoLabelMode';
+
+import type { AdminSubdomainDtoLabelMode } from "./adminSubdomainDtoLabelMode";
+import type { AdminSubdomainDtoStatus } from "./adminSubdomainDtoStatus";
 
 export interface AdminSubdomainDto {
   uuid?: string;

@@ -446,7 +446,8 @@ const enCommon = {
   },
   stagingAuth: {
     title: "Staging Environment",
-    description: "This environment is restricted. Enter the staging credentials to continue.",
+    description:
+      "This environment is restricted. Enter the staging credentials to continue.",
     username: "Username",
     password: "Password",
     submit: "Unlock",
@@ -502,9 +503,11 @@ const deCommon: CommonSchema = {
     oauthError: "Anmeldung fehlgeschlagen. Bitte erneut versuchen.",
     orEmail: "ODER E-MAIL NUTZEN",
     emailContinue: "Weiter →",
-    captchaError: "Sicherheitscheck noch nicht bereit. Bitte einen Moment warten.",
+    captchaError:
+      "Sicherheitscheck noch nicht bereit. Bitte einen Moment warten.",
     mfaTitle: "Zwei-Faktor-Authentifizierung",
-    mfaDescription: "Gib den 6-stelligen Code aus deiner Authenticator-App ein.",
+    mfaDescription:
+      "Gib den 6-stelligen Code aus deiner Authenticator-App ein.",
     mfaError: "Ungültiger Code. Bitte erneut versuchen.",
     mfaSubmit: "Bestätigen →",
   },
@@ -514,8 +517,10 @@ const deCommon: CommonSchema = {
       "Scanne den QR-Code mit einer Authenticator-App (z.B. Google Authenticator, Authy) und gib dann den 6-stelligen Code zur Bestätigung ein.",
     manualEntry: "Kein Scanner? Gib diesen Code manuell in deiner App ein:",
     inputTitle: "6-stelligen Code eingeben",
-    setupError: "MFA-Einrichtung konnte nicht gestartet werden. Bitte erneut versuchen.",
-    confirmError: "Der Code stimmt nicht überein. Prüfe deine App und versuche es erneut.",
+    setupError:
+      "MFA-Einrichtung konnte nicht gestartet werden. Bitte erneut versuchen.",
+    confirmError:
+      "Der Code stimmt nicht überein. Prüfe deine App und versuche es erneut.",
     submit: "Bestätigen →",
     submitting: "Wird überprüft...",
   },
@@ -560,7 +565,8 @@ const deCommon: CommonSchema = {
     passwordMismatch: "Passwörter stimmen nicht überein.",
     passwordTooShort: "Mindestens 8 Zeichen erforderlich",
     error: "Registrierung fehlgeschlagen. Bitte erneut versuchen.",
-    captchaError: "Sicherheitscheck noch nicht bereit. Bitte einen Moment warten.",
+    captchaError:
+      "Sicherheitscheck noch nicht bereit. Bitte einen Moment warten.",
     hasAccount: "Bereits ein Konto?",
     alreadyMovedIn: "Schon eingezogen?",
     loginLink: "Anmelden",

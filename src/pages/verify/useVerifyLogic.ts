@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";

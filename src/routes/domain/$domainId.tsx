@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DomainDetailPage } from "@/pages/domain-detail";
 import { requireFullAuth } from "@/lib/require-full-auth";
+import { DomainDetailPage } from "@/pages/domain-detail";
 
 export const Route = createFileRoute("/domain/$domainId")({
   beforeLoad: requireFullAuth,

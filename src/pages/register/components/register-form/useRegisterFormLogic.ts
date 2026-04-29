@@ -1,7 +1,7 @@
+import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import { useNavigate } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { TurnstileInstance } from "@marsidev/react-turnstile";
 
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { isValidEmail } from "@/lib/validators";

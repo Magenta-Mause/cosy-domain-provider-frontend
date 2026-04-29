@@ -72,7 +72,10 @@ const useDataInteractions = () => {
         });
         if (response?.mfaRequired && response.challengeToken) {
           dispatch(setAuthState("idle"));
-          return { mfaRequired: true as const, challengeToken: response.challengeToken };
+          return {
+            mfaRequired: true as const,
+            challengeToken: response.challengeToken,
+          };
         }
         const parsedToken = await refreshIdentityToken();
         dispatch(setAuthState("idle"));
@@ -228,12 +231,15 @@ const useDataInteractions = () => {
     window.location.href = url;
   }, []);
 
-  const setupMfa = useCallback(
-    async (): Promise<{ totpUri: string; secret: string }> => {
-      return await customInstance({ method: "POST", url: "/api/v1/auth/mfa/setup" });
-    },
-    [],
-  );
+  const setupMfa = useCallback(async (): Promise<{
+    totpUri: string;
+    secret: string;
+  }> => {
+    return await customInstance({
+      method: "POST",
+      url: "/api/v1/auth/mfa/setup",
+    });
+  }, []);
 
   const confirmMfa = useCallback(
     async (totpCode: string) => {

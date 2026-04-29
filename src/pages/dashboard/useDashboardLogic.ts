@@ -14,7 +14,8 @@ export function useDashboardLogic() {
     useAppSelector((state) => state.subdomains.state) === "loading";
   const isError =
     useAppSelector((state) => state.subdomains.state) === "failed";
-  const { isVerified, isMfaEnabled, userTier, maxSubdomainCount } = useAuthInformation();
+  const { isVerified, isMfaEnabled, userTier, maxSubdomainCount } =
+    useAuthInformation();
 
   const isSlotsExhausted =
     maxSubdomainCount !== null && subdomains.length >= maxSubdomainCount;
