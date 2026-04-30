@@ -2,6 +2,7 @@ import { AuthPageLayout } from "@/components/auth/auth-page-layout";
 import { sanitizeVerificationCode } from "@/pages/verify/lib.ts";
 import { SendEmailView } from "./components/send-email-view";
 import { SetPasswordView } from "./components/set-password-view";
+import { VerifiedView } from "./components/verified-view";
 import { VerifyForm } from "./components/verify-form";
 import { useVerifyLogic } from "./useVerifyLogic";
 
@@ -50,6 +51,8 @@ const VerifyPage = () => {
           sendError={sendError}
           onSend={() => void triggerSendEmail()}
         />
+      ) : stage === "success" ? (
+        <VerifiedView />
       ) : (
         <VerifyForm
           userEmail={userEmail}

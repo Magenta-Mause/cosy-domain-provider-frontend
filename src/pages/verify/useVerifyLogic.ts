@@ -1,4 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -6,18 +5,17 @@ import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { Route } from "@/routes/verify";
 
-type Stage = "password" | "send" | "input";
+type Stage = "password" | "send" | "input" | "success";
 
 export function useVerifyLogic() {
   const { t } = useTranslation();
-  const { userEmail, isVerified, needsPasswordSetup } = useAuthInformation();
+  const { userEmail, isVerified, needsPasswordSetup, isUserLoggedIn } = useAuthInformation();
   const { token: urlToken } = Route.useSearch();
   const { verifyAccount, resendVerificationCode, setupPassword } =
     useDataInteractions();
-  const navigate = useNavigate();
 
   const [stage, setStage] = useState<Stage>(
-    needsPasswordSetup ? "password" : "send",
+    needsPasswordSetup ? "password" : isUserLoggedIn ? "send" : "input",
   );
   const [verificationToken, setVerificationToken] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
@@ -39,7 +37,7 @@ export function useVerifyLogic() {
       setVerifyError(null);
       try {
         await verifyAccount(token);
-        await navigate({ to: "/mfa-setup" });
+        setStage("success");
       } catch {
         setVerifyError(t("verify.codeMismatchError"));
         setVerificationToken("");
@@ -47,7 +45,7 @@ export function useVerifyLogic() {
         setIsVerifying(false);
       }
     },
-    [verifyAccount, navigate, t],
+    [verifyAccount, t],
   );
 
   useEffect(() => {
