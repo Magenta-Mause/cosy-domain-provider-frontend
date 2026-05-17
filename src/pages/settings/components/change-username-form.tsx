@@ -43,7 +43,10 @@ export function ChangeUsernameForm({
         testId="settings-new-username-input"
       />
       {success && (
-        <div className="text-xl text-accent-2">
+        <div
+          data-testid="settings-username-success"
+          className="text-xl text-accent-2"
+        >
           {t("settings.usernameSuccess")}
         </div>
       )}

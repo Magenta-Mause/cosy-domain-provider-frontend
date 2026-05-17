@@ -123,7 +123,10 @@ export function ChangePasswordForm({ onSave }: ChangePasswordFormProps) {
       />
 
       {success && (
-        <div className="text-xl text-accent-2">
+        <div
+          data-testid="settings-password-success"
+          className="text-xl text-accent-2"
+        >
           {t("settings.passwordSuccess")}
         </div>
       )}
