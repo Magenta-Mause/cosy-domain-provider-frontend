@@ -81,7 +81,6 @@ export function TargetIpTabs({
           error={showIpv4Error ? t("domainDetail.ipv4Invalid") : null}
           hint={t("createSubdomain.targetIpv4Hint")}
           testId="domain-detail-target-ip-input"
-          inputMode="decimal"
         />
       )}
 
