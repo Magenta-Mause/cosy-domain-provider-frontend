@@ -167,7 +167,7 @@ describe("useDomainDetailLogic", () => {
       });
 
       expect(mockCreateSubdomain).toHaveBeenCalledWith({
-        label: "",
+        label: undefined,
         targetIp: "1.2.3.4",
         targetIpv6: undefined,
       });
