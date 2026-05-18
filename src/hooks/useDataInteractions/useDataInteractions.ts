@@ -199,8 +199,12 @@ const useDataInteractions = () => {
   );
 
   const initiateOAuthLink = useCallback(
-    (provider: OAuthProvider) => {
-      globalThis.location.href = `/api/v1/user/oauth-identities/${provider}/link`;
+    async (provider: OAuthProvider) => {
+      const url = await customInstance<string>({
+        method: "GET",
+        url: `/api/v1/user/oauth-identities/${provider}/link`,
+      });
+      globalThis.location.href = url;
     },
     [],
   );

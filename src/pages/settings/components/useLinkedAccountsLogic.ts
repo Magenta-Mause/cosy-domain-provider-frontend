@@ -64,7 +64,7 @@ export function useLinkedAccountsLogic() {
 
   const handleLink = useCallback(
     (provider: Provider) => {
-      initiateOAuthLink(provider);
+      void initiateOAuthLink(provider);
     },
     [initiateOAuthLink],
   );
