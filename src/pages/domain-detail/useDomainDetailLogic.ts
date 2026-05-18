@@ -180,7 +180,7 @@ export function useDomainDetailLogic(domainId: string) {
     try {
       if (isCreateMode) {
         const created = await createSubdomain({
-          label: namingMode === "custom" ? label : "",
+          label: namingMode === "custom" ? label : undefined,
           targetIp: targetIp.trim() || undefined,
           targetIpv6: targetIpv6.trim() || undefined,
         });
