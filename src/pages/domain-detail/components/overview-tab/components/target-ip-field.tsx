@@ -29,7 +29,6 @@ export function TargetIpField({
       error={hasSubmitted && !ipValid ? t("domainDetail.ipInvalid") : null}
       hint={t("createSubdomain.targetIpHint")}
       testId="domain-detail-target-ip-input"
-      inputMode="decimal"
     />
   );
 }

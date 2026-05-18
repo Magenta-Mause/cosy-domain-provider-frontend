@@ -41,7 +41,9 @@ export function UserMenu({
         >
           {initial}
         </span>
-        {userName ?? t("nav.userMenu")}
+        <span className="max-w-[80px] truncate sm:max-w-none">
+          {userName ?? t("nav.userMenu")}
+        </span>
       </Button>
       {menuOpen ? (
         <UserMenuDropdown
